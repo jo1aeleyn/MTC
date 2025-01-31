@@ -14,8 +14,8 @@
     <nav class="navbar">
       <div class="logo_item">
         <i class="bx bx-menu" id="sidebarOpen"></i>
-        <img src="https://mtco.com.ph/img/logotype_opaque.svg" alt=""></i>Mendoza Tugano & Co.,CPAs
-      </div>
+        <img src="{{ asset('Logo/Logo 1 V2.1 No BG.png') }}" alt="Mendoza Tugano & Co., CPAs" style="max-width: 31%; height: auto; width: auto;">
+        </div>
 
       <div class="navbar_content">
         <i class="bi bi-grid"></i>
@@ -27,7 +27,7 @@
     <!-- sidebar -->
     <nav class="sidebar">
       <div class="menu_content">
-        <ul class="menu_items">
+        <ul class="menu_items mt-5">
           <div class="menu_title menu_dahsboard"></div>
           <!-- duplicate or remove this li tag if you want to add or remove navlink with submenu -->
           <!-- start -->

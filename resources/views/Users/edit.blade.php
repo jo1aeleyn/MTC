@@ -4,51 +4,168 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit User</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        #password, #password_confirmation {
+            padding-right: 40px; 
+        }
+
+        #togglePassword, #toggleConfirmPassword {
+            font-size: 1.2rem; 
+            color: #aaa; 
+        }
+
+        #password:not([type='password']) + #togglePassword, 
+        #password_confirmation:not([type='password']) + #toggleConfirmPassword {
+            color: #007bff; 
+        }
+
+        #togglePassword:hover, #toggleConfirmPassword:hover {
+            color: #333; 
+        }
+
+        #password:focus, #password_confirmation:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+    </style>
 </head>
 @section('content')
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Edit User</h1>
-        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Edit Profile</h2>
 
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" value="{{ $user->username }}" required>
-            </div>
+    <!-- Success Message -->
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-            <div class="mb-3">
-                <label for="password" class="form-label">New Password (Leave blank if unchanged)</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
+    <!-- Error Message -->
+    @if($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-            <div class="mb-3">
-                <label for="user_role" class="form-label">Role</label>
-                <select class="form-select" id="user_role" name="user_role" required>
-                    <option value="admin" {{ $user->user_role == 'admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="user" {{ $user->user_role == 'user' ? 'selected' : '' }}>User</option>
-                </select>
-            </div>
+    <div class="row d-flex align-items-start mb-4">
+        <!-- Profile Picture Section -->
+        <div class="col-lg-4">
+            <div class="card h-100 shadow-lg border-0 ">
+                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                    <div class="card-body text-center ">
+                        <!-- Profile Picture -->
+                        <div class="mb-3">
+                            <img src="{{ asset('/Profile_pictures/' . $user->profile_picture) }}"
+                                 alt="{{$user->profile_picture}}"
+                                 class="img-fluid rounded-circle mb-3"
+                                 style="max-width: 21%; height: 50%;">
+                        </div>
 
-            <div class="mb-3">
-                <label for="profile_picture" class="form-label">Profile Picture</label>
-                <input type="file" class="form-control" id="profile_picture" name="profile_picture">
-                @if($user->profile_picture)
-                    <div class="mt-2">
-                        <img src="{{ asset('profile_pictures/' . $user->profile_picture) }}" width="50" height="50" class="rounded-circle">
+                        <!-- File Input for Profile Picture -->
+                        <div class="mb-3">
+                            <label for="profile_picture" class="form-label">Change Profile Picture</label>
+                            <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
+                        </div>
                     </div>
-                @endif
+                </form>
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
+        <!-- Form Section -->
+        <div class="col-lg-8 mt-3">
+            <div class="card h-100 shadow-lg border-0">
+                <div class="card-body">
+                    <form action="{{ route('profile.update') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Username Field -->
+                        <div class="row mb-4">
+                            <label for="username" class="col-sm-3 col-form-label">Username</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="username" name="username" value="{{ old('username', $user->username) }}" required>
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="row mb-4">
+                            <label for="password" class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-9 position-relative">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                                <i class="bi bi-eye-slash position-absolute" id="togglePassword" style="top: 50%; right: 20px; transform: translateY(-50%); cursor: pointer;"></i>
+                            </div>
+                        </div>  
+
+                        <!-- Confirm Password Field -->
+                        <div class="row mb-4">
+                            <label for="password_confirmation" class="col-sm-3 col-form-label">Confirm Password</label>
+                            <div class="col-sm-9 position-relative">
+                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password">
+                                <i class="bi bi-eye-slash position-absolute" id="toggleConfirmPassword" style="top: 50%; right: 20px; transform: translateY(-50%); cursor: pointer;"></i>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="submit" class="btn btn-primary" style='background-color:#326C79'>Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+    const confirmPassword = document.getElementById('password_confirmation');
+
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        var passwordField = document.getElementById('password');
+        var icon = document.getElementById('togglePassword');
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    });
+
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+        var confirmPasswordField = document.getElementById('password_confirmation');
+        var icon = document.getElementById('toggleConfirmPassword');
+
+        if (confirmPasswordField.type === 'password') {
+            confirmPasswordField.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            confirmPasswordField.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    });
+</script>
 </body>
 </html>
 
+@endsection

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -31,8 +31,10 @@ class UserController extends Controller
 
         $profile_picture = null;
         if ($request->hasFile('profile_picture')) {
-            $filename = time() . '.' . $request->profile_picture->extension();
-            $request->profile_picture->move(public_path('profile_pictures'), $filename);
+            $destinationPath = public_path('profile_pictures'); 
+            $extension = $request->file('profile_picture')->getClientOriginalExtension();
+            $filename = 'user_' . time() . '.' . $extension;
+            $request->file('profile_picture')->move($destinationPath, $filename);
             $profile_picture = $filename;
         }
 
@@ -55,43 +57,45 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $user = UserAccount::findOrFail($id);
+    {
+        $user = UserAccount::findOrFail($id);
 
-    $request->validate([
-        'username' => 'required|string|max:255|unique:user_accounts_tbl,username,' . $id,
-        'password' => 'nullable|string|min:8|confirmed|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
-        'user_role' => 'required',
-        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+        $request->validate([
+            'username' => 'required|string|max:255|unique:user_accounts_tbl,username,' . $id,
+            'password' => 'nullable|string|min:8|confirmed|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
+            'user_role' => 'required',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-    // Update username if changed
-    if ($request->has('username') && $request->username !== $user->username) {
-        $user->username = $request->username;
-    }
-
-    // Handle profile picture upload
-    if ($request->hasFile('profile_picture')) {
-        // Delete the old picture if it exists
-        if ($user->profile_picture && Storage::exists('public/profile_pictures/' . $user->profile_picture)) {
-            Storage::delete('public/profile_pictures/' . $user->profile_picture);
+        // Update username if changed
+        if ($request->has('username') && $request->username !== $user->username) {
+            $user->username = $request->username;
         }
 
-        // Store the new picture and get the filename
-        $filename = $request->file('profile_picture')->store('profile_pictures', 'public');
-        $user->profile_picture = basename($filename);
+        // Handle profile picture upload
+        if ($request->hasFile('profile_picture')) {
+            $destinationPath = public_path('profile_pictures'); 
+
+            // Delete old profile picture if exists
+            if ($user->profile_picture && File::exists($destinationPath . '/' . $user->profile_picture)) {
+                File::delete($destinationPath . '/' . $user->profile_picture);
+            }
+
+            $extension = $request->file('profile_picture')->getClientOriginalExtension();
+            $filename = 'user_' . time() . '.' . $extension;
+            $request->file('profile_picture')->move($destinationPath, $filename);
+            $user->profile_picture = $filename;
+        }
+
+        // Update user role and edited_by
+        $user->user_role = $request->user_role;
+        $user->edited_by = auth()->id();
+
+        // Save the updated user data
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
-
-    // Update user role and edited_by
-    $user->user_role = $request->user_role;
-    $user->edited_by = auth()->id();
-
-    // Save the updated user data
-    $user->save();
-
-    return redirect()->route('users.index')->with('success', 'User updated successfully.');
-}
-
 
     public function destroy($id)
     {

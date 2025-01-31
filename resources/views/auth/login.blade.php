@@ -52,13 +52,14 @@
                             </div>
                             <div data-mdb-input-init class="form-outline mb-4 position-relative">
                             <input type="password" id="password" name="password" class="form-control form-control-lg" required placeholder="Password" style="color: #555;" />
+                            <a href="{{ route('password.request') }}"> Forgot password? </a>
                             <button type="button" class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="z-index: 10;">
                             <i class="fas fa-eye"></i>
                             </button>
                             </div>
 
                             <div class="pt-1 mb-4">
-                                <button style="width: 100%; background-color: #005C66; border-color:#005C66; color:white;" type="submit" class="btn btn-info btn-lg btn-block">Login</button>
+                                <button style="width: 100%; background-color: #326C79; border-color:#326C79; color:white;" type="submit" class="btn btn-info btn-lg btn-block">Login</button>
                             </div>
                         </form>
                     </div>

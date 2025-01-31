@@ -1,0 +1,429 @@
+.arial,
+.arial-bold,
+.arial-bolder,
+.arial-normal {
+    font-family: Arial, sans-serif
+}
+
+.header2,
+.towhom {
+    text-decoration: underline
+}
+
+.towhom2{
+    text-decoration: none;
+    font-weight: 200;
+    font-size: 22px;
+}
+
+.bold {
+    font-weight: 700
+}
+
+.uppercase {
+    text-transform: uppercase
+}
+
+.lowercase {
+    text-transform: lowercase
+}
+
+.towhom,
+.uppercase1 {
+    text-transform: uppercase
+}
+
+.justify {
+    text-align: justify
+}
+
+.fontheader2,
+.h3 {
+    font-size: 18px
+}
+
+.uppercase1 {
+    font-size: 14px
+}
+
+.bg-image-container {
+    background-image: url('/import/img/imggenerate/logocover.png');
+    background-size: 90%;
+    background-position: center -20px;
+    background-repeat: no-repeat
+}
+
+.container-firstjob {
+    margin-top: 2rem !important;
+    width: 9in;
+    height: 14in;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+.container_biz-clearance {
+    width: 7in;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.custom-container {
+    margin-top: 2rem !important;
+    width: 9.7in;
+    /* height: 14in; */
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+.split-screen {
+    display: flex
+}
+
+.left-side {
+    flex: 0.35;
+    max-width: calc(35% - 3px);
+    margin-top: 2rem
+}
+
+.right-side {
+    flex: 0.66;
+    max-width: calc(66% - 3px);
+    margin-top: 1.5rem
+}
+
+.arial-bold,
+.no-space-top {
+    margin-top: 0
+}
+
+.divider {
+    width: 3.5px;
+    background-color: #000;
+    height: 900px;
+    margin-right: 25px;
+    margin-left: 5px
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif
+}
+
+.arial-normal {
+    font-weight: 400
+}
+
+.arial-bolder {
+    font-weight: 1000;
+    margin-top: 0
+}
+
+.arial-bold {
+    font-weight: 791
+}
+
+.lightblue {
+    color: #5b9bd5
+}
+
+.no-space-bottom,
+h1 {
+    margin-bottom: 0
+}
+
+.headercontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center
+}
+
+.header2 {
+    text-align: center
+}
+
+.logo {
+    margin: 0 28px;
+    width: 140px;
+    height: auto
+}
+
+.italized {
+    font-style: italic
+}
+
+.towhom {
+    padding: .2em 1em
+}
+
+.underline {
+    display: inline-block;
+    width: 330px;
+    margin-bottom: 0;
+    line-height: 1
+}
+
+.name,
+.name2name,
+.namename,
+.namenamename {
+    display: block;
+    line-height: 1;
+    width: 335px;
+    text-align: center
+}
+
+.jobheader {
+    display: block;
+    line-height: 1;
+    width: 500px;
+    text-align: center
+}
+
+.jobunderline {
+    display: inline-block;
+    border-bottom: 3px solid #000;
+    width: 500px;
+    margin-bottom: 0;
+    line-height: 1
+}
+
+.namenamename {
+    display: block;
+    text-align: center;
+    margin-bottom: -12px;
+    line-height: 1;
+    width: 220px;
+}
+
+.underline8 {
+    display: inline-block;
+    border-bottom: 2px solid #000;
+    width: 220px;
+    margin-bottom: 0;
+    line-height: 1;
+}
+.nameclear {
+    display: block;
+    text-align: justify;
+    margin-bottom: -13px; /* Negative margin to reduce space */
+    line-height: 1; /* Ensures no extra space */
+    width: 640px; /* Match the underline width */
+    margin-left: 0.5rem;
+}
+
+.underlineclear {
+    display: inline-block;
+    border-bottom: 2px solid #000;
+    width: 640px;
+    margin-bottom: 0;
+    line-height: 1; /* Ensures no extra space */
+}
+
+.nameclear2 {
+    display: block;
+    text-align: center;
+    margin-bottom: -13px; /* Negative margin to reduce space */
+    line-height: 1; /* Ensures no extra space */
+    width: 40px; /* Match the underline width */
+}
+
+.underlineclear2 {
+    display: inline-block;
+    border-bottom: 2px solid #000;
+    width: 40px;
+    margin-bottom: 0;
+    line-height: 1; /* Ensures no extra space */
+}
+
+.name,
+.name2name {
+    margin-bottom: -16px
+}
+
+.namename {
+    margin-bottom: -15px
+}
+
+.namenamename {
+    margin-bottom: -12px
+}
+
+.name1,
+.underline2 {
+    width: 330px;
+    line-height: 1
+}
+
+.underline2 {
+    display: inline-block;
+    border-bottom: 2px solid #000;
+    margin-bottom: 0
+}
+
+.name1 {
+    display: block;
+    text-align: center;
+    margin-bottom: -14px
+}
+
+.underline3,
+.underline4 {
+    display: inline-block;
+    margin-bottom: 0;
+    border-bottom: 2px solid #000
+}
+
+.underline3 {
+    width: 480px;
+    line-height: 1
+}
+
+.underline4 {
+    width: 100px;
+    line-height: 1
+}
+
+.name2,
+.name22 {
+    display: block;
+    line-height: 1;
+    width: 100px;
+    text-align: center
+}
+
+.name2 {
+    margin-bottom: -15px
+}
+
+.name22 {
+    margin-bottom: -16px
+}
+
+.name3,
+.underline5 {
+    width: 160px;
+    line-height: 1
+}
+
+.underline5 {
+    display: inline-block;
+    border-bottom: 2px solid #000;
+    margin-bottom: 0
+}
+
+.name3 {
+    display: block;
+    text-align: center;
+    margin-bottom: -14px
+}
+
+.underline6 {
+    display: inline-block;
+    border-bottom: 2px solid #000;
+    width: 30px;
+    margin-bottom: 0;
+    line-height: 1
+}
+
+.name4 {
+    display: block;
+    text-align: center;
+    margin-bottom: -14px;
+    line-height: 1;
+    width: 30px
+}
+
+.underline7 {
+    display: inline-block;
+    border-bottom: 3px solid #000;
+    width: 220px;
+    margin-bottom: 0;
+    line-height: 1
+}
+
+.name5,
+.name6 {
+    display: block;
+    margin-bottom: -11px;
+    line-height: 1;
+    text-align: center
+}
+
+.name5 {
+    width: 480px
+}
+
+.name6 {
+    width: 350px
+}
+
+.custom-checkbox {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1.5
+}
+
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 30px;
+    height: 30px
+}
+
+.custom-checkbox label {
+    position: relative;
+    padding-left: 35px;
+    margin-top: 20px
+}
+
+.custom-checkbox label:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 23px;
+    height: 23px;
+    border: 3px solid #000;
+    border-radius: 3px;
+    background-color: transparent
+}
+
+.custom-checkbox input:checked+label:before {
+    content: '\2713';
+    font-size: 20px;
+    line-height: 1.2;
+    text-align: center;
+    color: #000
+}
+
+.voter-label {
+    font-size: 22px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.5;
+    font-weight: 700
+}
+
+.fontheader {
+    font-size: 17px;
+    font-weight: 700
+}

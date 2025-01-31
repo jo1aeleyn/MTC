@@ -15,8 +15,9 @@ class SendAccountDetails extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param string $username
-     * @param string $password
+     * @param  string  $username
+     * @param  string  $password
+     * @return void
      */
     public function __construct($username, $password)
     {
@@ -31,7 +32,7 @@ class SendAccountDetails extends Mailable
      */
     public function build()
     {
-        return $this->subject('Your Account Details')
-                    ->view('emails.account_details'); // Create a Blade view for the email
+        return $this->subject('Account Details')->view('emails.account_details');
     }
 }
+
