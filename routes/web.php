@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
@@ -38,3 +40,9 @@ Route::prefix('users')->middleware('auth')->group(function() {
     Route::put('/{uuid}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{uuid}', [UserController::class, 'destroy'])->name('users.destroy');
 });
+
+// Forgot Password
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', action: [ResetPasswordController::class, 'reset'])->name('password.update');

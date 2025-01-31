@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 
 
 class AuthController extends Controller
@@ -61,43 +62,53 @@ class AuthController extends Controller
 
      // Update profile details (username, password, and profile picture)
      public function updateProfile(Request $request)
-{
-    $user = Auth::user();
-
-    $request->validate([
-        'username' => 'required|string|max:255|unique:user_accounts_tbl,username,' . $user->id,
-        'password' => 'nullable|string|min:8|confirmed|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
-        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
-
-
-    // Update username if changed
-    if ($request->has('username') && $request->username !== $user->username) {
-        $user->username = $request->username;
-    }
-
-    // Update password if provided
-    if ($request->filled('password')) {
-        $user->password = Hash::make($request->password);
-    }
-
-    // Handle profile picture upload
-    if ($request->hasFile('profile_picture')) {
-        // Delete the old picture if it exists
-        if ($user->profile_picture && Storage::exists('public/Profile_pictures/' . $user->profile_picture)) {
-            Storage::delete('public/Profile_pictures/' . $user->profile_picture);
-        }
-
-        // Store the new picture and get the filename
-        $filename = $request->file('profile_picture')->store('Profile_pictures', 'public');
-        $user->profile_picture = basename($filename);
-    }
-
-    // Save the updated user data
-    $user->save();
-
-    return redirect()->route('profile')->with('success', 'Profile updated successfully.');
-}
+     {
+         $user = Auth::user();
+     
+         $request->validate([
+             'username' => 'required|string|max:255|unique:user_accounts_tbl,username,' . $user->id,
+             'password' => 'nullable|string|min:8|confirmed|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
+             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+         ]);
+     
+         // Update username if changed
+         if ($request->has('username') && $request->username !== $user->username) {
+             $user->username = $request->username;
+         }
+     
+         // Update password if provided
+         if ($request->filled('password')) {
+             $user->password = Hash::make($request->password);
+         }
+     
+         // Handle profile picture upload
+         if ($request->hasFile('profile_picture')) {
+             // Define the upload path
+             $destinationPath = public_path('profile_pictures'); 
+     
+             // Delete the old picture if it exists
+             if ($user->profile_picture && File::exists($destinationPath . '/' . $user->profile_picture)) {
+                 File::delete($destinationPath . '/' . $user->profile_picture);
+             }
+     
+             // Get file extension
+             $extension = $request->file('profile_picture')->getClientOriginalExtension();
+     
+             // Define the new filename (Example: user_1_timestamp.jpg)
+             $filename = 'user_' . $user->id . '_' . time() . '.' . $extension;
+     
+             // Move the uploaded file to public/profile_pictures
+             $request->file('profile_picture')->move($destinationPath, $filename);
+     
+             // Save only the filename in the database
+             $user->profile_picture = $filename;
+         }
+     
+         // Save the updated user data
+         $user->save();
+     
+         return redirect()->route('profile')->with('success', 'Profile updated successfully.');
+     }
 
 
 }

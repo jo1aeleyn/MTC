@@ -89,10 +89,10 @@
                             name="employment_status"
                             required
                             style="background-color: #E2E2E2;">
-                            <option value="Probationary" {{ ($application->EmploymentStatus == 'Probationary') ? 'selected' : '' }}>Probationary</option>
-                            <option value="Regular" {{ ($application->EmploymentStatus == 'Regular') ? 'selected' : '' }}>Regular</option>
-                            <option value="Contractual" {{ ($application->EmploymentStatus == 'Contractual') ? 'selected' : '' }}>Contractual</option>
-                            <option value="Temporary" {{ ($application->EmploymentStatus == 'Temporary') ? 'selected' : '' }}>Temporary</option>
+                            <option value="Probationary" {{old('EmploymentStatus', $application->EmploymentStatus == 'Probationary') ? 'selected' : '' }}>Probationary</option>
+                            <option value="Regular" {{ old('EmploymentStatus', $application->EmploymentStatus == 'Regular') ? 'selected' : '' }}>Regular</option>
+                            <option value="Contractual" {{ old('EmploymentStatus', $application->EmploymentStatus == 'Contractual') ? 'selected' : '' }}>Contractual</option>
+                            <option value="Temporary" {{ old('EmploymentStatus', $application->EmploymentStatus == 'Temporary') ? 'selected' : '' }}>Temporary</option>
 
                         </select>
                     </div>

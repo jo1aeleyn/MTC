@@ -175,10 +175,10 @@
     </div>
 </div>
 
-<button id="exportPdf" class="btn btn-success mb-3">Export as PDF</button>
+<button id="exportPdf" style="width: 100%; background-color: #326C79; border-color:#326C79; color:white;">Export as PDF</button>
 
     <!-- Back Button -->
-    <a href="{{ route('employees.index') }}" class="btn btn-danger">Back to Employee List</a>
+    <a href="{{ route('employees.index') }}" class="btn btn-danger" style="float:right;">Back to Employee List</a>
 </div>
 
 <!-- Bootstrap 5 JS and Popper.js -->

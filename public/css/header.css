@@ -45,7 +45,27 @@ body.dark {
   font-size: 22px;
   font-weight: 500;
   color: var(--blue-color);
+  flex-wrap: wrap;  /* Allow items to wrap for smaller screens */
 }
+
+.logo_item img {
+  max-width: 100%;  /* Ensure the logo is responsive */
+  height: auto;  /* Maintain aspect ratio */
+  width: auto;
+}
+
+@media (max-width: 768px) {
+  .logo_item {
+    font-size: 18px;  /* Adjust font size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .logo_item {
+    font-size: 16px;  /* Further reduce font size for very small screens */
+  }
+}
+
 .navbar img {
   width: 35px;
   height: 35px;
@@ -151,7 +171,7 @@ body.dark {
   left: -20px;
 }
 .navlink_icon:hover {
-  background: var(--blue-color);
+  background: #326C79;
 }
 .sidebar .nav_link {
   display: flex;
@@ -168,10 +188,10 @@ body.dark {
 }
 .nav_link:hover {
   color: var(--white-color);
-  background: var(--blue-color);
+  background: #326C79;
 }
 .sidebar.close .nav_link:hover {
-  background: var(--white-color);
+  background: #326C79;
 }
 .submenu_item {
   cursor: pointer;

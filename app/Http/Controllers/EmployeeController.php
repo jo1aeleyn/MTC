@@ -16,39 +16,48 @@ use App\Models\Company;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use App\Mail\SendAccountDetails;
+
+
 
 class EmployeeController extends Controller
 {
     public function index(Request $request)
-    {
-        // Fetch distinct years from the 'date_hired' field
-        $years = Employee::selectRaw('YEAR(date_hired) as year')
-            ->distinct()
-            ->orderBy('year', 'desc')
-            ->pluck('year');
+{
+    // Fetch distinct years from the 'date_hired' field
+    $years = Employee::selectRaw('YEAR(date_hired) as year')
+        ->distinct()
+        ->orderBy('year', 'desc')
+        ->pluck('year');
 
-        // Fetch all employees without pagination
-        $employees = Employee::where('is_archived', 0)->get();
+    // Fetch all employees without pagination
+    $employees = Employee::where('is_archived', 0)->get();
 
-        // Fetch applications for all employee numbers
-        $employeeNumbers = $employees->pluck('emp_num'); // Get all emp_num values as a collection
-        $applications = Application::whereIn('emp_num', $employeeNumbers)->get()->keyBy('emp_num'); // Map applications by emp_num
+    // Fetch applications for all employee numbers
+    $employeeNumbers = $employees->pluck('emp_num'); // Get all emp_num values as a collection
+    $applications = Application::whereIn('emp_num', $employeeNumbers)->get()->keyBy('emp_num'); // Map applications by emp_num
 
-        // Add application to each employee and format the date_hired
-        foreach ($employees as $employee) {
-            $employee->application = $applications->get($employee->emp_num);
-            $employee->formatted_date_hired = \Carbon\Carbon::parse($employee->date_hired)->format('Y-m-d'); // Format the date
-        }
-
-        // Apply year filter if a year is selected
-        if ($request->has('year') && !empty($request->year)) {
-            $employees = $employees->filter(function ($employee) use ($request) {
-                return date('Y', strtotime($employee->date_hired)) == $request->year;
-            });
-        }
-
-        return view('employees.index', compact('employees', 'years'));
+    // Add application details and format the date_hired from the application table for each employee
+    foreach ($employees as $employee) {
+        $employee->application = $applications->get($employee->emp_num); // Associate application
+        // Use the application date_hired instead of the employee's date_hired if available
+        $employee->formatted_date_hired = $employee->application 
+            ? \Carbon\Carbon::parse($employee->application->date_hired)->format('Y-m-d') 
+            : \Carbon\Carbon::parse($employee->date_hired)->format('Y-m-d'); // Format application date_hired or employee date_hired
     }
+
+    // Apply year filter if a year is selected
+    if ($request->has('year') && !empty($request->year)) {
+        $employees = $employees->filter(function ($employee) use ($request) {
+            return date('Y', strtotime($employee->date_hired)) == $request->year;
+        });
+    }
+
+    // Return the view with employee data and distinct years
+    return view('employees.index', compact('employees', 'years'));
+}
 
     public function create()
     {
@@ -227,7 +236,8 @@ class EmployeeController extends Controller
             'username' => $username,
             'password' => Hash::make($password),
             'user_role' => 'employee',
-            'created_by' => 1
+            'email' => $request->email,
+            'created_by' => auth()->id()
         ]);
 
         $dateOfRegularization = Carbon::parse($request->date_hired)->addMonths(6)->format('Y-m-d');
@@ -320,6 +330,10 @@ class EmployeeController extends Controller
                 ]);
             }
         }
+
+        Log::info('Sending account details to email: ' . $request->email);
+        Log::info('Username: ' . $username);
+        Log::info('Password: ' . $password);
 
         if ($request->email) {
             Mail::to($request->email)->send(new SendAccountDetails($username, $password));
