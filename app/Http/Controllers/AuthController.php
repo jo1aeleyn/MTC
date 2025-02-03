@@ -58,6 +58,7 @@ class AuthController extends Controller
          return view('auth.ProfilePage', [
              'user' => Auth::user()
          ]);
+
      }
 
      // Update profile details (username, password, and profile picture)

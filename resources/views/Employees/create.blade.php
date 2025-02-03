@@ -2,6 +2,8 @@
 @include('partials.sidebar')
 @include('partials.navbar')
 
+
+
 <div class="container">
 <div class="page-inner">
 <div class="container mt-5">

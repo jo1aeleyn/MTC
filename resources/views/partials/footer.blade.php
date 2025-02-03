@@ -16,8 +16,7 @@
       </ul>
     </nav>
     <div class="copyright">
-      2024, made with <i class="fa fa-heart heart text-danger"></i> by
-      <a href="http://www.themekita.com">ThemeKita</a>
+     2025, Mendoza Tugano & Co,. CPAs
     </div>
     <div>
       Distributed by
