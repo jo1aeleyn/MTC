@@ -1,42 +1,11 @@
-@extends('Layouts.layout')
+@include('partials.header')
+@include('partials.sidebar')
+@include('partials.navbar')
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        #password, #password_confirmation {
-            padding-right: 40px; 
-        }
-
-        #togglePassword, #toggleConfirmPassword {
-            font-size: 1.2rem; 
-            color: #aaa; 
-        }
-
-        #password:not([type='password']) + #togglePassword, 
-        #password_confirmation:not([type='password']) + #toggleConfirmPassword {
-            color: #007bff; 
-        }
-
-        #togglePassword:hover, #toggleConfirmPassword:hover {
-            color: #333; 
-        }
-
-        #password:focus, #password_confirmation:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-    </style>
-</head>
-@section('content')
-<body>
+<div class="container">
+<div class="page-inner">
 <div class="container mt-5">
+ 
     <h2 class="mb-4 text-center">Edit Profile</h2>
 
     <!-- Success Message -->
@@ -128,44 +97,8 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    const togglePassword = document.getElementById('togglePassword');
-    const password = document.getElementById('password');
-    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-    const confirmPassword = document.getElementById('password_confirmation');
 
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        var passwordField = document.getElementById('password');
-        var icon = document.getElementById('togglePassword');
+</div>
+</div>
 
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            icon.classList.remove('bi-eye-slash');
-            icon.classList.add('bi-eye');
-        } else {
-            passwordField.type = 'password';
-            icon.classList.remove('bi-eye');
-            icon.classList.add('bi-eye-slash');
-        }
-    });
-
-    document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
-        var confirmPasswordField = document.getElementById('password_confirmation');
-        var icon = document.getElementById('toggleConfirmPassword');
-
-        if (confirmPasswordField.type === 'password') {
-            confirmPasswordField.type = 'text';
-            icon.classList.remove('bi-eye-slash');
-            icon.classList.add('bi-eye');
-        } else {
-            confirmPasswordField.type = 'password';
-            icon.classList.remove('bi-eye');
-            icon.classList.add('bi-eye-slash');
-        }
-    });
-</script>
-</body>
-</html>
-
-@endsection
+@include('partials.footer')

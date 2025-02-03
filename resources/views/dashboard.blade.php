@@ -1,22 +1,10 @@
-@extends('Layouts.layout')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-    @section('content')
-    <div class="container-fluid mt-5">
-        <div class="row">
+@include('partials.header')
+@include('partials.sidebar')
+@include('partials.navbar')
 
+<div class="container">
+<div class="page-inner">
 
-            <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="mt-4">
                     <h1>Welcome to the Dashboard</h1>
 
                     <!-- Display the logged-in user's username -->
@@ -49,12 +37,12 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-            </main>
+              
         </div>
     </div>
 
-    <!-- Include Bootstrap JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+</div>
+
+@include('partials.footer')
+

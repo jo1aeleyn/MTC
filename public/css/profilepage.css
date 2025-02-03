@@ -1,0 +1,22 @@
+#password, #password_confirmation {
+    padding-right: 40px; 
+}
+
+#togglePassword, #toggleConfirmPassword {
+    font-size: 1.2rem; 
+    color: #aaa; 
+}
+
+#password:not([type='password']) + #togglePassword, 
+#password_confirmation:not([type='password']) + #toggleConfirmPassword {
+    color: #007bff; 
+}
+
+#togglePassword:hover, #toggleConfirmPassword:hover {
+    color: #333; 
+}
+
+#password:focus, #password_confirmation:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

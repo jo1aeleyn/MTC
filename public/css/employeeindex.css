@@ -1,0 +1,95 @@
+/* Flexbox container */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Add New Employee Button */
+.add-employee-btn {
+    margin-right: 20px;
+}
+
+/* Filter Container */
+.filter-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Custom Dropdown */
+.custom-dropdown {
+    margin-right: 10px;
+}
+
+/* Filter Icon */
+#filterIcon {
+    font-size: 16px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+#filterIcon i {
+    margin-right: 5px;
+}
+
+/* Clear Filter Button */
+#removeFilterBtn {
+    font-size: 14px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+#removeFilterBtn:hover {
+    background-color: #e2e6ea;
+}
+
+/* Hide the dropdown initially */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .add-employee-btn {
+        margin-bottom: 10px;
+    }
+
+    .filter-container {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .custom-dropdown {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    #removeFilterBtn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

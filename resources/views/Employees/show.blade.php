@@ -1,30 +1,9 @@
-@extends('Layouts.layout')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Details</title>
+@include('partials.header')
+@include('partials.sidebar')
+@include('partials.navbar')
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
-    <!-- Optional: Custom CSS (if any) -->
-    <style>
-        .card-header {
-            background-color: #f8f9fa;
-        }
-        .container {
-            max-width: 1200px;
-        }
-
-
-    </style>
-</head>
-@section('content')
-<body>
-
+<div class="container">
+<div class="page-inner">
 <div class="container mt-5 mb-5">
     <h2 class="mb-3">Employee Details</h2>
 
@@ -174,38 +153,15 @@
         </div>
     </div>
 </div>
-
-<button id="exportPdf" style="width: 100%; background-color: #326C79; border-color:#326C79; color:white;">Export as PDF</button>
+<!-- 
+<button id="exportPdf" style="width: 100%; background-color: #326C79; border-color:#326C79; color:white;">Export as PDF</button> -->
 
     <!-- Back Button -->
     <a href="{{ route('employees.index') }}" class="btn btn-danger" style="float:right;">Back to Employee List</a>
 </div>
 
-<!-- Bootstrap 5 JS and Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
+</div>
+</div>
 
-<script>
-
-        document.getElementById('exportPdf').addEventListener('click', function () {
-    html2canvas(document.querySelector('.container')).then(function (canvas) {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        const imgData = canvas.toDataURL('image/png');
-        doc.addImage(imgData, 'PNG', 10, 10);
-
-        doc.save('employee-details.pdf');
-    }).catch(function(error) {
-        console.error('Error generating PDF: ', error);
-    });
-});
-
-</script>
-
-</body>
-</html>
-@endsection
+@include('partials.footer')

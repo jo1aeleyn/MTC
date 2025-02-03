@@ -1,17 +1,10 @@
-@extends('Layouts.layout')
+@include('partials.header')
+@include('partials.sidebar')
+@include('partials.navbar')
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Create User</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-@section('content')
-<body>
-    <div class="container mt-5">
+<div class="container">
+<div class="page-inner">
+<div class="container mt-5">
         <h1 class="mb-4">Create User</h1>
         @if ($errors->any())
         <div class="alert alert-danger">
@@ -51,6 +44,7 @@
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    </div>
+</div>
+
+@include('partials.footer')
