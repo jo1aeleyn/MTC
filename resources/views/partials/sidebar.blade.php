@@ -1,5 +1,4 @@
-<body>
-    <div class="wrapper">
+<div class="wrapper">
       <!-- Sidebar -->
       <div class="sidebar" style="background-color:#326C79 ; color:white">
         <div class="sidebar-logo">
