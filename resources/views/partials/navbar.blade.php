@@ -2,26 +2,26 @@
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->
-            <div class="logo-header" data-background-color="dark">
+            <div class="logo-header"style="background-color:#326C79">
               <a href="index.html" class="logo">
               <img
-    src="{{ asset('assets/img/mtc/mtc logo.png') }}"
-    alt="navbar brand"
-    class="navbar-brand"
-    height="20"
-/>
+                  src="{{ asset('assets/img/mtc/mtc logo.png') }}"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+              />
 
               </a>
               <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
-                  <i class="gg-menu-right"></i>
+                  <i class="gg-menu-right" style="color: #ffffff;"></i>
                 </button>
                 <button class="btn btn-toggle sidenav-toggler">
-                  <i class="gg-menu-left"></i>
+                  <i class="gg-menu-left" style="color: #ffffff;"></i>
                 </button>
               </div>
               <button class="topbar-toggler more">
-                <i class="gg-more-vertical-alt"></i>
+                <i class="gg-more-vertical-alt" style="color: #ffffff;"></i>
               </button>
             </div>
             <!-- End Logo Header -->
