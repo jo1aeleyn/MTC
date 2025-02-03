@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use App\Models\Employee;
+use App\Models\UserAccount;
+use App\Models\EducationalBG;
+use App\Models\Emergency;
+use App\Models\EmploymentHistory;
+use App\Models\FamilyBG;
+use App\Models\Training;
+use App\Models\Application;
+use App\Models\Company;
 
 
 class AuthController extends Controller
@@ -55,11 +64,37 @@ class AuthController extends Controller
      // Display the profile page
      public function showProfilePage()
      {
+         // Get the logged-in user
+         $user = Auth::user();
+     
+         // Fetch the employee record using the uuid from the user model
+         $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+     
+         // Fetch related data based on the employee's emp_num
+         $application = Application::where('emp_num', $employee->emp_num)->first();
+         $education = EducationalBG::where('emp_num', $employee->emp_num)->get();
+         $employment = EmploymentHistory::where('emp_num', $employee->emp_num)->get();
+         $family = FamilyBG::where('emp_num', $employee->emp_num)->get();
+         $training = Training::where('emp_num', $employee->emp_num)->get();
+         $emergencyContacts = Emergency::where('emp_num', $employee->emp_num)->get();
+     
+         // Attach additional data to the employee
+         $employee->application = $application;
+         $employee->education = $education;
+         $employee->employment = $employment;
+         $employee->family = $family;
+         $employee->training = $training;
+         $employee->emergencyContacts = $emergencyContacts;
+     
+         // Return the view with employee data
          return view('auth.ProfilePage', [
-             'user' => Auth::user()
+             'user' => $user,
+             'employee' => $employee,
          ]);
-
      }
+     
+
+     
 
      // Update profile details (username, password, and profile picture)
      public function updateProfile(Request $request)
