@@ -1,22 +1,318 @@
 #password, #password_confirmation {
-    padding-right: 40px; 
+    padding-right: 40px;
 }
 
 #togglePassword, #toggleConfirmPassword {
-    font-size: 1.2rem; 
-    color: #aaa; 
+    font-size: 1.2rem;
+    color: #aaa;
 }
 
-#password:not([type='password']) + #togglePassword, 
+.cover-photo {
+    background: url(https://t4.ftcdn.net/jpg/02/81/89/73/360_F_281897358_3rj9ZBSZHo5s0L1ug7uuIHadSxh9Cc75.jpg);
+    background-size: cover;
+    background-position: center;
+    min-height: 250px;
+    width: 100%;
+}
+
+#password:not([type='password']) + #togglePassword,
 #password_confirmation:not([type='password']) + #toggleConfirmPassword {
-    color: #007bff; 
+    color: #007bff;
 }
 
 #togglePassword:hover, #toggleConfirmPassword:hover {
-    color: #333; 
+    color: #333;
 }
 
 #password:focus, #password_confirmation:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.header-profile > a i {
+    font-weight: 700;
+}
+
+.header-right .header-profile .dropdown-menu {
+    padding: 15px 0;
+    min-width: 12.5rem;
+}
+
+.header-right .header-profile .dropdown-menu a:hover, 
+.header-right .header-profile .dropdown-menu a:focus, 
+.header-right .header-profile .dropdown-menu a.active {
+    color: #593bdb;
+    background: transparent;
+}
+
+.header-right .header-profile img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+}
+
+.header-right .header-profile .dropdown-toggle i {
+    font-size: 1.25rem;
+}
+
+@media only screen and (max-width: 575px) {
+    .header-right .header-profile .dropdown-toggle span {
+        display: none;
+    }
+}
+
+.header-right .header-profile .profile_title {
+    background: #593bdb;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.header-right .header-profile .profile_title h5 {
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.header-right .header-profile .dropdown-item {
+    padding: 5px 24px;
+}
+
+/* For smaller screens, adjust the card's width */
+@media (max-width: 768px) {
+    .card {
+        width: 90%; /* On medium screens, set width to 90% of the container */
+        max-width: none; /* Remove max-width limit for small screens */
+    }
+}
+
+/* For even smaller screens, adjust further */
+@media (max-width: 576px) {
+    .card {
+        width: 100%; /* On mobile, set width to 100% */
+    }
+}
+
+.photo-content .profile-photo {
+    bottom: 380px;
+    left: 90px;
+    max-width: 150px;
+    position: absolute;
+}
+
+.profile-info {
+    padding: 30px 20px;
+    background: #F7FAFC;
+}
+
+.profile-info h4 {
+    color: #464a53 !important;
+}
+
+.profile-info h4.text-primary {
+    color: #593bdb !important;
+}
+
+.profile-info p {
+    color: #828690;
+}
+
+.profile-info .prf-col {
+    min-width: 250px;
+    padding: 10px 50px 0;
+}
+
+.profile-interest .row {
+    margin: 0 -.70px;
+}
+
+.profile-interest .row .int-col {
+    padding: 0 .70px;
+}
+
+.profile-interest .row .int-col .interest-cat {
+    margin-bottom: 1.40px;
+    position: relative;
+    display: block;
+}
+
+.profile-interest .row .int-col .interest-cat:after {
+    background: #000;
+    bottom: 0;
+    content: "";
+    left: 0;
+    opacity: 0.5;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 0;
+}
+
+.profile-interest .row .int-col .interest-cat p {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    left: 0;
+    margin: 0;
+    z-index: 1;
+    color: white;
+    font-size: 1.20px;
+}
+
+.profile-tab .nav-item .nav-link {
+    font-size: auto;
+    padding: 10px 0 .50px;
+    margin-right: 30px;
+    transition: all 0.5s ease-in-out;
+    border: none;
+    border-bottom: .20px solid transparent;
+    color: #828690;
+}
+
+.profile-tab .nav-item .nav-link:hover, 
+.profile-tab .nav-item .nav-link.active {
+    border: 0;
+    background: transparent;
+    background: transparent;
+    border-bottom: 0.2px solid #593bdb;
+    color: #464a53;
+}
+
+.post-input {
+    margin-bottom: 30px;
+}
+
+.post-input .form-control {
+    height: 75px;
+    font-weight: 400;
+    margin: 15px 0;
+}
+
+.post-input a {
+    display: inline-block;
+    font-size: 22px;
+}
+
+.post-input a i {
+    display: block;
+    margin-right: 15px;
+    padding: 7px 20px;
+    border-radius: .50px;
+    border: 1px solid #eaeaea;
+    color: #828690;
+}
+
+.post-input .btn {
+    padding: 7px 30px;
+    font-size: 14px;
+    margin-top: -10px;
+}
+
+.profile-uoloaded-post img {
+    margin-bottom: 20px;
+}
+
+.profile-uoloaded-post a h4 {
+    margin-bottom: 10px;
+    color: #464a53;
+}
+
+.nav-tabs {
+    text-align: center;
+    margin: auto;
+}
+
+/* Responsive Styles */
+
+/* Adjustments for smaller screens */
+@media (max-width: 1024px) {
+    .profile-head {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-head .photo-content {
+        width: 100%;
+        text-align: center;
+    }
+
+    .profile-head .profile-info .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-head .profile-info .prf-col {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .photo-content .profile-photo {
+        position: relative;
+        bottom: 80px;
+        left: auto;
+        max-width: 120px;
+        margin: 0 auto;
+    }
+
+    .profile-info h4 {
+        font-size: 1.2rem;
+    }
+
+
+    .profile-info p {
+        font-size: 1rem;
+    }
+
+    /* Adjust navigation tabs for smaller screens */
+    .profile-tab .nav-tabs {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .profile-tab .nav-tabs .nav-item {
+        margin: 0;
+    }
+
+    .profile-tab .nav-tabs .nav-link {
+        padding: 10px 15px;
+    }
+
+    .profile-tab .nav-tabs .nav-item .nav-link.active {
+        border-bottom: 0.2px solid #593bdb;
+    }
+}
+
+/* Further adjustments for small mobile screens */
+@media (max-width: 576px) {
+    .profile-head {
+        margin-bottom: 20px;
+    }
+
+    .profile-head .profile-info {
+        padding: 15px;
+    }
+
+    .profile-head .profile-info h4 {
+        font-size: 1rem;
+    }
+
+    .profile-head .profile-info p {
+        font-size: 0.9rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .profile-info .prf-col {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .profile-photo {
+        max-width: 120px;
+    }
 }
