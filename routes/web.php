@@ -37,8 +37,10 @@ Route::prefix('users')->middleware('auth')->group(function() {
     Route::get('/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/', [UserController::class, 'store'])->name('users.store');
     Route::get('/{uuid}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/{uuid}', [UserController::class, 'update'])->name('users.update');
+    Route::put('/users/{uuid}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{uuid}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::post('/users/{uuid}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
+
 });
 
 // Forgot Password
