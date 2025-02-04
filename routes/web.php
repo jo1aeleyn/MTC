@@ -18,11 +18,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/employee/{uuid}', [EmployeeController::class, 'show'])->name('employee.show');
     Route::patch('/employees/{uuid}/archive', [EmployeeController::class, 'archive'])->name('employee.archive');
 });
+<<<<<<< HEAD
 
 Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
 Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
 
 
+=======
+Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
+ Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+>>>>>>> bd3ccdcbd8503da738c680d5059d371573ac114d
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');

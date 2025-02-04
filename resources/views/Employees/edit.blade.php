@@ -75,21 +75,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="employment_status" class="form-label">Employment Status</label>
-                        <select
-                            class="form-control"
-                            id="employment_status"
-                            name="employment_status"
-                            required
-                            style="background-color: #E2E2E2;">
-                            <option value="Probationary" {{old('EmploymentStatus', $application->EmploymentStatus == 'Probationary') ? 'selected' : '' }}>Probationary</option>
-                            <option value="Regular" {{ old('EmploymentStatus', $application->EmploymentStatus == 'Regular') ? 'selected' : '' }}>Regular</option>
-                            <option value="Contractual" {{ old('EmploymentStatus', $application->EmploymentStatus == 'Contractual') ? 'selected' : '' }}>Contractual</option>
-                            <option value="Temporary" {{ old('EmploymentStatus', $application->EmploymentStatus == 'Temporary') ? 'selected' : '' }}>Temporary</option>
+                <div class="col-md-6 mb-3">
+    <label for="employment_status" class="form-label">Employment Status</label>
+    <select
+        class="form-control"
+        id="employment_status"
+        name="employment_status"
+        required
+        style="background-color: #E2E2E2;">
+        <option value="Probationary" {{ old('employment_status', $application->EmploymentStatus) == 'Probationary' ? 'selected' : '' }}>Probationary</option>
+        <option value="Regular" {{ old('employment_status', $application->EmploymentStatus) == 'Regular' ? 'selected' : '' }}>Regular</option>
+        <option value="Contractual" {{ old('employment_status', $application->EmploymentStatus) == 'Contractual' ? 'selected' : '' }}>Contractual</option>
+        <option value="Temporary" {{ old('employment_status', $application->EmploymentStatus) == 'Temporary' ? 'selected' : '' }}>Temporary</option>
+    </select>
+</div>
 
-                        </select>
-                    </div>
                 </div>
 
 
@@ -284,35 +284,38 @@
 <div class="row">
 
 <div class="col-md-3 mb-3">
-        <label for="Religion" class="form-label">Religion</label>
-        <select class="form-control" id="Religion" name="Religion">
-            <option value="" selected disabled>Select Religion</option>
-            <option value="Catholic" {{ old('Religion') == 'Catholic' ? 'selected' : '' }}>Catholic</option>
-            <option value="Christianity" {{ old('Religion') == 'Christianity' ? 'selected' : '' }}>Christianity</option>
-            <option value="Iglesia ni Cristo" {{ old('Religion') == 'Iglesia ni Cristo' ? 'selected' : '' }}>Iglesia ni Cristo</option>
-            <option value="Islam" {{ old('Religion') == 'Islam' ? 'selected' : '' }}>Islam</option>
-            <option value="Hinduism" {{ old('Religion') == 'Hinduism' ? 'selected' : '' }}>Hinduism</option>
-            <option value="Buddhism" {{ old('Religion') == 'Buddhism' ? 'selected' : '' }}>Buddhism</option>
-            <option value="Judaism" {{ old('Religion') == 'Judaism' ? 'selected' : '' }}>Judaism</option>
-            <option value="Folk Religion" {{ old('Religion') == 'Folk Religion' ? 'selected' : '' }}>Folk Religion</option>
-            <option value="Other" {{ old('Religion') == 'Other' ? 'selected' : '' }}>Other</option>
-        </select>
-    </div>
+    <label for="Religion" class="form-label">Religion</label>
+    <select class="form-control" id="Religion" name="Religion" required>
+        <option value="" disabled>Select Religion</option>
+        <option value="Catholic" {{ old('Religion', $employee->religion) == 'Catholic' ? 'selected' : '' }}>Catholic</option>
+        <option value="Christianity" {{ old('Religion', $employee->religion) == 'Christianity' ? 'selected' : '' }}>Christianity</option>
+        <option value="Iglesia ni Cristo" {{ old('Religion', $employee->religion) == 'Iglesia ni Cristo' ? 'selected' : '' }}>Iglesia ni Cristo</option>
+        <option value="Islam" {{ old('Religion', $employee->religion) == 'Islam' ? 'selected' : '' }}>Islam</option>
+        <option value="Hinduism" {{ old('Religion', $employee->religion) == 'Hinduism' ? 'selected' : '' }}>Hinduism</option>
+        <option value="Buddhism" {{ old('Religion', $employee->religion) == 'Buddhism' ? 'selected' : '' }}>Buddhism</option>
+        <option value="Judaism" {{ old('Religion', $employee->religion) == 'Judaism' ? 'selected' : '' }}>Judaism</option>
+        <option value="Folk Religion" {{ old('Religion', $employee->religion) == 'Folk Religion' ? 'selected' : '' }}>Folk Religion</option>
+        <option value="Other" {{ old('Religion', $employee->religion) == 'Other' ? 'selected' : '' }}>Other</option>
+    </select>
+</div>
+
 
     <div class="col-md-3 mb-3">
-        <label for="BloodType" class="form-label">Blood Type</label>
-        <select class="form-control" id="BloodType" name="BloodType">
-            <option value="" {{ old('BloodType', $employee->BloodType) === null ? 'selected' : '' }} disabled>Select Blood Type</option>
-            <option value="A+" {{ old('BloodType', $employee->BloodType) === 'A+' ? 'selected' : '' }}>A+</option>
-            <option value="A-" {{ old('BloodType', $employee->BloodType) === 'A-' ? 'selected' : '' }}>A-</option>
-            <option value="B+" {{ old('BloodType', $employee->BloodType) === 'B+' ? 'selected' : '' }}>B+</option>
-            <option value="B-" {{ old('BloodType', $employee->BloodType) === 'B-' ? 'selected' : '' }}>B-</option>
-            <option value="AB+" {{ old('BloodType', $employee->BloodType) === 'AB+' ? 'selected' : '' }}>AB+</option>
-            <option value="AB-" {{ old('BloodType', $employee->BloodType) === 'AB-' ? 'selected' : '' }}>AB-</option>
-            <option value="O+" {{ old('BloodType', $employee->BloodType) === 'O+' ? 'selected' : '' }}>O+</option>
-            <option value="O-" {{ old('BloodType', $employee->BloodType) === 'O-' ? 'selected' : '' }}>O-</option>
-        </select>
-    </div>
+    <label for="BloodType" class="form-label">Blood Type</label>
+    <select class="form-control" id="BloodType" name="BloodType" required>
+        <option value="">Select</option>
+        <option value="A+" {{ old('BloodType', $employee->blood_type) === 'A+' ? 'selected' : '' }}>A+</option>
+        <option value="A-" {{ old('BloodType', $employee->blood_type) === 'A-' ? 'selected' : '' }}>A-</option>
+        <option value="B+" {{ old('BloodType', $employee->blood_type) === 'B+' ? 'selected' : '' }}>B+</option>
+        <option value="B-" {{ old('BloodType', $employee->blood_type) === 'B-' ? 'selected' : '' }}>B-</option>
+        <option value="AB+" {{ old('BloodType', $employee->blood_type) === 'AB+' ? 'selected' : '' }}>AB+</option>
+        <option value="AB-" {{ old('BloodType', $employee->blood_type) === 'AB-' ? 'selected' : '' }}>AB-</option>
+        <option value="O+" {{ old('BloodType', $employee->blood_type) === 'O+' ? 'selected' : '' }}>O+</option>
+        <option value="O-" {{ old('BloodType', $employee->blood_type) === 'O-' ? 'selected' : '' }}>O-</option>
+    </select>
+</div>
+
+
     <div class="col-md-3 mb-3">
         <label for="contact_num" class="form-label">Contact Number</label>
         <input
@@ -423,7 +426,7 @@
                 </div>
 
                 <div class="col-md-12 mb-3" style="text-align: center;">
-                            <button type="button" id="addFamilyBackground" class="btn btn-primary" style="background-color: #326c79; margin: auto;">Add More</button>
+                            <button type="button" id="addFamilyBackground" class="btn btn-secondary mb-3">Add More</button>
                 </div>
             </div>
 
@@ -536,7 +539,7 @@
                 @endforelse
 
                 <div class="col-md-12 mb-3" style="text-align: center;">
-                     <button type="button" id="addEmergencyContact" class="btn btn-primary" style="background-color: #326c79">Add More</button>
+                     <button type="button" id="addEmergencyContact" class="btn btn-secondary mb-3">Add More</button>
                 </div>
 
             </div>
@@ -586,30 +589,30 @@
        >
             </div>
             <div class="col-md-6 mb-3">
-                <label for="tax_status" class="form-label">Tax Status</label>
-                <select
-                class="form-control"
-                id="tax_status"
-                name="tax_status"
+            <label for="tax_status" class="form-label">Tax Status</label>
+<select
+    class="form-control"
+    id="tax_status"
+    name="tax_status"
+    required>
+    <option value="" selected disabled>Select Tax Status</option>
+    <option value="Single" {{ old('tax_status', $employee->tax_status) == 'Single' ? 'selected' : '' }}>Single</option>
+    <option value="HF1" {{ old('tax_status', $employee->tax_status) == 'HF1' ? 'selected' : '' }}>HF1</option>
+    <option value="HF2" {{ old('tax_status', $employee->tax_status) == 'HF2' ? 'selected' : '' }}>HF2</option>
+    <option value="Married without children (MOSE)" {{ old('tax_status', $employee->tax_status) == 'Married without children (MOSE)' ? 'selected' : '' }}>
+        Married without children (MOSE)
+    </option>
+    <option value="M1OSE" {{ old('tax_status', $employee->tax_status) == 'M1OSE' ? 'selected' : '' }}>M1OSE</option>
+    <option value="M2OSE" {{ old('tax_status', $employee->tax_status) == 'M2OSE' ? 'selected' : '' }}>M2OSE</option>
+    <option value="M3OSE" {{ old('tax_status', $employee->tax_status) == 'M3OSE' ? 'selected' : '' }}>M3OSE</option>
+    <option value="M4OSE" {{ old('tax_status', $employee->tax_status) == 'M4OSE' ? 'selected' : '' }}>M4OSE</option>
+    <option value="Employed Husband/Wife Unemployed or Employed Wife/Husband Unemployed(EHWE)"
+        {{ old('tax_status', $employee->tax_status) == 'Employed Husband/Wife Unemployed or Employed Wife/Husband Unemployed(EHWE)' ? 'selected' : '' }}>
+        Employed Husband/Wife Unemployed or Employed Wife/Husband Unemployed(EHWE)
+    </option>
+    <option value="Other" {{ old('tax_status', $employee->tax_status) == 'Other' ? 'selected' : '' }}>Other</option>
+</select>
 
-                required>
-                <option value="" selected disabled>Select Tax Status</option>
-                <option value="Single" {{ old('tax_status') == 'Single' ? 'selected' : '' }}>Single</option>
-                <option value="HF1" {{ old('tax_status') == 'HF1' ? 'selected' : '' }}>HF1</option>
-                <option value="HF2" {{ old('tax_status') == 'HF2' ? 'selected' : '' }}>HF2</option>
-                <option value="Married without children (MOSE)" {{ old('tax_status') == 'Married without children (MOSE)' ? 'selected' : '' }}>
-                    Married without children (MOSE)
-                </option>
-                <option value="M1OSE" {{ old('tax_status') == 'M1OSE' ? 'selected' : '' }}>M1OSE</option>
-                <option value="M2OSE" {{ old('tax_status') == 'M2OSE' ? 'selected' : '' }}>M2OSE</option>
-                <option value="M3OSE" {{ old('tax_status') == 'M3OSE' ? 'selected' : '' }}>M3OSE</option>
-                <option value="M4OSE" {{ old('tax_status') == 'M4OSE' ? 'selected' : '' }}>M4OSE</option>
-                <option value="Employed Husband/Wife Unemployed or Employed Wife/Husband Unemployed(EHWE)"
-                {{ old('tax_status') == 'Employed Husband/Wife Unemployed or Employed Wife/Husband Unemployed(EHWE)' ? 'selected' : '' }}>
-                Employed Husband/Wife Unemployed or Employed Wife/Husband Unemployed(EHWE)
-            </option>
-            <option value="Other" {{ old('tax_status') == 'Other' ? 'selected' : '' }}>Other</option>
-        </select>
     </div>
 </div>
 
@@ -931,7 +934,7 @@
         </div>
     @endforeach
 </div>
-<button type="button" class="btn btn-secondary mb-3" onclick="addEducationField()" id="add-education-btn">Add More Education</button>
+<button type="button" class="btn btn-secondary mb-3" onclick="addEducationField()" id="add-education-btn">Add More</button>
 
 
 <h3>Training</h3>
@@ -985,7 +988,7 @@
         </div>
     @endforeach
 </div>
-<button type="button" class="btn btn-secondary mb-3" onclick="addTrainingField()" id="addTrainingBtn">Add More Training</button>
+<button type="button" class="btn btn-secondary mb-3" onclick="addTrainingField()" id="addTrainingBtn">Add Mores</button>
 <button style="float: right; background-color: #326c79;"type="submit" class="btn btn-primary">Save</button>
 
 

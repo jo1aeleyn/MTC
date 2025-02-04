@@ -661,6 +661,7 @@ if ($application) {
     }
 
     public function export(Request $request)
+<<<<<<< HEAD
 {
     $year = $request->input('year');
     Log::info('Export started for year: ' . $year);
@@ -772,4 +773,202 @@ if ($application) {
     fclose($output);
     Log::info('Employee export completed for year: ' . $year);
 }
+=======
+    {
+        // Retrieve the year filter
+        $year = $request->input('year');
+    
+        // Log the export attempt
+        Log::info('Export started for year: ' . $year);
+    
+        // Fetch the employee data
+        $employees = Employee::query();
+    
+        // Apply the year filter if provided
+        if ($year) {
+            $employees = $employees->whereYear('date_hired', $year);
+        }
+    
+        // Get the employee data
+        $employeeData = $employees->get(['emp_num', 'first_name', 'surname', 'contact_num', 'email', 'date_hired']);
+    
+        // Create a file name with the current date and time
+        $fileName = 'employees_' . now()->format('Y_m_d_H_i_s') . '.csv';
+    
+        // Open the output stream
+        $output = fopen('php://output', 'w');
+    
+        // Set the correct headers to force download
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+    
+        // Add the section title and columns in row 1 and 2 (only once)
+        fputcsv($output, ['Employee Details']);
+        fputcsv($output, [
+            'No', 'Employee Number', 'First Name', 'Last Name', 'Contact Number', 'Email', 'Date Hired'
+        ]);
+    
+        // Add the records for Employee details (start from row 3 and onwards)
+        foreach ($employeeData as $index => $employee) {
+            // Fetch related data based on the employee's emp_num
+            $application = Application::where('emp_num', $employee->emp_num)->first();
+            $education = EducationalBG::where('emp_num', $employee->emp_num)->get(); // Multiple education entries
+            $employmentHistory = EmploymentHistory::where('emp_num', $employee->emp_num)->get(); // Multiple employment history entries
+            $family = FamilyBG::where('emp_num', $employee->emp_num)->get(); // Multiple family entries
+            $training = Training::where('emp_num', $employee->emp_num)->get(); // Multiple training entries
+            $emergencyContacts = Emergency::where('emp_num', $employee->emp_num)->get(); // Multiple emergency contacts
+            $company = Company::where('emp_num', $employee->emp_num)->first(); // Single company record
+    
+            // Attach additional data to the employee
+            $employee->application = $application;
+            $employee->education = $education;
+            $employee->employmentHistory = $employmentHistory;
+            $employee->family = $family;
+            $employee->training = $training;
+            $employee->emergencyContacts = $emergencyContacts;
+            $employee->company = $company;
+    
+            // Employee Data Row
+            fputcsv($output, [
+                $index + 1, // Incremental number starting from 1
+                $employee->emp_num,
+                $employee->first_name,
+                $employee->surname,
+                $employee->contact_num,
+                $employee->email,
+                $employee->formatted_date_hired,
+            ]);
+    
+            // Add blank line between employee sections for clarity
+            fputcsv($output, []);
+    
+            // "Applications" Section
+            fputcsv($output, ['Applications']);
+            fputcsv($output, [
+                'No', 'Referred By', 'Date Applied', 'Date Hired', 'Position', 'Employment Status', 'Date of Regularization'
+            ]);
+            fputcsv($output, [
+                $index + 1, // Incremental number for application section
+                $application->referred_by ?? 'N/A',
+                $application->date_applied ?? 'N/A',
+                $application->date_hired ?? 'N/A',
+                $application->position ?? 'N/A',
+                $application->EmploymentStatus ?? 'N/A',
+                $application->DateOfRegularization ?? 'N/A',
+            ]);
+    
+            // Add blank line
+            fputcsv($output, []);
+    
+            // "Education" Section
+            fputcsv($output, ['Education']);
+            fputcsv($output, ['No', 'Degree', 'School', 'Year Graduated']);
+            foreach ($education as $edu) {
+                fputcsv($output, [
+                    $index + 1, // Incremental number for education section
+                    $edu->degree ?? 'N/A',
+                    $edu->school ?? 'N/A',
+                    $edu->year_attended_from . ' - ' . $edu->year_attended_to ?? 'N/A',
+                ]);
+            }
+    
+            // Add blank line
+            fputcsv($output, []);
+    
+            // "Employment History" Section
+            fputcsv($output, ['Employment History']);
+            fputcsv($output, [
+                'No', 'Position', 'Salary', 'Superior', 'Department', 'Address', 'Company', 'Telephone', 'Reason for Leaving'
+            ]);
+            foreach ($employmentHistory as $emp) {
+                fputcsv($output, [
+                    $index + 1, // Incremental number for employment history section
+                    $emp->position ?? 'N/A',
+                    $emp->salary ?? 'N/A',
+                    $emp->superior ?? 'N/A',
+                    $emp->department ?? 'N/A',
+                    $emp->address ?? 'N/A',
+                    $emp->company ?? 'N/A',
+                    $emp->telephone ?? 'N/A',
+                    $emp->reason_for_leaving ?? 'N/A',
+                ]);
+            }
+    
+            // Add blank line
+            fputcsv($output, []);
+    
+            // "Company" Section
+            fputcsv($output, ['Company']);
+            fputcsv($output, ['Access Card Release Date', 'Access Card Return Date', 'Company Email', 'Payroll Account', 'Cocolife HMO', 'Cocolife Release Date', 'Cocolife Return Date']);
+            fputcsv($output, [
+                $company->AccessCard_release ?? 'N/A',
+                $company->AccesCard_return ?? 'N/A',
+                $company->CompanyEmail ?? 'N/A',
+                $company->PayrollAccount ?? 'N/A',
+                $company->Cocolife_HMO ?? 'N/A',
+                $company->Cocolife_ReleaseDate ?? 'N/A',
+                $company->Cocolife_ReturnDate ?? 'N/A',
+            ]);
+    
+            // Add blank line
+            fputcsv($output, []);
+    
+            // "Family" Section
+            fputcsv($output, ['Family']);
+            fputcsv($output, ['No', 'Relationship', 'Name', 'Age']);
+            foreach ($family as $fam) {
+                fputcsv($output, [
+                    $index + 1, // Incremental number for family section
+                    $fam->relationship ?? 'N/A',
+                    $fam->name ?? 'N/A',
+                    $fam->age ?? 'N/A',
+                ]);
+            }
+    
+            // Add blank line
+            fputcsv($output, []);
+    
+            // "Training" Section
+            fputcsv($output, ['Training']);
+            fputcsv($output, ['No', 'Training Title', 'Inclusive Dates', 'Conducted By', 'Venue']);
+            foreach ($training as $train) {
+                fputcsv($output, [
+                    $index + 1, // Incremental number for training section
+                    $train->title ?? 'N/A',
+                    $train->inclusive_dates ?? 'N/A',
+                    $train->conducted_by ?? 'N/A',
+                    $train->venue ?? 'N/A',
+                ]);
+            }
+    
+            // Add blank line
+            fputcsv($output, []);
+    
+            // "Emergency Contacts" Section
+            fputcsv($output, ['Emergency Contacts']);
+            fputcsv($output, ['No', 'Contact Name', 'Relationship', 'Phone Number', 'Address']);
+            foreach ($emergencyContacts as $emergency) {
+                fputcsv($output, [
+                    $index + 1, // Incremental number for emergency contacts section
+                    $emergency->name ?? 'N/A',
+                    $emergency->relationship ?? 'N/A',
+                    $emergency->contact_num ?? 'N/A',
+                    $emergency->address ?? 'N/A',
+                ]);
+            }
+    
+            // Add blank line after each employee section for clarity
+            fputcsv($output, []);
+        }
+    
+        // Close the output stream
+        fclose($output);
+    
+        // Log the completion
+        Log::info('Employee export completed for year: ' . $year);
+    }
+    
+>>>>>>> bd3ccdcbd8503da738c680d5059d371573ac114d
 }
