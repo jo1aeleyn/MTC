@@ -359,8 +359,8 @@
                             style="background-color: #E2E2E2;" 
                             required>
                         </div>
-                        <div class="col-md-12" style="text-align: center;">
-                            <button type="button" id="addFamilyBackground" class="btn btn-secondary mb-3" margin: auto;">Add More</button>
+                        <div class="col-md-12" style="float:left;">
+                            <button type="button" id="addFamilyBackground" class="btn btn-secondary mb-3">Add More</button>
                         </div>
                     </div>
                 </div>
@@ -414,7 +414,7 @@
                         style="background-color: #E2E2E2;"
                         required>
                     </div>
-                    <div class="col-md-12 " style="text-align: center;">
+                    <div class="col-md-12 " style="float:left;">
                      <button type="button" id="addEmergencyContact"  class="btn btn-secondary mb-3">Add More</button>
                     </div>
                 </div>
@@ -686,19 +686,20 @@
     </div>
 </div>
 <button type="button" class="btn btn-secondary mb-3" onclick="addTrainingField()" id="addTrainingBtn">Add More</button>
-<button type="submit" class="btn btn-primary" style="float: right; background-color: #326c79;">Submit</button>
+
 
 <div style="display: flex; justify-content: center; align-items: center; padding-bottom: 50px;">
-    <button onclick="window.location.href='{{ url('employees') }}';" class="btn btn-primary" style="background-color: #326c79;">Back To Employee List</button>
+<button type="submit" class="btn" style="float: right; background-color: #FFDE59;">Submit</button>
 </div>
 
 </form>
 </div>
 </div>
 </div>
-</div>
-</div>
+<button onclick="window.location.href='{{ url('employees') }}';" class="btn" style="background-color: #289DD2">Back To Employee List</button>
 
+</div>
+</div>
 </div>
 
 
