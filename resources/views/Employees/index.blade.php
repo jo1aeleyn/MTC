@@ -26,6 +26,10 @@
             <!-- Add New Employee Button -->
             <a href="{{ route('employee.create') }}" class="btn btn-success">Add New Employee</a>
             
+            <!-- Export Button -->
+            <a href="{{ route('employee.export', ['year' => request('year')]) }}" class="btn btn-primary">Export Employees</a>
+
+            
             <!-- Filter Section -->
             <div class="dropdown">
                 <button id="filterIcon" class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown">
@@ -36,7 +40,7 @@
                         <option value="">Select Year</option>
                         <option value="">Clear Filter</option>
                         @foreach(range(2000, date('Y')) as $year)
-                            <option value="{{ $year }}">{{ $year }}</option>
+                            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
                         @endforeach
                     </select>
                     <button id="removeFilterBtn" class="btn btn-secondary btn-sm mt-2">Clear Filter</button>
@@ -96,7 +100,5 @@
 </div>
 </div>
 </div>
-
-
 
 @include('partials.footer')

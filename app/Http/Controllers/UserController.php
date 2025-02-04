@@ -10,7 +10,10 @@ use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c99fbbec6d41079d2b2e255cd93d6d7d69764b54
 
 class UserController extends Controller
 {
