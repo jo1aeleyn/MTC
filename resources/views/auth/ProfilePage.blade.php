@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="{{ asset('assets/css/profilepage.css') }}">
 
 <div class="container">
+<div class="page-inner">
+
     <div class="row justify-content-center">
         <div class="col-lg-12">
             <div class="profile">
@@ -17,17 +19,17 @@
                     </div>
                     <div class="profile-info">
                         <div class="row justify-content-center">
-                            <div class="col-xl-8 col-lg-10 col-md-12">
+                            <div class="col-12 col-md-10 col-lg-8">
                                 <div class="row">
                                     <!-- Name Section -->
-                                    <div class="col-xl-4 col-sm-4 col-12 border-right-1 prf-col">
+                                    <div class="col-12 col-sm-6 col-md-4 border-right-1 prf-col">
                                         <div class="profile-name">
                                             <h4 class="text-primary">{{ $employee->first_name }} {{ $employee->surname }}</h4>
                                             <p>{{ $employee->application ? $employee->application->position : 'N/A' }}</p>
                                         </div>
                                     </div>
                                     <!-- Email Section -->
-                                    <div class="col-xl-4 col-sm-4 col-12 border-right-1 prf-col">
+                                    <div class="col-12 col-sm-6 col-md-4 border-right-1 prf-col">
                                         <div class="profile-email">
                                             <h4 class="text-muted">{{ $employee->email }}</h4>
                                             <p>Email</p>
@@ -37,6 +39,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -48,18 +51,20 @@
             <div class="profile-tab">
                 <div class="custom-tab-1">
                     <!-- Tab Navigation -->
-                    <ul class="nav nav-tabs justify-content-center">
+                    <ul class="nav nav-tabs justify-content-center flex-column flex-sm-row">
                         <li class="nav-item">
-                            <a href="#my-posts" data-bs-toggle="tab" class="nav-link active show">About Me</a>
+                            <a href="#edit-profile" data-bs-toggle="tab" class="nav-link active show">Edit Profile</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="#my-posts" data-bs-toggle="tab" class="nav-link ">About Me</a>
+                        </li>
+
                         <li class="nav-item">
                             <a href="#about-me" data-bs-toggle="tab" class="nav-link">Educational Background</a>
                         </li>
+
                         <li class="nav-item">
                             <a href="#profile-settings" data-bs-toggle="tab" class="nav-link">Training History</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#edit-profile" data-bs-toggle="tab" class="nav-link">Edit Profile</a>
                         </li>
                         <li class="nav-item">
                             <a href="#employment-history" data-bs-toggle="tab" class="nav-link">Employment History</a>
@@ -75,7 +80,7 @@
                     <!-- Tab Content -->
                     <div class="tab-content">
                         <!-- About Me Tab Content -->
-                        <div id="my-posts" class="tab-pane fade active show">
+                        <div id="my-posts" class="tab-pane fade">
                             <div class="card-body">
                                 <div class="mb-3">
                                     <p><strong><i class="fas fa-phone-alt"></i> Contact Number:</strong> {{ $employee->contact_num }}</p>
@@ -123,7 +128,7 @@
                         </div>
 
                         <!-- Edit Profile Tab Content -->
-                        <div id="edit-profile" class="tab-pane fade">
+                        <div id="edit-profile" class="tab-pane fade  active show">
                             <div class="card-body">
                                 <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">     
                                     @csrf
@@ -214,10 +219,9 @@
             </div>
         </div>
     </div>
-
+ </div>
 </div>
 
-<!-- Bootstrap JS and jQuery -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 @include('partials.footer')

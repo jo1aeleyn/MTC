@@ -28,12 +28,12 @@
 
 
         <div class="mb-1 col-6">
-        <div class="mt-5 d-flex justify-content-center">
+        <div class="mt-2  d-flex justify-content-center">
         <!-- Placeholder Image -->
         <img id="profile_preview" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwbYMnoBKydOk2tezl6c1A1g1nQgC_8JXckA&s" alt="Profile Preview" class="img-thumbnail mt-4" style="max-width: 150px;">
             </div>
             <label for="profile_picture" class="form-label">Profile Picture</label>
-            <div class="custom-file">
+            <div class="custom-file mb-3">
                 <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*" onchange="previewImage(event)">
             </div>
            
@@ -49,14 +49,6 @@
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <div class="mb-3">
-                <label for="password_confirmation" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
             </div>
             <div class="mb-3">
                 <label for="user_role" class="form-label">Role</label>

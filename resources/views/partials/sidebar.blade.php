@@ -4,7 +4,7 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" style="background-color:#326C79">
-            <a href="index.html" class="logo">
+            <a href="{{ route('dashboard') }}" class="logo">
             <img
     src="{{ asset('assets/img/mtc/mtc logo.png') }}"
     alt="navbar brand"
@@ -74,7 +74,7 @@
                     </li>
                     <li>
                       <a href="{{ route('employee.create') }}">
-                        <span class="sub-item" style="color: #ffffff;">Register Employee</span>
+                        <span class="sub-item" style="color: #ffffff;">Register New Employee</span>
                       </a>
                     </li>
                   </ul>
@@ -98,7 +98,7 @@
                     </li>
                     <li>
                       <a href="{{ route('users.create') }}">
-                        <span class="sub-item" style="color: #ffffff;">Regiser New User</span>
+                        <span class="sub-item" style="color: #ffffff;">Register New User</span>
                       </a>
                     </li>
                   </ul>

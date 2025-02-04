@@ -316,3 +316,58 @@
         max-width: 120px;
     }
 }
+
+/* For larger screens (desktops and tablets), adjust the profile photo size */
+@media (min-width: 1024px) {
+    .photo-content .profile-photo {
+        width: 200px; /* Adjust the maximum width */
+        position: absolute; /* Keeps it fixed in the photo content */
+        top: 120px; /* Adjust the top position */
+        left: 50%; /* Center the photo horizontally */
+        transform: translateX(-50%); /* Center it exactly */
+    }
+}
+
+/* For very large screens (large desktop monitors), you may want to tweak even further */
+@media (min-width: 1440px) {
+    .photo-content .profile-photo {
+        max-width: 250px; /* Slightly larger profile photo */
+    }
+}
+
+
+/* Adjust for small screens */
+@media (max-width: 576px) {
+    .profile-info .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-info .col-12 {
+        padding: 10px;
+    }
+
+    .profile-info .profile-name, .profile-info .profile-email {
+        text-align: center; /* Center the text for better alignment on small screens */
+    }
+
+    .profile-info .text-primary, .profile-info .text-muted {
+        font-size: 1.1rem; /* Slightly increase font size for small screens */
+    }
+}
+
+/* Medium screens (tablets) adjustments */
+@media (max-width: 768px) {
+    .profile-info .col-md-4 {
+        margin-bottom: 15px;
+    }
+}
+
+/* Large screens (Desktops and above) */
+@media (min-width: 1024px) {
+    .profile-info .col-md-4 {
+        text-align: left; /* Ensure left alignment for larger screens */
+    }
+}
+
+
