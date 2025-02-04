@@ -17,7 +17,11 @@ Route::get('/', [AuthController::class, 'showLoginForm']);
     Route::patch('/employees/{uuid}', [EmployeeController::class, 'update'])->name('employee.update');
     Route::get('/employee/{uuid}', [EmployeeController::class, 'show'])->name('employee.show');
     Route::patch('/employees/{uuid}/archive', [EmployeeController::class, 'archive'])->name('employee.archive');
+   
  });
+ Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
+ Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+ 
 
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 
