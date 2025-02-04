@@ -5,7 +5,7 @@
 #famphone, #emergencyname, #emergencyrel, #emergencyaddress, #emergencynumber,
 #tin_num, #sss_num, #pag_ibig_num, #philhealth_num, #tax_status, #educlevel, 
 #schoolname, #schooldeg, #schfrom, #schto, #honorsrec, #title, #inclusive_dates, #conducted_by, 
-#venue {
+#venue, #username, #password, #password_confirmation, #user_role, #profile_picture {
     background-color: #E2E2E2;
     padding: 10px;
   }

@@ -24,6 +24,7 @@ class UserController extends Controller
     {
         $request->validate([
             'username' => 'required|unique:user_accounts_tbl,username',
+            'email' => 'required|unique:user_accounts_tbl,email',
             'password' => 'required|string|min:8|confirmed|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
             'user_role' => 'required',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
@@ -40,6 +41,7 @@ class UserController extends Controller
 
         UserAccount::create([
             'uuid' => \Str::uuid(),
+            'email' => $request->email,
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'user_role' => $request->user_role,
