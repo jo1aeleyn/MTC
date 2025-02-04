@@ -20,10 +20,18 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
+<<<<<<< HEAD
  Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
 
 Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
  Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+=======
+Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+
+
+Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
+ Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+>>>>>>> 60f1c613cf7467d80c33288054b1a5cac09d84d5
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
