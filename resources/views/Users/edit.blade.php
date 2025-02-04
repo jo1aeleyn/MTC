@@ -5,8 +5,7 @@
 <div class="container">
 <div class="page-inner">
 <div class="container mt-5">
- 
-    <h2 class="mb-4 text-center">Edit Profile</h2>
+    <h2 class="mb-4 text-center">Edit User Account </h2>
 
     <!-- Success Message -->
     @if(session('success'))
@@ -28,77 +27,87 @@
         </div>
     @endif
 
-    <div class="row d-flex align-items-start mb-4">
-        <!-- Profile Picture Section -->
-        <div class="col-lg-4">
-            <div class="card h-100 shadow-lg border-0 ">
-                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
-                    <div class="card-body text-center ">
-                        <!-- Profile Picture -->
-                        <div class="mb-3">
-                            <img src="{{ asset('/Profile_pictures/' . $user->profile_picture) }}"
-                                 alt="{{$user->profile_picture}}"
-                                 class="img-fluid rounded-circle mb-3"
-                                 style="max-width: 21%; height: 50%;">
-                        </div>
-
-                        <!-- File Input for Profile Picture -->
-                        <div class="mb-3">
-                            <label for="profile_picture" class="form-label">Change Profile Picture</label>
-                            <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Form Section -->
-        <div class="col-lg-8 mt-3">
-            <div class="card h-100 shadow-lg border-0">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <div class="card shadow-lg border-0">
                 <div class="card-body">
-                    <form action="{{ route('profile.update') }}" method="POST">
+                    <form action="{{ route('users.update', $user->uuid) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
-                        <!-- Username Field -->
-                        <div class="row mb-4">
-                            <label for="username" class="col-sm-3 col-form-label">Username</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="username" name="username" value="{{ old('username', $user->username) }}" required>
+                        <!-- Profile Picture Section -->
+                        <div class="text-center mb-4">
+                            <img src="{{ asset('/Profile_pictures/' . $user->profile_picture) }}" 
+                                 alt="{{ $user->profile_picture }}" 
+                                 class="img-fluid rounded-circle" 
+                                 style="max-width: 120px; height: auto;">
+                            <div class="mt-3">
+                                <label for="profile_picture" class="form-label">Change Profile Picture</label>
+                                <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
                             </div>
                         </div>
 
-                        <!-- Password Field -->
-                        <div class="row mb-4">
-                            <label for="password" class="col-sm-3 col-form-label">Password</label>
-                            <div class="col-sm-9 position-relative">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-                                <i class="bi bi-eye-slash position-absolute" id="togglePassword" style="top: 50%; right: 20px; transform: translateY(-50%); cursor: pointer;"></i>
-                            </div>
-                        </div>  
+                        <!-- Username Field -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" value="{{ old('username', $user->username) }}" required>
+                        </div>
 
-                        <!-- Confirm Password Field -->
-                        <div class="row mb-4">
-                            <label for="password_confirmation" class="col-sm-3 col-form-label">Confirm Password</label>
-                            <div class="col-sm-9 position-relative">
-                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password">
-                                <i class="bi bi-eye-slash position-absolute" id="toggleConfirmPassword" style="top: 50%; right: 20px; transform: translateY(-50%); cursor: pointer;"></i>
+                        <!-- Password Fields -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword"><i class="bi bi-eye-slash"></i></button>
                             </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password">
+                                <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword"><i class="bi bi-eye-slash"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- User Role Dropdown -->
+                        <div class="mb-3">
+                            <label for="user_role" class="form-label">User Role</label>
+                            <select class="form-select" id="user_role" name="user_role" required>
+                                <option value="admin" {{ old('user_role', $user->user_role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="user" {{ old('user_role', $user->user_role) == 'user' ? 'selected' : '' }}>User</option>
+                            </select>
                         </div>
 
                         <!-- Submit Button -->
-                        <div class="d-flex justify-content-end mt-3">
+                        <div class="d-grid">
                             <button type="submit" class="btn btn-primary" style='background-color:#326C79'>Update Profile</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+        </div>
+        <div class="d-flex justify-content-end mt-3">
+    <form action="{{ route('users.resetPassword', $user->uuid) }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-warning">Reset Password</button>
+    </form>
+</div>
+        </div>
     </div>
-</div>
 
-
-</div>
-</div>
 
 @include('partials.footer')
+
+<script>
+    document.getElementById("togglePassword").addEventListener("click", function() {
+        let passwordField = document.getElementById("password");
+        passwordField.type = passwordField.type === "password" ? "text" : "password";
+    });
+
+    document.getElementById("toggleConfirmPassword").addEventListener("click", function() {
+        let passwordField = document.getElementById("password_confirmation");
+        passwordField.type = passwordField.type === "password" ? "text" : "password";
+    });
+</script>
