@@ -22,8 +22,11 @@ Route::middleware('auth')->group(function () {
 Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
  Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
 
+<<<<<<< HEAD
 Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
  Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+=======
+>>>>>>> 71363dff541219fa2cbcda00627588730dbb371f
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
