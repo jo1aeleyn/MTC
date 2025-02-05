@@ -85,13 +85,27 @@
                                         <td>{{ $employee->email }}</td>
                                         <td>{{ $employee->formatted_date_hired }}</td>
                                         <td>
-                                            <a href="{{ route('employee.edit', $employee->uuid) }}" class="btn btn-primary btn-sm">Edit</a>
-                                            <a href="{{ route('employee.show', $employee->uuid) }}" class="btn btn-info btn-sm">View</a>
-                                            <button type="button" class="btn btn-warning btn-sm archive-btn" data-id="{{ $employee->uuid }}">Archive</button>
-                                            <form id="archive-form-{{ $employee->uuid }}" action="{{ route('employee.archive', $employee->uuid) }}" method="POST" style="display:none;">
-                                                @csrf
-                                                @method('PATCH')
-                                            </form>
+                                            <!-- Dropdown for Actions -->
+                                            <div class="dropdown" style="text-align:center;">
+                                                <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $employee->uuid }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $employee->uuid }}">
+                                                    <li>
+                                                        <a class="dropdown-item" href="{{ route('employee.edit', $employee->uuid) }}">Edit</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="{{ route('employee.show', $employee->uuid) }}">View</a>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('employee.archive', $employee->uuid) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this employee?');">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <button class="dropdown-item" type="submit">Archive</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -114,3 +128,6 @@
 </div>
 
 @include('partials.footer')
+
+
+
