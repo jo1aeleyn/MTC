@@ -4,11 +4,14 @@
 
 <div class="container">
 <div class="page-inner">
-<div class="container mt-5 mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="mb-0">User Accounts</h1>
-            <a href="{{ route('users.create') }}" class="btn btn-primary">Create User</a>
-        </div>
+<div class="container mb-5">
+<nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+            <li class="breadcrumb-item text-muted">Manage Users</li>
+            <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Users List</li>
+        </ol>
+    </nav>
+        
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -16,6 +19,9 @@
 
         <div class="card">
             <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{{ route('users.create') }}" class="btn btn-primary">Create User</a>
+            </div>
             <div class="table-responsive">
                 <table id="usersTable" class="display table table-striped table-hover">
                     <thead>

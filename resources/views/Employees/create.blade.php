@@ -6,7 +6,13 @@
 
 <div class="container">
 <div class="page-inner">
-<div class="container mt-5">
+<div class="container">
+<nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+            <li class="breadcrumb-item text-muted">Manage Employee</li>
+            <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">New Employee Record</li>
+        </ol>
+    </nav>
             @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -16,7 +22,6 @@
                 </ul>
             </div>
             @endif
-            <h1 class="text-center">Create Employee Record</h1>
             <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">

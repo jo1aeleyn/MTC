@@ -4,10 +4,16 @@
 
 <div class="container">
 <div class="page-inner">
-
+<div class="container">
+<nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+            <li class="breadcrumb-item text-muted">Manage Employee</li>
+            <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Employee List</li>
+        </ol>
+    </nav>
 <div class="card">
     <div class="card-body">
-        <h2 class="text-center">Employee List</h2>
+    
         
         @if (session('success'))
             <div class="alert alert-success">
@@ -24,7 +30,7 @@
 <!-- Container for the button and filter section -->
 <div class="d-flex justify-content-between mb-3">
     <!-- Add New Employee Button -->
-    <a href="{{ route('employee.create') }}" class="btn btn-success">Add New Employee</a>
+    <a href="{{ route('employee.create') }}" class="btn text-white" style="background-color:#326C79">Add New Employee</a>
 
     <!-- Filter and Export Buttons Section -->
     <div class="d-flex">
@@ -56,8 +62,6 @@
 
         <!-- Employee Table -->
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
                     <div class="table-responsive">
                         <table id="employeeTable" class="display table table-striped table-hover">
                             <thead>
@@ -94,8 +98,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
+                
         </div>
 
         <!-- No Records Found Message -->
@@ -105,6 +108,8 @@
     </div>
 </div>
 </div>
+</div>
+
 </div>
 </div>
 

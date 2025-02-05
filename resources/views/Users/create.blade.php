@@ -6,10 +6,16 @@
 
 <div class="container">
 <div class="page-inner">
+<div class="container">
+<nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+            <li class="breadcrumb-item text-muted">Manage Users</li>
+            <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Create New User</li>
+        </ol>
+    </nav>
 <div class="card">
 <div class="card-body">
-<div class="container mt-5">
-        <h3 class="mb-4">Create User</h3>
+
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -61,7 +67,11 @@
 
 
 
-            <button type="submit" class="btn btn-primary">Create</button>
+            <div class="d-flex justify-content-center">
+    <button type="submit" class="btn text-white w-auto px-4"  style="background-color:#326C79">Create</button>
+</div>
+
+
             </div>
 
         </form>
