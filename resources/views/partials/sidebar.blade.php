@@ -200,20 +200,20 @@
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#maps">
-                  <i class="fas fa-map-marker-alt" style="color: #ffffff;"></i>
-                  <p style="color: #ffffff;">Maps</p>
+                  <i class="fas fa-solid fa-bullhorn" style="color: #ffffff;"></i>
+                  <p style="color: #ffffff;">Announcements</p>
                   <span class="caret" style="color: #ffffff;"></span>
                 </a>
                 <div class="collapse" id="maps">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="maps/googlemaps.html">
-                        <span class="sub-item" style="color: #ffffff;">Google Maps</span>
+                      <a href="{{route('announcements.index')}}">
+                        <span class="sub-item" style="color: #ffffff;">Announcements List</span>
                       </a>
                     </li>
                     <li>
-                      <a href="maps/jsvectormap.html">
-                        <span class="sub-item" style="color: #ffffff;">Jsvectormap</span>
+                      <a href="{{route('announcements.create')}}">
+                        <span class="sub-item" style="color: #ffffff;">Post an Announcement</span>
                       </a>
                     </li>
                   </ul>
