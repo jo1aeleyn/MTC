@@ -1,29 +1,12 @@
 <footer class="footer">
-  <div class="container-fluid d-flex justify-content-between">
-    <nav class="pull-left">
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link" href="http://www.themekita.com">
-            ThemeKita
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"> Help </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"> Licenses </a>
-        </li>
-      </ul>
-    </nav>
+  <div class="container-fluid d-flex justify-content-center">
     <div class="copyright">
-     2025, Mendoza Tugano & Co,. CPAs
-    </div>
-    <div>
-      Distributed by
-      <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
+      &copy; {{ date('Y') }}, Mendoza Tugano & Co,. CPAs
     </div>
   </div>
 </footer>
+
+
 
 <!-- Core JS Files -->
 <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
@@ -64,6 +47,25 @@
 
 <!-- Kaiadmin JS -->
 <script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>
+<script>
+  // Function to format the date and time in Philippines time (UTC+8)
+  function getFormattedDateTime() {
+    const options = {
+      weekday: 'long', // "Monday"
+      year: 'numeric', // "2025"
+      month: 'long', // "February"
+      day: 'numeric', // "6"
+      hour: '2-digit', // "02"
+      minute: '2-digit', // "30"
+      timeZone: 'Asia/Manila', // Set to Philippine timezone
+      hour12: true
+    };
+    const date = new Date().toLocaleString('en-PH', options);
+    return date;
+  }
 
+  // Set the date and time to the placeholder
+  document.getElementById('current-date-time').textContent = getFormattedDateTime();
+</script>
 </body>
 </html>
