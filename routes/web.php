@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\ClientController;
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
@@ -53,3 +54,14 @@ Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequest
 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
+Route::prefix('clients')->group(function () {
+    Route::get('/', [ClientController::class, 'index'])->name('clients.index'); // List all clients
+    Route::get('/create', [ClientController::class, 'create'])->name('clients.create'); // Show create form
+    Route::post('/store', [ClientController::class, 'store'])->name('clients.store'); // Store client
+    Route::get('/{uuid}', [ClientController::class, 'show'])->name('clients.show'); // Show single client
+    Route::get('/{uuid}/edit', [ClientController::class, 'edit'])->name('clients.edit'); // Show edit form
+    Route::put('/{uuid}/update', [ClientController::class, 'update'])->name('clients.update'); // Update client
+    Route::delete('/{uuid}/archive', [ClientController::class, 'archive'])->name('clients.archive'); // Archive client
+});
