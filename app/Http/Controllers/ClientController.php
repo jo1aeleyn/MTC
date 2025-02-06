@@ -129,9 +129,32 @@ class ClientController extends Controller
         return view('clients.show', compact('client'));
     }
 
-    public function destroy(ClientTbl $client)
+    public function archive($uuid)
     {
-        $client->delete();
-        return redirect()->route('clients.index')->with('success', 'Client deleted successfully.');
+        try {
+            // Fetch the client record by UUID
+            $client = ClientTbl::where('uuid', $uuid)->firstOrFail();
+    
+            // Check if the client is already archived
+            if ($client->IsArchived) {
+                return redirect()->route('clients.index')
+                    ->with('error', 'This client is already archived.');
+            }
+    
+            // Mark the client as archived
+            $client->update([
+                'IsArchived' => true,  // or 'archived' => 1, based on your column type
+                'archived_by' => auth()->id()  // Store who archived the client
+            ]);
+    
+            return redirect()->route('clients.index')
+                ->with('success', 'Client archived successfully.');
+        } catch (\Exception $e) {
+            // Handle errors and return an error message
+            return redirect()->route('clients.index')
+                ->with('error', 'An error occurred while trying to archive the client.');
+        }
     }
+    
+    
 }
