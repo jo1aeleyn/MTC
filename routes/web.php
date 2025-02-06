@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\AnnouncementController;
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
@@ -71,4 +72,15 @@ Route::prefix('clients')->group(function () {
     Route::get('/{uuid}/edit', [ClientController::class, 'edit'])->name('clients.edit'); // Show edit form
     Route::put('/{uuid}', [ClientController::class, 'update'])->name('clients.update');
     Route::delete('/{uuid}/archive', [ClientController::class, 'archive'])->name('clients.archive'); // Archive client
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
+    Route::get('/announcements/create', [AnnouncementController::class, 'create'])->name('announcements.create');
+    Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
+    Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])->name('announcements.show');
+    Route::get('/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
+    Route::put('/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('announcements.update');
+    Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
+    Route::post('/announcements/{announcement}/archive', [AnnouncementController::class, 'archive'])->name('announcements.archive');
 });
