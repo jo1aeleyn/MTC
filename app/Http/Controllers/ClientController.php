@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Auth;
 class ClientController extends Controller
 {
     public function index()
-    {
-        $clients = ClientTbl::orderBy('created_at', 'desc')->get();
-        return view('clients.index', compact('clients'));
-    }
+{
+    $clients = ClientTbl::where('IsArchived', 0)->orderBy('created_at', 'desc')->get();
+    return view('clients.index', compact('clients'));
+}
 
     public function create()
     {
@@ -66,7 +66,7 @@ class ClientController extends Controller
                 'LAFS' => $isNewClient && $request->has('latest_audited_financial_statement') ? true : false, // Save the Latest Audited Financial Statement checkbox
                 'TBCY' => $request->has('trial_balance_current_year') ? true : false, // Save the Trial Balance checkbox
                 'BIR_CoR' => $isNewClient && $request->has('bir_certificate_of_registration') ? true : false, // Save the BIR Certificate checkbox
-                'created_by' => 1
+                'created_by' => Auth::id(),
             ]);
     
             // Create the ClientDistributionTbl record
@@ -118,7 +118,8 @@ class ClientController extends Controller
 
     public function update(Request $request, $uuid)
     {
-        $client = ClientTbl::findOrFail($uuid);
+        $client = ClientTbl::where('uuid', $uuid)->firstOrFail();
+
     // Validate the incoming data
     $validated = $request->validate([
         'registered_company_name' => 'required',
@@ -158,9 +159,6 @@ class ClientController extends Controller
             'delivery_address' => $request->delivery_address,
             'contact_person' => $request->contact_person,
             'mobile_number' => $request->mobile_number,
-            'authorized_personnel' => $request->authorized_personnel,
-            'position_of_authorized_personnel' => $request->position_of_authorized_personnel,
-            'prior_years_auditor' => $request->prior_years_auditor,
             'email_address' => $request->email_address_of_authorized_personnel,
         ]);
 
@@ -202,7 +200,7 @@ class ClientController extends Controller
             // Mark the client as archived
             $client->update([
                 'IsArchived' => true,  // or 'archived' => 1, based on your column type
-                'archived_by' => auth()->id()  // Store who archived the client
+                'ArchivedBy' => Auth::id(),
             ]);
     
             return redirect()->route('clients.index')

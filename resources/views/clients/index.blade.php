@@ -67,11 +67,11 @@
                                                         <a class="dropdown-item" href="{{ route('clients.edit', $client->uuid) }}">Edit</a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('clients.archive', $client->uuid) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this client?');">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="dropdown-item" type="submit">Archive</button>
-                                                        </form>
+                                                    <form id="archiveForm" action="{{ route('clients.archive', $client->uuid) }}" method="POST">
+                                                         @csrf
+                                                          @method('DELETE')
+                                                        <button class="dropdown-item" type="button" onclick="confirmArchive()">Archive</button>
+                                                    </form>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -92,5 +92,23 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmArchive() {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you really want to archive this client?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, archive it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('archiveForm').submit();
+            }
+        });
+    }
+</script>
 @include('partials.footer')
