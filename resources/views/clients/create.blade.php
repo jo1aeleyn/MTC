@@ -3,9 +3,45 @@
 @include('partials.navbar')
 
 <link rel="stylesheet" href="{{ asset('/css/forms.css') }}">
+
+<style>
+    .client-type-label {
+        display: inline-block;
+        padding: 10px 20px;
+        border: 2px solid #ccc;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .client-type-label:hover {
+        background-color: #f1f3f5;
+        border-color: #0d6efd;
+    }
+    .form-check-input:checked + .client-type-label {
+        background-color: #ffde59;
+        color: white;
+        border-color: #0d6efd;
+        box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+    }
+</style>
+
+
+
+
 <div class="container">
     <div class="page-inner">
-        <div class="container mt-5">
+
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+            <li class="breadcrumb-item text-muted">Manage Clients</li>
+            <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Create New Client</li>
+        </ol>
+    </nav>
+
+        <div class="container ">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -18,20 +54,22 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3>CLIENT INFORMATION SHEET</h3>
+                    <h3>Preparation of Engagement Letter</h3>
                     <form action="{{ route('clients.store') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Client Type</label><br>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="client_type" id="client_type_new" value="new" required onclick="toggleCheckboxes()">
-                                <label class="form-check-label" for="client_type_new">New Client</label>
+                            <div class="form-check form-check-inline" style="margin-right: -30px;">
+                                <input class="form-check-input visually-hidden" type="radio" name="client_type" id="client_type_new" value="new" required onclick="toggleCheckboxes()">
+                                <label class="form-check-label client-type-label" for="client_type_new" id="label_client_type_new">New Client</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="client_type" id="client_type_old" value="old" required onclick="toggleCheckboxes()">
-                                <label class="form-check-label" for="client_type_old">Old Client</label>
+                                <input class="form-check-input visually-hidden" type="radio" name="client_type" id="client_type_old" value="old" required onclick="toggleCheckboxes()">
+                                <label class="form-check-label client-type-label" for="client_type_old" id="label_client_type_old">Old Client</label>
                             </div>
                         </div>
+
+
 
                         <div class="row">
                             <div class="col-4">
@@ -55,9 +93,16 @@
                                     <input type="text" id="engagement_year" name="engagement_year" class="form-control" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Type of Engagement (Accounting, Agreed-upon, Audit, Tax)</label>
-                                    <input type="text" id="type_of_engagement" name="type_of_engagement" class="form-control" required>
+                                    <label class="form-label">Type of Engagement</label>
+                                    <select id="type_of_engagement" name="type_of_engagement" class="form-control" required>
+                                        <option value="" disabled selected>Select Type of Engagement</option>
+                                        <option value="Accounting">Accounting</option>
+                                        <option value="Agreed-upon">Agreed-upon</option>
+                                        <option value="Audit">Audit</option>
+                                        <option value="Tax">Tax</option>
+                                    </select>
                                 </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Authorized Personnel (In attention of Engagement)</label>
                                     <input type="text" id="authorized_personnel" name="authorized_personnel" class="form-control" required>
