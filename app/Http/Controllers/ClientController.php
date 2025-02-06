@@ -180,9 +180,13 @@ class ClientController extends Controller
 }
 
 
-    public function show(ClientTbl $client)
+    public function show($uuid)
     {
-        return view('clients.show', compact('client'));
+        $client = ClientTbl::where('uuid', $uuid)->firstOrFail();
+        $clientDistribution = ClientDistributionTbl::where('uuid', $client->uuid)->first();
+        $clientServiceOfInvoice = ClientServiceOfInvoiceTbl::where('uuid', $client->uuid)->first();
+    
+        return view('clients.show', compact('client', 'clientDistribution', 'clientServiceOfInvoice'));
     }
 
     public function archive($uuid)
