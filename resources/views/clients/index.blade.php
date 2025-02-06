@@ -67,7 +67,7 @@
                                                         <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}">Edit</a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('clients.archive', $client->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this client?');">
+                                                        <form action="{{ route('clients.archive', $client->uuid) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this client?');">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="dropdown-item" type="submit">Archive</button>
