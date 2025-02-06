@@ -4,11 +4,16 @@
 #email, #address, #famname, #famrelation, #famoccupation, #fambdate, #famaddress,
 #famphone, #emergencyname, #emergencyrel, #emergencyaddress, #emergencynumber,
 #tin_num, #sss_num, #pag_ibig_num, #philhealth_num, #tax_status, #educlevel, 
-#schoolname, #schooldeg, #schfrom, #schto, #honorsrec, #title, #inclusive_dates, #conducted_by, 
-#venue, #username, #password, #password_confirmation, #user_role, #profile_picture {
-    background-color: #E2E2E2;
+#schoolname, #schooldeg, #schfrom, #schto, #honorsrec, #title, #inclusive_dates, 
+#conducted_by, #venue, #username, #password, #password_confirmation, #user_role, 
+#profile_picture, #registered_company_name, #registered_address, #email_address_of_authorized_personnel,
+#engagement_year, #type_of_engagement, #authorized_personnel, #position_of_authorized_personnel, 
+#revenue_for_current_year, #prior_years_auditor, #company_name, #delivery_address, #contact_person, 
+#mobile_number, #tax_identification_number, #invoice_registered_company_name, #invoice_registered_address, #email_address {
+    background-color: #F8FAFC;
     padding: 10px;
-  }
+}
+
   
 
   h3 {
