@@ -89,12 +89,12 @@
                 <div class="collapse" id="forms">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="forms/forms.html">
+                      <a href="{{ route('clients.index') }}">
                         <span class="sub-item" style="color: #ffffff;">Client List</span>
                       </a>
                     </li>
                     <li>
-                      <a href="forms/forms.html">
+                      <a href="{{ route('clients.create') }}">
                         <span class="sub-item" style="color: #ffffff;">Client Information Sheet</span>
                       </a>
                     </li>

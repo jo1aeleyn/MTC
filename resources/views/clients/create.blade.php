@@ -1,27 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Client</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script>
-        function toggleCheckboxes() {
-            const clientType = document.querySelector('input[name="client_type"]:checked').value;
-            const newClientCheckboxes = document.getElementById('newClientCheckboxes');
-            const oldClientCheckboxes = document.getElementById('oldClientCheckboxes');
-            
-            if (clientType === 'new') {
-                newClientCheckboxes.style.display = 'block';
-                oldClientCheckboxes.style.display = 'none';
-            } else {
-                newClientCheckboxes.style.display = 'none';
-                oldClientCheckboxes.style.display = 'block';
-            }
-        }
-    </script>
-</head>
-<body>
+@include('partials.header')
+@include('partials.sidebar')
+@include('partials.navbar')
+
+
+
+    <link rel="stylesheet" href="{{ asset('/css/forms.css') }}">
+<div class="container">
+<div class="page-inner">
     <div class="container mt-5">
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -33,7 +18,9 @@
     </div>
 @endif
 
-        <h2>Create Client</h2>
+<div class="card">
+<div class="card-body">
+        <h3>CLIENT INFORMATION SHEET</h3>
         <form action="{{ route('clients.store') }}" method="POST">
             @csrf
 
@@ -49,6 +36,13 @@
                     <label class="form-check-label" for="old_client">Old Client</label>
                 </div>
             </div>
+
+
+
+        <div class="row">
+
+            <div class="col-4">
+
             <div class="mb-3">
                 <label class="form-label">Registered Company Name</label>
                 <input type="text" name="registered_company_name" class="form-control" required>
@@ -63,6 +57,12 @@
                 <label class="form-label">Email Address of Authorized Personnel</label>
                 <input type="email" name="email_address_of_authorized_personnel" class="form-control" required>
             </div>
+       
+            </div>
+
+
+            <div class="col-4">
+
             <div class="mb-3">
                 <label class="form-label">Engagement Year</label>
                 <input type="text" name="engagement_year" class="form-control" required>
@@ -77,7 +77,10 @@
                 <label class="form-label">Authorized Personnel (In attention of Engagement)</label>
                 <input type="text" name="authorized_personnel" class="form-control" required>
             </div>
+            </div>
+            
 
+            <div class="col-4">
             <div class="mb-3">
                 <label class="form-label">Position of Authorized Personnel</label>
                 <input type="text" name="position_of_authorized_personnel" class="form-control" required>
@@ -92,9 +95,17 @@
                 <label class="form-label">Prior Year's Auditor (if not MTC)</label>
                 <input type="text" name="prior_years_auditor" class="form-control">
             </div>
+            </div>
 
-            <h4>Client Distribution</h4>
 
+
+            </div>
+
+            <h3>Client Distribution</h3>
+
+
+        <div class="row">
+            <div class="col-6">
             <div class="mb-3">
                 <label class="form-label">Company Name</label>
                 <input type="text" name="company_name" class="form-control" required>
@@ -109,7 +120,8 @@
                 <label class="form-label">Contact Person</label>
                 <input type="text" name="contact_person" class="form-control" required>
             </div>
-
+            </div>
+            <div class="col-6">
             <div class="mb-3">
                 <label class="form-label">Mobile Number</label>
                 <input type="text" name="mobile_number" class="form-control" required>
@@ -119,24 +131,27 @@
                 <label class="form-label">Email Address</label>
                 <input type="email" name="email_address" class="form-control" required>
             </div>
+            </div>
+        </div>
 
-            <h4>Client Service of Invoice</h4>
+            <h3>Client Service of Invoice</h3>
 
-            <div class="mb-3">
-    <label class="form-label">Tax Identification Number</label>
-    <input type="text" name="tax_identification_number" class="form-control" required>
+<div class="row">   
+            <div class="mb-3 col-4">
+                <label class="form-label">Tax Identification Number</label>
+                <input type="text" name="tax_identification_number" class="form-control" required>
+            </div>
+
+            <div class="mb-3 col-4">
+                <label class="form-label">Registered Company Name</label>
+                <input type="text" name="registered_company_name" class="form-control" required>
+            </div>
+
+            <div class="mb-3 col-4">
+                <label class="form-label">Registered Address</label>
+                <input type="text" name="registered_address" class="form-control" required>
+            </div>
 </div>
-
-<div class="mb-3">
-    <label class="form-label">Registered Company Name</label>
-    <input type="text" name="registered_company_name" class="form-control" required>
-</div>
-
-<div class="mb-3">
-    <label class="form-label">Registered Address</label>
-    <input type="text" name="registered_address" class="form-control" required>
-</div>
-
             <!-- Dynamic Checkboxes for New/Old Client -->
             <div id="newClientCheckboxes" style="display:none;">
                 <h5>Required Documents for New Client</h5>
@@ -162,5 +177,23 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-</body>
-</html>
+    </div>
+    </div>
+    </div>
+    </div>
+    <script>
+        function toggleCheckboxes() {
+            const clientType = document.querySelector('input[name="client_type"]:checked').value;
+            const newClientCheckboxes = document.getElementById('newClientCheckboxes');
+            const oldClientCheckboxes = document.getElementById('oldClientCheckboxes');
+            
+            if (clientType === 'new') {
+                newClientCheckboxes.style.display = 'block';
+                oldClientCheckboxes.style.display = 'none';
+            } else {
+                newClientCheckboxes.style.display = 'none';
+                oldClientCheckboxes.style.display = 'block';
+            }
+        }
+    </script>
+@include('partials.footer')
