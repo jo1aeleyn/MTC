@@ -6,11 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-<<<<<<< HEAD
 use App\Http\Controllers\DashboardController;
-=======
 use App\Http\Controllers\ClientController;
->>>>>>> d82d1c34e4fbb82968e343f80cf294be4bdf0b12
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
