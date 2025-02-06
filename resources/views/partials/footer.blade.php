@@ -57,6 +57,7 @@
       day: 'numeric', // "6"
       hour: '2-digit', // "02"
       minute: '2-digit', // "30"
+      second: '2-digit', // "45"
       timeZone: 'Asia/Manila', // Set to Philippine timezone
       hour12: true
     };
@@ -64,8 +65,17 @@
     return date;
   }
 
-  // Set the date and time to the placeholder
-  document.getElementById('current-date-time').textContent = getFormattedDateTime();
+  // Function to update the date and time
+  function updateDateTime() {
+    document.getElementById('current-date-time').textContent = getFormattedDateTime();
+  }
+
+  // Update the date and time initially
+  updateDateTime();
+
+  // Update the date and time every second (1000 milliseconds)
+  setInterval(updateDateTime, 1000);
 </script>
+
 </body>
 </html>
