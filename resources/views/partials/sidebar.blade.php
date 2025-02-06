@@ -30,34 +30,10 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-              <li class="nav-item">
-                <a
-                  data-bs-toggle="collapse"
-                  href="#dashboard"
-                  class="collapsed"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-home" style="color: #ffffff;"></i>
-                  <p style="color: #ffffff;">Dashboard</p>
-                  <span class="caret" style="color: #ffffff;"></span>
-                </a> 
-                <div class="collapse" id="dashboard">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../demo1/index.html">
-                        <span class="sub-item" style="color: #ffffff;">Dashboard 1</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              
               <li class="nav-section">
                 <span class="sidebar-mini-icon">
                   <i class="fa fa-ellipsis-h" style="color: #ffffff;"></i>
                 </span>
-                <h4 class="text-section" style="color: #ffffff;">Components</h4>
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
@@ -104,28 +80,27 @@
                   </ul>
                 </div>
               </li>
-
-
-
-
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#forms">
                   <i class="fas fa-pen-square" style="color: #ffffff;"></i>
-                  <p style="color: #ffffff;">Forms</p>
+                  <p style="color: #ffffff;">Client Management</p>
                   <span class="caret" style="color: #ffffff;"></span>
                 </a>
                 <div class="collapse" id="forms">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="forms/forms.html">
-                        <span class="sub-item" style="color: #ffffff;">Basic Form</span>
+                        <span class="sub-item" style="color: #ffffff;">Client List</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="forms/forms.html">
+                        <span class="sub-item" style="color: #ffffff;">Client Information Sheet</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-
-
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables">
                   <i class="fas fa-table" style="color: #ffffff;"></i>
