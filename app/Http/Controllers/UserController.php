@@ -25,36 +25,46 @@ class UserController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'username' => 'required|unique:user_accounts_tbl,username',
-            'email' => 'required|unique:user_accounts_tbl,email',
-            'password' => 'required|string|min:8|confirmed|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
-            'user_role' => 'required',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+{
+    $request->validate([
+        'username' => 'required|unique:user_accounts_tbl,username',
+        'email' => 'required|unique:user_accounts_tbl,email',
+        'user_role' => 'required',
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
 
-        $profile_picture = null;
-        if ($request->hasFile('profile_picture')) {
-            $destinationPath = public_path('profile_pictures'); 
-            $extension = $request->file('profile_picture')->getClientOriginalExtension();
-            $filename = 'user_' . time() . '.' . $extension;
-            $request->file('profile_picture')->move($destinationPath, $filename);
-            $profile_picture = $filename;
-        }
+    // Generate a random password
+    $randomPassword = Str::random(8); // You can adjust the length here
 
-        UserAccount::create([
-            'uuid' => \Str::uuid(),
-            'email' => $request->email,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'user_role' => $request->user_role,
-            'profile_picture' => $profile_picture,
-            'created_by' => auth()->id(),
-        ]);
+    // Hash the password
+    $hashedPassword = Hash::make($randomPassword);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+    // Upload the profile picture if provided
+    $profile_picture = null;
+    if ($request->hasFile('profile_picture')) {
+        $destinationPath = public_path('profile_pictures'); 
+        $extension = $request->file('profile_picture')->getClientOriginalExtension();
+        $filename = 'user_' . time() . '.' . $extension;
+        $request->file('profile_picture')->move($destinationPath, $filename);
+        $profile_picture = $filename;
     }
+
+    // Create the user account
+    $user = UserAccount::create([
+        'uuid' => \Str::uuid(),
+        'email' => $request->email,
+        'username' => $request->username,
+        'password' => $hashedPassword,
+        'user_role' => $request->user_role,
+        'profile_picture' => $profile_picture,
+        'created_by' => auth()->id(),
+    ]);
+
+    // Send the generated password to the user's email
+    Mail::to($request->email)->send(new \App\Mail\UserPasswordMail($randomPassword));
+
+    return redirect()->route('users.index')->with('success', 'User created successfully. The password has been emailed.');
+}
 
     public function edit($uuid)
     {
