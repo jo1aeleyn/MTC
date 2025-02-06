@@ -61,10 +61,10 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $client->id }}">
                                                     <li>
-                                                        <a class="dropdown-item" href="{{ route('clients.show', $client->id) }}">View</a>
+                                                        <a class="dropdown-item" href="{{ route('clients.show', $client->uuid) }}">View</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}">Edit</a>
+                                                        <a class="dropdown-item" href="{{ route('clients.edit', $client->uuid) }}">Edit</a>
                                                     </li>
                                                     <li>
                                                         <form action="{{ route('clients.archive', $client->uuid) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this client?');">

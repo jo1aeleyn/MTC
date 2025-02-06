@@ -103,26 +103,84 @@ class ClientController extends Controller
     }
     
     
-    public function edit(ClientTbl $client)
-    {
-        return view('clients.edit', compact('client'));
-    }
+    public function edit($uuid)
+{
+    // Retrieve the client by uuid and load the related data
+    $client = ClientTbl::where('uuid', $uuid)->firstOrFail();
+    $clientDistribution = ClientDistributionTbl::where('uuid', $client->uuid)->first();
+    $clientServiceOfInvoice = ClientServiceOfInvoiceTbl::where('uuid', $client->uuid)->first();
 
-    public function update(Request $request, ClientTbl $client)
-    {
-        $request->validate([
-            'registered_company_name' => 'required',
-            'registered_address' => 'required',
-        ]);
+    return view('clients.edit', compact('client', 'clientDistribution', 'clientServiceOfInvoice'));
+}
 
+
+    
+
+    public function update(Request $request, $uuid)
+    {
+        $client = ClientTbl::findOrFail($uuid);
+    // Validate the incoming data
+    $validated = $request->validate([
+        'registered_company_name' => 'required',
+        'registered_address' => 'required',
+        'email_address_of_authorized_personnel' => 'required|email',
+        'engagement_year' => 'required',
+        'company_name' => 'required',
+        'delivery_address' => 'required',
+        'contact_person' => 'required',
+        'mobile_number' => 'required',
+        'tax_identification_number' => 'required',
+        'revenue_for_current_year' => 'required',
+        'client_type' => 'required|in:new,old', // Ensure client type is selected
+    ]);
+
+    try {
+        // Update the client details
         $client->update([
             'registered_company_name' => $request->registered_company_name,
             'registered_address' => $request->registered_address,
-            'EditedBy' => Auth::id(),
+            'engagement_year' => $request->engagement_year,
+            'authorized_personnel' => $request->authorized_personnel,
+            'position_of_authorized_personnel' => $request->position_of_authorized_personnel,
+            'email_address_of_authorized_personnel' => $request->email_address_of_authorized_personnel,
+            'revenue_for_current_year' => $request->revenue_for_current_year,
+            'prior_years_auditor' => $request->prior_years_auditor,
+            'NewClient' => $request->client_type === 'new', // Store whether the client is new or old
+            'LAFS' => $request->has('latest_audited_financial_statement'), // Save the Latest Audited Financial Statement checkbox
+            'TBCY' => $request->has('trial_balance_current_year'), // Save the Trial Balance checkbox
+            'BIR_CoR' => $request->has('bir_certificate_of_registration'), // Save the BIR Certificate checkbox
+            'EditedBy' => Auth::id(), // Store the user who edited the record
+        ]);
+
+        // If needed, update related records as well in other tables like ClientDistributionTbl or ClientServiceOfInvoiceTbl.
+        ClientDistributionTbl::where('uuid', $client->uuid)->update([
+            'company_name' => $request->company_name,
+            'delivery_address' => $request->delivery_address,
+            'contact_person' => $request->contact_person,
+            'mobile_number' => $request->mobile_number,
+            'authorized_personnel' => $request->authorized_personnel,
+            'position_of_authorized_personnel' => $request->position_of_authorized_personnel,
+            'prior_years_auditor' => $request->prior_years_auditor,
+            'email_address' => $request->email_address_of_authorized_personnel,
+        ]);
+
+        // Update ClientServiceOfInvoiceTbl if necessary
+        ClientServiceOfInvoiceTbl::where('uuid', $client->uuid)->update([
+            'company_name' => $request->company_name,
+            'registered_address' => $request->registered_address,
+            'tax_identification_number' => $request->tax_identification_number,
         ]);
 
         return redirect()->route('clients.index')->with('success', 'Client updated successfully.');
+    } catch (\Exception $e) {
+        // Log the error to debug
+        \Log::error('Error updating client: ' . $e->getMessage());
+
+        // In case of an exception, return with an error message
+        return redirect()->back()->withErrors(['error' => 'An error occurred while updating the client.'])->withInput();
     }
+}
+
 
     public function show(ClientTbl $client)
     {

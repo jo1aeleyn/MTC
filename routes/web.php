@@ -69,6 +69,6 @@ Route::prefix('clients')->group(function () {
     Route::post('/store', [ClientController::class, 'store'])->name('clients.store'); // Store client
     Route::get('/{uuid}', [ClientController::class, 'show'])->name('clients.show'); // Show single client
     Route::get('/{uuid}/edit', [ClientController::class, 'edit'])->name('clients.edit'); // Show edit form
-    Route::put('/{uuid}/update', [ClientController::class, 'update'])->name('clients.update'); // Update client
+    Route::put('/{uuid}/update', [ClientController::class, 'update'])->name('clients.update');
     Route::delete('/{uuid}/archive', [ClientController::class, 'archive'])->name('clients.archive'); // Archive client
 });
