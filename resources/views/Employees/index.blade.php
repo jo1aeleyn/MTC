@@ -98,11 +98,11 @@
                                                         <a class="dropdown-item" href="{{ route('employee.show', $employee->uuid) }}">View</a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('employee.archive', $employee->uuid) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this employee?');">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <button class="dropdown-item" type="submit">Archive</button>
-                                                        </form>
+                                                    <form id="archiveForm{{ $employee->uuid }}" action="{{ route('employee.archive', $employee->uuid) }}" method="POST">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <button type="button" class="dropdown-item" onclick="confirmArchive('{{ $employee->uuid }}')">Archive</button>
+                                                    </form>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -126,7 +126,23 @@
 
 </div>
 </div>
-
+        <script>
+        function confirmArchive(uuid) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You want to archive this employee?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, archive it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('archiveForm' + uuid).submit();
+                }
+            });
+        }
+        </script>
 @include('partials.footer')
 
 
