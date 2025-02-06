@@ -68,16 +68,27 @@
 
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="position" class="form-label">Position</label>
-                        <input
-                        type="text"
-                        class="form-control"
-                        id="position"
-                        name="position"
-                        required
-                        value=" {{ old('position', $application->position) }}"
-                        >
-                    </div>
+    <label for="position" class="form-label">Position</label>
+    <select 
+        class="form-select" 
+        id="position" 
+        name="position" 
+        required
+        style="background-color: #E2E2E2;">
+        <option value="" disabled {{ old('position', $application->position) ? '' : 'selected' }}>Select Position</option>
+        <option value="Junior Audit Associate" {{ old('position', $application->position) == 'Junior Audit Associate' ? 'selected' : '' }}>Junior Audit Associate</option>
+        <option value="Audit Senior Associate" {{ old('position', $application->position) == 'Audit Senior Associate' ? 'selected' : '' }}>Audit Senior Associate</option>
+        <option value="Audit Supervisor" {{ old('position', $application->position) == 'Audit Supervisor' ? 'selected' : '' }}>Audit Supervisor</option>
+        <option value="Junior Accounting Associate" {{ old('position', $application->position) == 'Junior Accounting Associate' ? 'selected' : '' }}>Junior Accounting Associate</option>
+        <option value="Accounting Senior Associate" {{ old('position', $application->position) == 'Accounting Senior Associate' ? 'selected' : '' }}>Accounting Senior Associate</option>
+        <option value="Accounting Supervisor" {{ old('position', $application->position) == 'Accounting Supervisor' ? 'selected' : '' }}>Accounting Supervisor</option>
+        <option value="IT Associate" {{ old('position', $application->position) == 'IT Associate' ? 'selected' : '' }}>IT Associate</option>
+        <option value="Administrative Associate" {{ old('position', $application->position) == 'Administrative Associate' ? 'selected' : '' }}>Administrative Associate</option>
+        <option value="Partner" {{ old('position', $application->position) == 'Partner' ? 'selected' : '' }}>Partner</option>
+        <option value="Managing Partner" {{ old('position', $application->position) == 'Managing Partner' ? 'selected' : '' }}>Managing Partner</option>
+    </select>
+</div>
+
                 </div>
                 <div class="row">
                 <div class="col-md-6 mb-3">

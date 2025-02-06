@@ -43,6 +43,9 @@
                  
                   </ul>
                 </li>
+                <li class="nav-item topbar-user">
+            <span id="current-date-time" class="nav-link" style="padding-left: 15px;"></span>
+          </li>
                 <li class="nav-item topbar-icon dropdown hidden-caret">
                   <a
                     class="nav-link"
