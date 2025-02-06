@@ -24,15 +24,9 @@
                                     <!-- Name Section -->
                                     <div class="col-12 col-sm-6 col-md-4 border-right-1 prf-col">
                                         <div class="profile-name">
-                                            <h4 class="text-primary">{{ $employee->first_name }} {{ $employee->surname }}</h4>
-                                            <p>{{ $employee->application ? $employee->application->position : 'N/A' }}</p>
-                                        </div>
-                                    </div>
-                                    <!-- Email Section -->
-                                    <div class="col-12 col-sm-6 col-md-4 border-right-1 prf-col">
-                                        <div class="profile-email">
-                                            <h4 class="text-muted">{{ $employee->email }}</h4>
-                                            <p>Email</p>
+                                        <h4 class="text-primary" style="margin-bottom: 5px;">{{ $employee->first_name }} {{ $employee->surname }}</h4>
+                                        <h4 class="text-muted" style="margin-bottom: 5px; ">{{ $employee->email }}</h4>
+                                        <p style="margin-bottom: 0; ">{{ $employee->application ? $employee->application->position : 'N/A' }}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -320,18 +320,19 @@
 /* For larger screens (desktops and tablets), adjust the profile photo size */
 @media (min-width: 1024px) {
     .photo-content .profile-photo {
-        width: 200px; /* Adjust the maximum width */
+        width: 15%; /* Adjust the maximum width */
         position: absolute; /* Keeps it fixed in the photo content */
-        top: 120px; /* Adjust the top position */
-        left: 50%; /* Center the photo horizontally */
-        transform: translateX(-50%); /* Center it exactly */
+        top: 260px; /* Adjust the top position */
+        left: -50%; /* Center the photo horizontally */
+        transform: translateX(-310%); /* Center it exactly */
     }
 }
 
 /* For very large screens (large desktop monitors), you may want to tweak even further */
 @media (min-width: 1440px) {
     .photo-content .profile-photo {
-        max-width: 250px; /* Slightly larger profile photo */
+        max-width: 180px; /* Slightly larger profile photo */
+        left: 50%; /* Center the photo horizontally */
     }
 }
 
