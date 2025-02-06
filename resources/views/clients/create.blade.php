@@ -18,30 +18,25 @@
     }
     .client-type-label:hover {
         background-color: #f1f3f5;
-        border-color: #0d6efd;
     }
     .form-check-input:checked + .client-type-label {
         background-color: #ffde59;
         color: white;
-        border-color: #0d6efd;
         box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
     }
 </style>
 
-
-
-
 <div class="container">
     <div class="page-inner">
 
-    <nav aria-label="breadcrumb" class="mb-3">
-        <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
-            <li class="breadcrumb-item text-muted">Manage Clients</li>
-            <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Create New Client</li>
-        </ol>
-    </nav>
-
         <div class="container ">
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+                    <li class="breadcrumb-item text-muted">Manage Clients</li>
+                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Create New Client</li>
+                </ol>
+            </nav>
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -69,10 +64,9 @@
                             </div>
                         </div>
 
-
-
+                        <!-- Main Form Content with Responsive Grid -->
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-12 col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Registered Company Name</label>
                                     <input type="text" id="registered_company_name" name="registered_company_name" class="form-control" required>
@@ -87,7 +81,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-12 col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Engagement Year</label>
                                     <input type="text" id="engagement_year" name="engagement_year" class="form-control" required>
@@ -102,14 +96,13 @@
                                         <option value="Tax">Tax</option>
                                     </select>
                                 </div>
-
                                 <div class="mb-3">
                                     <label class="form-label">Authorized Personnel (In attention of Engagement)</label>
                                     <input type="text" id="authorized_personnel" name="authorized_personnel" class="form-control" required>
                                 </div>
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-12 col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Position of Authorized Personnel</label>
                                     <input type="text" id="position_of_authorized_personnel" name="position_of_authorized_personnel" class="form-control" required>
@@ -127,7 +120,7 @@
 
                         <h3>Client Distribution</h3>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12 col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Company Name</label>
                                     <input type="text" id="company_name" name="company_name" class="form-control" required>
@@ -141,7 +134,8 @@
                                     <input type="text" id="contact_person" name="contact_person" class="form-control" required>
                                 </div>
                             </div>
-                            <div class="col-6">
+
+                            <div class="col-12 col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Mobile Number</label>
                                     <input type="text" id="mobile_number" name="mobile_number" class="form-control" required>
@@ -155,17 +149,23 @@
 
                         <h3>Client Service of Invoice</h3>
                         <div class="row">
-                            <div class="mb-3 col-4">
-                                <label class="form-label">Tax Identification Number</label>
-                                <input type="text" id="tax_identification_number" name="tax_identification_number" class="form-control" required>
+                            <div class="col-12 col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Tax Identification Number</label>
+                                    <input type="text" id="tax_identification_number" name="tax_identification_number" class="form-control" required>
+                                </div>
                             </div>
-                            <div class="mb-3 col-4">
-                                <label class="form-label">Registered Company Name</label>
-                                <input type="text" id="invoice_registered_company_name" name="registered_company_name" class="form-control" required>
+                            <div class="col-12 col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Registered Company Name</label>
+                                    <input type="text" id="invoice_registered_company_name" name="registered_company_name" class="form-control" required>
+                                </div>
                             </div>
-                            <div class="mb-3 col-4">
-                                <label class="form-label">Registered Address</label>
-                                <input type="text" id="invoice_registered_address" name="registered_address" class="form-control" required>
+                            <div class="col-12 col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Registered Address</label>
+                                    <input type="text" id="invoice_registered_address" name="registered_address" class="form-control" required>
+                                </div>
                             </div>
                         </div>
                         
@@ -198,6 +198,7 @@
         </div>
     </div>
 </div>
+
 <script>
     function toggleCheckboxes() {
         const clientType = document.querySelector('input[name="client_type"]:checked').value;
@@ -213,4 +214,5 @@
         }
     }
 </script>
+
 @include('partials.footer')
