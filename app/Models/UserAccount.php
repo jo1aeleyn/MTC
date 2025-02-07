@@ -21,4 +21,6 @@ class UserAccount extends Authenticatable
     {
         return $this->email;
     }
+
+    
 }

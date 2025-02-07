@@ -19,7 +19,7 @@
             >
               <div>
                 <h3 class="fw-bold mb-3">Dashboard</h3>
-              </div>
+              </div> 
             </div>
             <div class="row">
               <div class="col-sm-6 col-md-3">

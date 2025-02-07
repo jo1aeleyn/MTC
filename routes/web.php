@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\OvertimeController;
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
@@ -83,4 +84,14 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('announcements.update');
     Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
     Route::post('/announcements/{announcement}/archive', [AnnouncementController::class, 'archive'])->name('announcements.archive');
+});
+
+Route::middleware(['auth'])->group(function () {
+Route::get('overtime', [OvertimeController::class, 'index'])->name('overtime.index');
+Route::get('overtime/create', [OvertimeController::class, 'create'])->name('overtime.create');
+Route::post('overtime', [OvertimeController::class, 'store'])->name('overtime.store');
+Route::get('overtime/{id}', [OvertimeController::class, 'show'])->name('overtime.show');
+Route::get('overtime/{id}/edit', [OvertimeController::class, 'edit'])->name('overtime.edit');
+Route::put('overtime/{id}', [OvertimeController::class, 'update'])->name('overtime.update');
+Route::delete('overtime/{id}', [OvertimeController::class, 'destroy'])->name('overtime.destroy');
 });
