@@ -123,12 +123,12 @@
                       <div class="collapse" id="subnav1">
                         <ul class="nav nav-collapse subnav">
                           <li>
-                            <a href="#">
+                            <a href="{{route('overtime.index')}}">
                               <span class="sub-item" style="color: #ffffff;">Pending Overtime Request</span>
                             </a>
                           </li>
                           <li>
-                            <a href="#">
+                            <a href="{{route('overtime.create')}}">
                               <span class="sub-item" style="color: #ffffff;">Overtime Request Form</span>
                             </a>
                           </li>

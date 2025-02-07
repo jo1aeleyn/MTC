@@ -80,3 +80,23 @@
 </div>
 
 @include('partials.footer')
+
+<!-- DataTable JS & CSS -->
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<!-- Include DataTables JS -->
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#overtimeTable').DataTable({
+            // You can customize DataTable options here
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+        });
+    });
+</script>
