@@ -9,7 +9,11 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AnnouncementController;
+<<<<<<< HEAD
 use App\Http\Controllers\OvertimeController;
+=======
+use App\Http\Controllers\DepartmentController;
+>>>>>>> 9b2fc90dbe1404ab9d1b5edb95ccd603c445b329
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
@@ -80,8 +84,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/announcements/create', [AnnouncementController::class, 'create'])->name('announcements.create');
     Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
     Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])->name('announcements.show');
-    Route::get('/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
-    Route::put('/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('announcements.update');
+    Route::get('/announcements/{uuid}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
+    Route::put('/announcements/{uuid}', [AnnouncementController::class, 'update'])->name('announcements.update');
     Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
     Route::post('/announcements/{announcement}/archive', [AnnouncementController::class, 'archive'])->name('announcements.archive');
 });
@@ -94,4 +98,11 @@ Route::get('overtime/{id}', [OvertimeController::class, 'show'])->name('overtime
 Route::get('overtime/{id}/edit', [OvertimeController::class, 'edit'])->name('overtime.edit');
 Route::put('overtime/{id}', [OvertimeController::class, 'update'])->name('overtime.update');
 Route::delete('overtime/{id}', [OvertimeController::class, 'destroy'])->name('overtime.destroy');
+
+    Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+    Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
+    Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
+    Route::get('/departments/{uuid}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
+    Route::put('/departments/{uuid}', [DepartmentController::class, 'update'])->name('departments.update');
+    Route::post('/departments/{uuid}', [DepartmentController::class, 'archive'])->name('departments.archive');
 });

@@ -105,7 +105,25 @@
             <option value="Temporary" {{ old('employment_status') == 'Temporary' ? 'selected' : '' }}>Temporary</option>
         </select>
     </div>
+    <div class="col-md-6 mb-3">
+    <label for="department" class="form-label">Department</label>
+    <select 
+        class="form-control" 
+        id="DepartmentName" 
+        name="DepartmentName" 
+        required
+        style="background-color: #E2E2E2;">
+        <option value="" disabled selected>Select Department</option>
+        @foreach($departments as $department)
+            <option value="{{ $department->DepartmentName }}" {{ old('DepartmentName') == $department->DepartmentName ? 'selected' : '' }}>
+                {{ $department->DepartmentName }}
+            </option>
+        @endforeach
+    </select>
 </div>
+
+</div>
+
 
                 <h3>Personal Information</h3>
                 <div class="row">

@@ -60,11 +60,14 @@ class EmployeeController extends Controller
     return view('employees.index', compact('employees', 'years'));
 }
 
-    public function create()
-    {
-        // Optionally, you can pass data to the view like departments, positions, etc.
-        return view('employees.create');
-    }
+public function create()
+{
+    // Fetch all departments from the Department model
+    $departments = \App\Models\Department::all();
+
+    // Optionally, you can pass other data (positions, etc.) if needed
+    return view('employees.create', compact('departments'));
+}
 
     /**
     * Store a newly created employee record in storage.
@@ -106,6 +109,7 @@ class EmployeeController extends Controller
             'date_applied' => 'required|date',
             'dateofregularization' => 'nullable|date',
             'employment_status' => 'nullable|string|max:255',
+            'DepartmentName' => 'nullable|string|max:255',
             // Family Background
             'family_background.*.name' => 'required|string|max:255',
             'family_background.*.relationship' => 'required|string|max:255',
@@ -161,33 +165,31 @@ class EmployeeController extends Controller
 
         $yearHired = Carbon::parse($request->date_hired)->year;
 
-        // Get the last employee based on the year of hire and sorted by employee number in descending order
-        $lastEmployee = Employee::whereYear('date_hired', $yearHired)
-        ->orderBy('emp_num', 'desc') // Sort by emp_num to get the most recent one
-        ->first();
-
-        // Increment the last employee's employee number or start from 1 if no employee exists
+        // Get the last employee based on employee number sorted in descending order
+        $lastEmployee = Employee::orderBy('emp_num', 'desc')->first();
+        
+        // Increment the last employee's employee number
         $increment = 1;
-
+        
         if ($lastEmployee) {
             // Extract the last 4 digits from the employee number (emp_num)
             $lastEmpNum = $lastEmployee->emp_num;
-            $lastNum = substr($lastEmpNum, -4); // Get the last 4 digits of the emp_num
-
-            // Ensure the extracted number is a valid integer
+            $lastNum = substr($lastEmpNum, -4);    // Get the last 4 digits of the emp_num (e.g., '0007')
+        
+            // Increment the last employee number
             $increment = is_numeric($lastNum) ? (int) $lastNum + 1 : 1;
         }
-
-        // Generate the new employee number
-        $employmentId = sprintf('MTC%04d-%04d', $yearHired, $increment);
-
+        
+        // Generate the new employee number in the desired format: 'mtc{year} - {increment}'
+        $employmentId = sprintf('mtc%04d - %04d', $yearHired, $increment);
+        
         // Check if the employee number already exists in the database
         while (Employee::where('emp_num', $employmentId)->exists()) {
             // If the employee number exists, increment the number and check again
             $increment++;
-            $employmentId = sprintf('MTC%04d-%04d', $yearHired, $increment);
+            $employmentId = sprintf('mtc%04d - %04d', $yearHired, $increment);
         }
-
+        
         // Check for duplicate records
         if (Employee::where('contact_num', $request->contact_num)->exists()) {
             return redirect()->back()->withErrors(['contact_num' => 'The contact number is already associated with another employee.']);
@@ -225,7 +227,7 @@ class EmployeeController extends Controller
             'pag_ibig_num' => $request->pag_ibig_num,
             'philhealth_num' => $request->philhealth_num,
             'tax_status' => $request->tax_status,
-            'created_by' => 1
+            'created_by' => auth()->id()
         ]);
 
         // Automatically create user account
@@ -252,6 +254,7 @@ class EmployeeController extends Controller
             'position' => $request->position,
             'EmploymentStatus' => $request->employment_status,
             'DateOfRegularization' => $dateOfRegularization,
+            'DepartmentName' =>  $request->DepartmentName,
         ]);
 
         // Save educational background
@@ -356,6 +359,7 @@ class EmployeeController extends Controller
         $emergencyContacts = Emergency::where('emp_num', $employee->emp_num)->get();
         $application = Application::where('emp_num', $employee->emp_num)->firstOrFail();
         $company = Company::where('emp_num', $employee->emp_num)->first(); // This might be null
+        $departments = \App\Models\Department::all();
 
         // Ensure $company is always an object, even if it's null
         $company = $company ?? new Company();
@@ -369,7 +373,8 @@ class EmployeeController extends Controller
             'training',
             'emergencyContacts',
             'application',
-            'company' // Now guaranteed to be an object
+            'company',
+            'departments' // Now guaranteed to be an object
         ));
     }
 
@@ -406,6 +411,7 @@ class EmployeeController extends Controller
             'referred_by' => 'nullable|string|max:255',
             'date_applied' => 'required|date',
             'employment_status' => 'nullable|string|max:255',
+            'DepartmentName' => 'nullable|string|max:255',
             // Family Background
             'family_background.*.name' => 'required|string|max:255',
             'family_background.*.relationship' => 'required|string|max:255',
@@ -569,6 +575,7 @@ if ($application) {
         'date_hired' => $request->date_hired,
         'position' => $request->position,
         'EmploymentStatus' => $request->employment_status,
+        'DepartmentName' => $request->DepartmentName,
     ]);
 } else {
     // If no application record exists, you can create a new one (if necessary)

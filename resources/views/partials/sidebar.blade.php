@@ -222,14 +222,14 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#charts">
                   <i class="far fa-chart-bar" style="color: #ffffff;"></i>
-                  <p style="color: #ffffff;">Charts</p>
+                  <p style="color: #ffffff;">Departments</p>
                   <span class="caret" style="color: #ffffff;"></span>
                 </a>
                 <div class="collapse" id="charts">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="charts/charts.html">
-                        <span class="sub-item" style="color: #ffffff;">Chart Js</span>
+                      <a href="{{route('departments.index')}}">
+                        <span class="sub-item" style="color: #ffffff;">Department List</span>
                       </a>
                     </li>
                     <li>

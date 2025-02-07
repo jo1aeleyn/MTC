@@ -21,6 +21,7 @@
         >{{ $employee->first_name }} {{ $employee->surname }}</h6
         >
                 <p class="text-muted mb-1">{{ $employee->application ? $employee->application->position : 'N/A' }}</p>
+                <p class="text-muted mb-1">{{ $employee->application ? $employee->application->DepartmentName : 'N/A' }}</p>
                 <p class="text-muted mb-1">{{ $employee->emp_num }}</p>
                 <p class="text-muted mb-1">{{ $employee->email }}</p>
                 <div class="d-flex justify-content-center mb-2">
