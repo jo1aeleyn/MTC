@@ -9,11 +9,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AnnouncementController;
-<<<<<<< HEAD
 use App\Http\Controllers\OvertimeController;
-=======
 use App\Http\Controllers\DepartmentController;
->>>>>>> 9b2fc90dbe1404ab9d1b5edb95ccd603c445b329
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
