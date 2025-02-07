@@ -227,7 +227,7 @@ public function create()
             'pag_ibig_num' => $request->pag_ibig_num,
             'philhealth_num' => $request->philhealth_num,
             'tax_status' => $request->tax_status,
-            'created_by' => 1
+            'created_by' => auth()->id()
         ]);
 
         // Automatically create user account
