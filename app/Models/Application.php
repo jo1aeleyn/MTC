@@ -18,7 +18,8 @@ class Application extends Model
         'date_hired',
         'position',
         'EmploymentStatus',
-        'DateOfRegularization'
+        'DateOfRegularization',
+        'DepartmentName'
     ];
 
     /**

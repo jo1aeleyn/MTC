@@ -60,11 +60,14 @@ class EmployeeController extends Controller
     return view('employees.index', compact('employees', 'years'));
 }
 
-    public function create()
-    {
-        // Optionally, you can pass data to the view like departments, positions, etc.
-        return view('employees.create');
-    }
+public function create()
+{
+    // Fetch all departments from the Department model
+    $departments = \App\Models\Department::all();
+
+    // Optionally, you can pass other data (positions, etc.) if needed
+    return view('employees.create', compact('departments'));
+}
 
     /**
     * Store a newly created employee record in storage.
@@ -106,6 +109,7 @@ class EmployeeController extends Controller
             'date_applied' => 'required|date',
             'dateofregularization' => 'nullable|date',
             'employment_status' => 'nullable|string|max:255',
+            'DepartmentName' => 'nullable|string|max:255',
             // Family Background
             'family_background.*.name' => 'required|string|max:255',
             'family_background.*.relationship' => 'required|string|max:255',
@@ -252,6 +256,7 @@ class EmployeeController extends Controller
             'position' => $request->position,
             'EmploymentStatus' => $request->employment_status,
             'DateOfRegularization' => $dateOfRegularization,
+            'DepartmentName' => $DepartmentName,
         ]);
 
         // Save educational background
@@ -356,6 +361,7 @@ class EmployeeController extends Controller
         $emergencyContacts = Emergency::where('emp_num', $employee->emp_num)->get();
         $application = Application::where('emp_num', $employee->emp_num)->firstOrFail();
         $company = Company::where('emp_num', $employee->emp_num)->first(); // This might be null
+        $departments = \App\Models\Department::all();
 
         // Ensure $company is always an object, even if it's null
         $company = $company ?? new Company();
@@ -369,7 +375,8 @@ class EmployeeController extends Controller
             'training',
             'emergencyContacts',
             'application',
-            'company' // Now guaranteed to be an object
+            'company',
+            'departments' // Now guaranteed to be an object
         ));
     }
 
@@ -406,6 +413,7 @@ class EmployeeController extends Controller
             'referred_by' => 'nullable|string|max:255',
             'date_applied' => 'required|date',
             'employment_status' => 'nullable|string|max:255',
+            'DepartmentName' => 'nullable|string|max:255',
             // Family Background
             'family_background.*.name' => 'required|string|max:255',
             'family_background.*.relationship' => 'required|string|max:255',
@@ -569,6 +577,7 @@ if ($application) {
         'date_hired' => $request->date_hired,
         'position' => $request->position,
         'EmploymentStatus' => $request->employment_status,
+        'DepartmentName' => $request->DepartmentName,
     ]);
 } else {
     // If no application record exists, you can create a new one (if necessary)
