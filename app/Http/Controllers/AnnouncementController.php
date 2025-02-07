@@ -61,44 +61,49 @@ class AnnouncementController extends Controller
         return view('announcements.show', compact('announcement'));
     }
 
-    public function edit(Announcement $announcement)
+    public function edit($uuid)
     {
+        $announcement = Announcement::where('uuid', $uuid)->firstOrFail(); // Fetch by UUID
         return view('announcements.edit', compact('announcement'));
     }
-
-    public function update(Request $request, Announcement $announcement)
+    
+    public function update(Request $request, $uuid)
     {
-        // Validate the incoming request
+        // Find the announcement using UUID
+        $announcement = Announcement::where('uuid', $uuid)->firstOrFail();
+    
+        // Validate the request data
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
             'category' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate the image
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        // Handle image upload if a new image is uploaded
-        $imagePath = $announcement->image; // Keep the existing image path by default
+    
+        // Handle image upload if a new image is provided
+        $imagePath = $announcement->image; // Keep the existing image if not updated
         if ($request->hasFile('image')) {
             // Delete the old image if it exists
             if ($announcement->image && Storage::exists('public/' . $announcement->image)) {
                 Storage::delete('public/' . $announcement->image);
             }
-
+    
             // Store the new image and get its path
             $imagePath = $request->file('image')->store('announcements', 'public');
         }
-
+    
         // Update the announcement
         $announcement->update([
             'title' => $request->title,
             'content' => $request->content,
             'category' => $request->category,
             'editedBy' => auth()->id(),
-            'image' => $imagePath, // Update the image path
+            'image' => $imagePath, // Update the image path if changed
         ]);
-
+    
         return redirect()->route('announcements.index')->with('success', 'Announcement updated successfully.');
     }
+    
 
     public function archive(Announcement $announcement)
     {

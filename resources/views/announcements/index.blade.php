@@ -62,7 +62,7 @@
                                                         <a class="dropdown-item" href="{{ route('announcements.show', $announcement->id) }}">View</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="{{ route('announcements.edit', $announcement->id) }}">Edit</a>
+                                                        <a class="dropdown-item" href="{{ route('announcements.edit', $announcement->uuid) }}">Edit</a>
                                                     </li>
                                                     <li>
                                                         <form action="{{ route('announcements.archive', $announcement->id) }}" method="POST" id="archiveForm{{ $announcement->id }}" >
