@@ -165,33 +165,31 @@ public function create()
 
         $yearHired = Carbon::parse($request->date_hired)->year;
 
-        // Get the last employee based on the year of hire and sorted by employee number in descending order
-        $lastEmployee = Employee::whereYear('date_hired', $yearHired)
-        ->orderBy('emp_num', 'desc') // Sort by emp_num to get the most recent one
-        ->first();
-
-        // Increment the last employee's employee number or start from 1 if no employee exists
+        // Get the last employee based on employee number sorted in descending order
+        $lastEmployee = Employee::orderBy('emp_num', 'desc')->first();
+        
+        // Increment the last employee's employee number
         $increment = 1;
-
+        
         if ($lastEmployee) {
             // Extract the last 4 digits from the employee number (emp_num)
             $lastEmpNum = $lastEmployee->emp_num;
-            $lastNum = substr($lastEmpNum, -4); // Get the last 4 digits of the emp_num
-
-            // Ensure the extracted number is a valid integer
+            $lastNum = substr($lastEmpNum, -4);    // Get the last 4 digits of the emp_num (e.g., '0007')
+        
+            // Increment the last employee number
             $increment = is_numeric($lastNum) ? (int) $lastNum + 1 : 1;
         }
-
-        // Generate the new employee number
-        $employmentId = sprintf('MTC%04d-%04d', $yearHired, $increment);
-
+        
+        // Generate the new employee number in the desired format: 'mtc{year} - {increment}'
+        $employmentId = sprintf('mtc%04d - %04d', $yearHired, $increment);
+        
         // Check if the employee number already exists in the database
         while (Employee::where('emp_num', $employmentId)->exists()) {
             // If the employee number exists, increment the number and check again
             $increment++;
-            $employmentId = sprintf('MTC%04d-%04d', $yearHired, $increment);
+            $employmentId = sprintf('mtc%04d - %04d', $yearHired, $increment);
         }
-
+        
         // Check for duplicate records
         if (Employee::where('contact_num', $request->contact_num)->exists()) {
             return redirect()->back()->withErrors(['contact_num' => 'The contact number is already associated with another employee.']);
@@ -256,7 +254,7 @@ public function create()
             'position' => $request->position,
             'EmploymentStatus' => $request->employment_status,
             'DateOfRegularization' => $dateOfRegularization,
-            'DepartmentName' => $DepartmentName,
+            'DepartmentName' =>  $request->DepartmentName,
         ]);
 
         // Save educational background
