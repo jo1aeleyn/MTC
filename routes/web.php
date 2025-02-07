@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\DepartmentController;
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
@@ -83,4 +84,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/announcements/{uuid}', [AnnouncementController::class, 'update'])->name('announcements.update');
     Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
     Route::post('/announcements/{announcement}/archive', [AnnouncementController::class, 'archive'])->name('announcements.archive');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+    Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
+    Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
+    Route::get('/departments/{uuid}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
+    Route::put('/departments/{uuid}', [DepartmentController::class, 'update'])->name('departments.update');
+    Route::post('/departments/{uuid}', [DepartmentController::class, 'archive'])->name('departments.archive');
 });
