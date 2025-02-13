@@ -65,15 +65,10 @@
                                             <td>{{ $request->RequestType }}</td>
                                             <td>₱{{ number_format($request->Ammount, 2) }}</td>
                                             <td>
-                                                <span class="badge bg-{{ 
-                                                    $request->status == 'pending' ? 'warning' : 
-                                                    ($request->status == 'approved' ? 'success' : 
-                                                    ($request->status == 'recommended' ? 'warning' : 'danger')) 
-                                                }}">
+                                                <span class="badge bg-{{ $request->status == 'pending' ? 'warning' : ($request->status == 'approved' ? 'success' : 'danger') }}">
                                                     {{ ucfirst($request->status) }}
                                                 </span>
                                             </td>
-
                                             <td>{{ $request->Date->format('Y-m-d') }}</td>
                                             <td>
                                                 <div class="dropdown" style="text-align:center;">
@@ -84,23 +79,19 @@
                                                         <li>
                                                             <a class="dropdown-item" href="{{ route('financial_req.show', $request->id) }}">View</a>
                                                         </li>
-                                                        @if(auth()->user()->user_role == 'Employee User')
+                                                        
                                                         <li>
                                                             <a class="dropdown-item" href="{{ route('financial_req.edit', $request->id) }}">Edit</a>
                                                         </li>
-                                                        @endif
-
-                                                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
-
+                                                      
+                                                      
                                                         <li>
-                                                            <form action="{{ route('financial_req.archive', $request->id) }}" method="POST">
+                                                            <form action="{{ route('financial_req.cancel', $request->id) }}" method="POST">
                                                                 @csrf
                                                                 @method('PUT')
-                                                                <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to archive this request?')">Archive</button>
+                                                                <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to cancel this request?')">Cancel</button>
                                                             </form>
                                                         </li>
-                                                        @endif
-                                            
                                                     </ul>
                                                 </div>
                                             </td>

@@ -66,6 +66,9 @@
                             <textarea name="purpose" id="purpose" class="form-control" rows="3">{{ $financialRequest->purpose }}</textarea>
                         </div>
 
+
+
+                        @if( auth()->user()->user_role == 'Partner')
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
                             <select name="status" id="status" class="form-control">
@@ -74,9 +77,14 @@
                                 <option value="rejected" {{ $financialRequest->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
                             </select>
                         </div>
+                        @endif
+
+
 
                         <button type="submit" class="btn btn-success">Update Request</button>
-                        <a href="{{ route('financial_req.index') }}" class="btn btn-secondary">Cancel</a>
+
+                        <a href="{{ route('financial_req.personalindex') }}" class="btn btn-secondary">Cancel</a>
+
                     </form>
                 </div>
             </div>

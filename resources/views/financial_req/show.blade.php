@@ -51,7 +51,11 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <strong>Status:</strong>
-                            <span class="badge bg-{{ $financialRequest->status == 'pending' ? 'warning' : ($financialRequest->status == 'approved' ? 'success' : 'danger') }}">
+                            <span class="badge bg-{{ 
+                                $financialRequest->status == 'pending' ? 'warning' : 
+                                ($financialRequest->status == 'approved' ? 'success' : 
+                                ($financialRequest->status == 'recommended' ? 'warning' : 'danger')) 
+                            }}">
                                 {{ ucfirst($financialRequest->status) }}
                             </span>
                         </div>
@@ -61,6 +65,7 @@
                         </div>
                     </div>
 
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <strong>Purpose:</strong>
@@ -68,27 +73,44 @@
                         </div>
                     </div>
 
-
-                @if(auth()->user()->user_role == 'HR Admin'||auth()->user()->user_role == 'Partner')
-                    <div class="row mt-4">
-                        <div class="col-md-12 text-end">
-                            <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-success">Approve</button>
-                            </form>
-                            
-                            <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'rejected']) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-danger">Disapprove</button>
-                            </form>
-                            
-                            <a href="{{ route('financial_req.index') }}" class="btn btn-secondary">Back to List</a>
-                        </div>
-                    </div>
-                @endif
-
+                    
+                        
+                            <div class="row mt-4">
+                                <div class="col-md-12 text-end">
+                                @if(auth()->user()->user_role == 'Partner')
+                                     @if($empnum !== $financialRequest->emp_num)
+                                    <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-success">Approve</button>
+                                    </form>
+                                 
+                                    <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'rejected']) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-danger">Disapprove</button>
+                                    </form>
+                                    @endif
+                                    @endif
+                                    @if($empnum !== $financialRequest->emp_num)
+                                    @if(auth()->user()->user_role == 'HR Admin')
+                                    <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'recommended']) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-success">Recommend</button>
+                                    </form>
+                                    <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'declined']) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('PUT')      
+                                        <button type="submit" class="btn btn-danger">Decline</button>
+                                    </form>
+                                    @endif
+                                    @endif
+                                    <a href="{{ route('financial_req.index') }}" class="btn btn-secondary">Back to List</a>
+                                </div>
+                            </div>
+                       
+                    
 
                 </div>
             </div>

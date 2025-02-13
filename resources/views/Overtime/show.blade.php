@@ -2,6 +2,7 @@
 @include('partials.sidebar')
 @include('partials.navbar')
 
+
 <div class="container">
     <div class="page-inner">
         <div class="container mb-5">
@@ -57,7 +58,7 @@
 
             <!-- Back Button -->
             <a href="{{ route('overtime.index') }}" class="btn btn-primary" style="float:right;">Back to Overtime List</a>
-        </div>
+        </div>  
     </div>
 </div>
 

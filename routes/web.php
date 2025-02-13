@@ -109,9 +109,10 @@ Route::delete('overtime/{id}', [OvertimeController::class, 'destroy'])->name('ov
 });
 
 
-
+Route::put('/financial_req/{id}/cancel', [FinancialRequestController::class, 'cancel'])->name('financial_req.cancel');
 Route::put('/financial-req/{id}/status/{status}', [FinancialRequestController::class, 'updateStatus'])->name('financial_req.update_status');
 Route::get('/financial-req', [FinancialRequestController::class, 'index'])->name('financial_req.index');
+Route::get('/financial-req/personalindex', [FinancialRequestController::class, 'personalindex'])->name('financial_req.personalindex');
 Route::get('/financial-req/create', [FinancialRequestController::class, 'create'])->name('financial_req.create');
 Route::post('/financial-req/store', [FinancialRequestController::class, 'store'])->name('financial_req.store');
 Route::get('/financial-req/{id}', [FinancialRequestController::class, 'show'])->name('financial_req.show');

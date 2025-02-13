@@ -154,11 +154,27 @@
                         </a>
                         <div class="collapse" id="subnav2">
                           <ul class="nav nav-collapse subnav">
+                          @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
                             <li>
                               <a href="{{route('financial_req.index')}}">
                                 <span class="sub-item" style="color: #ffffff;">Requests</span>
                               </a>
                             </li>
+                          @endif
+                          @if(auth()->user()->user_role == 'HR Admin')
+                          <li>
+                              <a href="{{route('financial_req.personalindex')}}">
+                                <span class="sub-item" style="color: #ffffff;">My Requests</span>
+                              </a>
+                            </li>
+                            @endif
+                          @if(auth()->user()->user_role == 'Employee User')
+                            <li>
+                              <a href="{{route('financial_req.personalindex')}}">
+                                <span class="sub-item" style="color: #ffffff;">Requests</span>
+                              </a>
+                            </li>
+                          @endif
                             <li>
                               <a href="{{route('financial_req.create')}}">
                                 <span class="sub-item" style="color: #ffffff;">Financial Request Form</span>
@@ -217,10 +233,11 @@
                         <span class="sub-item" style="color: #ffffff;">Post an Announcement</span>
                       </a>
                     </li>
+                    @endif
                   </ul>
                 </div>
               </li>
-              @endif
+              
 
               @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
               <li class="nav-item">

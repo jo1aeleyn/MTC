@@ -15,6 +15,17 @@ class FinancialRequestController extends Controller
         return view('financial_req.index', compact('financialRequests'));
     }
 
+    public function personalindex()
+    {
+        $user = Auth::user();  // Retrieve the authenticated user
+        $uuid = $user->uuid;   // Get the user's uuid
+        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+        $empnum = $employee->emp_num;
+
+        $financialRequests = FinancialReq::where('IsArchived', 0)-> where('emp_num', $empnum)->paginate(10);
+        return view('financial_req.personalindex', compact('financialRequests'));
+    }
+
     public function create()
     {
         return view('financial_req.create');
@@ -56,9 +67,16 @@ class FinancialRequestController extends Controller
 
     public function show($id)
     {
+        $user = Auth::user();
+        $uuid = $user->uuid;
+        $employee = Employee::where('uuid', $uuid)->firstOrFail();
+        $empnum = $employee->emp_num;
+    
         $financialRequest = FinancialReq::findOrFail($id);
-        return view('financial_req.show', compact('financialRequest'));
+        
+        return view('financial_req.show', compact('financialRequest', 'empnum'));
     }
+    
 
         public function edit($id)
     {
@@ -116,6 +134,15 @@ class FinancialRequestController extends Controller
 
         return redirect()->route('financial_req.index')->with('success', 'Financial request archived successfully.');
     }
+    public function cancel($id)
+{
+    $financialRequest = FinancialReq::findOrFail($id);
+    $financialRequest->status = 'cancelled';
+    $financialRequest->save();
+
+    return redirect()->route('financial_req.index')->with('success', 'Financial request cancelled successfully.');
+}
+ 
 
 
 }
