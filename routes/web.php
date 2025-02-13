@@ -12,6 +12,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\FinancialRequestController;
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
@@ -104,3 +105,12 @@ Route::delete('overtime/{id}', [OvertimeController::class, 'destroy'])->name('ov
     Route::put('/departments/{uuid}', [DepartmentController::class, 'update'])->name('departments.update');
     Route::post('/departments/{uuid}', [DepartmentController::class, 'archive'])->name('departments.archive');
 });
+
+
+Route::get('/financial-req', [FinancialRequestController::class, 'index'])->name('financial_req.index');
+Route::get('/financial-req/create', [FinancialRequestController::class, 'create'])->name('financial_req.create');
+Route::post('/financial-req/store', [FinancialRequestController::class, 'store'])->name('financial_req.store');
+Route::get('/financial-req/{id}', [FinancialRequestController::class, 'show'])->name('financial_req.show');
+Route::get('/financial-req/{id}/edit', [FinancialRequestController::class, 'edit'])->name('financial_req.edit');
+Route::put('/financial-req/{id}', [FinancialRequestController::class, 'update'])->name('financial_req.update');
+Route::delete('/financial-req/{id}', [FinancialRequestController::class, 'destroy'])->name('financial_req.destroy');

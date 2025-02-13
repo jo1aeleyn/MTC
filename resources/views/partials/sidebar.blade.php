@@ -110,7 +110,7 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#submenu">
                   <i class="fas fa-bars" style="color: #ffffff;"></i>
-                  <p style="color: #ffffff;">Applications</p>
+                  <p style="color: #ffffff;">Applications/Requests</p>
                   <span class="caret" style="color: #ffffff;"></span>
                 </a>
                 <div class="collapse" id="submenu">
@@ -137,19 +137,24 @@
                     </li>
                     <li>
                         <a data-bs-toggle="collapse" href="#subnav2">
-                          <span class="sub-item" style="color: #ffffff;">Reimbursements</span>
+                          <span class="sub-item" style="color: #ffffff;">Financial Requests</span>
                           <span class="caret" style="color: #ffffff;"></span>
                         </a>
                         <div class="collapse" id="subnav2">
                           <ul class="nav nav-collapse subnav">
                             <li>
                               <a href="#">
-                                <span class="sub-item" style="color: #ffffff;">Pending Reimbursements</span>
+                                <span class="sub-item" style="color: #ffffff;">Reimbursement</span>
                               </a>
                             </li>
                             <li>
                               <a href="#">
-                                <span class="sub-item" style="color: #ffffff;">Reimbursement Form</span>
+                                <span class="sub-item" style="color: #ffffff;">Cash Advance</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <span class="sub-item" style="color: #ffffff;">Liquidation</span>
                               </a>
                             </li>
                           </ul>
@@ -175,26 +180,7 @@
                           </ul>
                         </div>
                       </li>
-                      <li>
-                        <a data-bs-toggle="collapse" href="#subnav4">
-                          <span class="sub-item" style="color: #ffffff;">Cash Advance</span>
-                          <span class="caret" style="color: #ffffff;"></span>
-                        </a>
-                        <div class="collapse" id="subnav4">
-                          <ul class="nav nav-collapse subnav">
-                            <li>
-                              <a href="#">
-                                <span class="sub-item" style="color: #ffffff;">Pending Cash Advance</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <span class="sub-item" style="color: #ffffff;">Cash Advance Request Form</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
+                      
                   </ul>
                 </div>
               </li>
