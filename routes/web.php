@@ -59,6 +59,7 @@ Route::prefix('users')->middleware('auth')->group(function() {
     Route::delete('/{uuid}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/users/{uuid}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
 });
+Route::post('/users/{id}/update-role', [UserController::class, 'updateRole'])->name('users.updateRole');
 
 // Forgot Password
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
@@ -79,6 +80,7 @@ Route::prefix('clients')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
+    Route::get('/announcements/Company Announcement', [AnnouncementController::class, 'companyannouncements'])->name('announcements.companyannouncements');
     Route::get('/announcements/create', [AnnouncementController::class, 'create'])->name('announcements.create');
     Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
     Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])->name('announcements.show');

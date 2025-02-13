@@ -108,21 +108,35 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-8">
-                <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row">
-                      <div class="card-title">Company Announcements</div>
+
+
+                <div class="col-md-8">
+                    <div class="card card-round">
+                        <div class="card-header">
+                            <div class="card-head-row">
+                                <div class="card-title">Company Announcements</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                          <?php if (!empty($announcements) && count($announcements) > 0): ?>
+                              <?php $latestAnnouncement = $announcements->first(); ?>
+                              <?php if (!empty($latestAnnouncement->image)): ?>
+                                  <img src=" {{asset('announcements/' . $latestAnnouncement->image)}}" class="d-block w-100" alt="Announcement Image" style="height: 375px; object-fit: cover;">
+                            
+                                  <?php endif; ?>
+                              <div class="mt-3">
+                              <h5>{!! $latestAnnouncement->title !!}</h5>
+                              <p>{!! Str::limit($latestAnnouncement->content, 100) !!}</p>
+                              </div>
+                          <?php else: ?>
+                              <p>No announcements available.</p>
+                          <?php endif; ?>
+                      </div>
+
+
                     </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart-container" style="min-height: 375px">
-                      <canvas id="statisticsChart"></canvas>
-                    </div>
-                    <div id="myChartLegend"></div>
-                  </div>
                 </div>
-              </div>
+
               <div class="col-md-4">
                 <div class="card card-primary card-round">
                   <div class="card-header">

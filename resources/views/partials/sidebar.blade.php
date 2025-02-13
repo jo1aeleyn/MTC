@@ -1,8 +1,10 @@
+
+
 <div class="wrapper">
       <!-- Sidebar -->
       <div class="sidebar" style="background-color:#326C79 ; color:white">
         <div class="sidebar-logo">
-
+      
         <div style="padding-top:10px;">
           <!-- Logo Header -->
           <div class="logo-header" style="background-color:#326C79">
@@ -41,6 +43,8 @@
                   <i class="fa fa-ellipsis-h" style="color: #ffffff;"></i>
                 </span>
               </li>
+
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
                 <i class="fa-solid fa-user" style="color: #ffffff;"></i>
@@ -62,9 +66,10 @@
                   </ul>
                 </div>
               </li>
+              @endif
 
 
-
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarLayouts">
                   <i class="fas fa-th-list" style="color: #ffffff;"></i>
@@ -86,6 +91,10 @@
                   </ul>
                 </div>
               </li>
+
+              @endif
+
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#forms">
                   <i class="fas fa-pen-square" style="color: #ffffff;"></i>
@@ -107,6 +116,9 @@
                   </ul>
                 </div>
               </li>
+
+              @endif
+             
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#submenu">
                   <i class="fas fa-bars" style="color: #ffffff;"></i>
@@ -198,6 +210,8 @@
                   </ul>
                 </div>
               </li>
+
+              
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#maps">
                   <i class="fas fa-solid fa-bullhorn" style="color: #ffffff;"></i>
@@ -206,6 +220,12 @@
                 </a>
                 <div class="collapse" id="maps">
                   <ul class="nav nav-collapse">
+                  <li>
+                      <a href="{{route('announcements.companyannouncements')}}">
+                        <span class="sub-item" style="color: #ffffff;">Company Announcements</span>
+                      </a>
+                    </li>
+                    @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
                     <li>
                       <a href="{{route('announcements.index')}}">
                         <span class="sub-item" style="color: #ffffff;">Announcements List</span>
@@ -219,6 +239,9 @@
                   </ul>
                 </div>
               </li>
+              @endif
+
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#charts">
                   <i class="far fa-chart-bar" style="color: #ffffff;"></i>
@@ -232,28 +255,29 @@
                         <span class="sub-item" style="color: #ffffff;">Department List</span>
                       </a>
                     </li>
-                    <li>
-                      <a href="charts/sparkline.html">
-                        <span class="sub-item" style="color: #ffffff;">Sparkline</span>
-                      </a>
-                    </li>
                   </ul>
                 </div>
               </li>
+              @endif
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
               <li class="nav-item">
-                <a href="widgets.html">
+                <a href="#">
                   <i class="fas fa-desktop" style="color: #ffffff;"></i>
-                  <p style="color: #ffffff;">Widgets</p>
-                  <span class="badge badge-success" style="color: #ffffff;">4</span>
+                  <p style="color: #ffffff;">Payroll</p>
+                  <!-- <span class="badge badge-success" style="color: #ffffff;">4</span> -->
                 </a>
               </li>
+              @endif
+
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner' || auth()->user()->user_role == 'IT Admin')
               <li class="nav-item">
-                <a href="../../documentation/index.html">
+                <a href="#">
                   <i class="fas fa-file" style="color: #ffffff;" ></i>
-                  <p style="color: #ffffff;" >Documentation</p>
-                  <span class="badge badge-secondary" style="color: #ffffff;">1</span>
+                  <p style="color: #ffffff;" >Audit Logs</p>
+                  <!-- <span class="badge badge-secondary" style="color: #ffffff;">1</span> -->
                 </a>
               </li>
+              @endif
             </ul>
           </div>
         </div>

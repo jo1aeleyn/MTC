@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 
 class UserController extends Controller
@@ -146,4 +147,33 @@ public function resetPassword($uuid)
 
         return redirect()->route('users.index')->with('success', 'User archived successfully.');
     }
+    public function updateRole(Request $request, $id)
+{
+    try {
+        Log::info('Update Role Called', ['id' => $id, 'request' => $request->all()]);
+
+        $request->validate([
+            'role' => 'required|in:Employee User,HR Admin,Partners,Supervisor,IT Admin',
+        ]);
+
+        $user = UserAccount::find($id);
+
+        if (!$user) {
+            Log::error("User not found", ['id' => $id]);
+            return response()->json(['success' => false, 'message' => 'User not found'], 404);
+        }
+
+        $user->user_role = $request->role;
+        $user->save();
+
+        Log::info('User role updated successfully', ['id' => $id, 'role' => $request->role]);
+
+        return response()->json(['success' => true, 'message' => 'User role updated successfully']);
+    } catch (\Exception $e) {
+        Log::error("Error updating role", ['error' => $e->getMessage()]);
+        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+    }
+}
+    
+
 }
