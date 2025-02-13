@@ -29,11 +29,13 @@
                     @endif
 
                     <!-- Container for the button and filter section -->
+
+                    @if(auth()->user()->user_role == 'Employee User')
                     <div class="d-flex justify-content-between mb-3">
                         <!-- Add New Financial Request Button -->
                         <a href="{{ route('financial_req.create') }}" class="btn text-white" style="background-color:#326C79">Add New Financial Request</a>
                     </div>
-
+                    @endif
                     <!-- Financial Requests Table -->
                     <div class="col-md-12">
                         <div class="table-responsive">
@@ -77,16 +79,19 @@
                                                         <li>
                                                             <a class="dropdown-item" href="{{ route('financial_req.show', $request->id) }}">View</a>
                                                         </li>
+                                                        @if(auth()->user()->user_role == 'Employee User')
                                                         <li>
                                                             <a class="dropdown-item" href="{{ route('financial_req.edit', $request->id) }}">Edit</a>
                                                         </li>
+                                                        @endif
                                                         <li>
-                                                            <form action="{{ route('financial_req.destroy', $request->id) }}" method="POST">
+                                                            <form action="{{ route('financial_req.archive', $request->id) }}" method="POST">
                                                                 @csrf
-                                                                @method('DELETE')
-                                                                <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to delete this request?')">Delete</button>
+                                                                @method('PUT')
+                                                                <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to archive this request?')">Archive</button>
                                                             </form>
                                                         </li>
+
                                                     </ul>
                                                 </div>
                                             </td>

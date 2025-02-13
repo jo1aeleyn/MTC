@@ -11,7 +11,7 @@ class FinancialRequestController extends Controller
 {
     public function index()
     {
-        $financialRequests = FinancialReq::paginate(10); // Paginate results
+        $financialRequests = FinancialReq::where('IsArchived', 0)->paginate(10);
         return view('financial_req.index', compact('financialRequests'));
     }
 
@@ -60,32 +60,62 @@ class FinancialRequestController extends Controller
         return view('financial_req.show', compact('financialRequest'));
     }
 
-    public function edit($id)
-{
-    $financialRequest = FinancialReq::findOrFail($id);
-    return view('financial_req.edit', compact('financialRequest'));
-}
+        public function edit($id)
+    {
+        $financialRequest = FinancialReq::findOrFail($id);
+        return view('financial_req.edit', compact('financialRequest'));
+    }
 
-public function update(Request $request, $id)
-{
-    $financialRequest = FinancialReq::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $financialRequest = FinancialReq::findOrFail($id);
 
-    $validated = $request->validate([
-        'Chargeto' => 'nullable|string|max:255',
-        'PaymentForm' => 'nullable|string|max:50',
-        'RequestType' => 'nullable|string|max:100',
-        'Ammount' => 'nullable|numeric',
-        'purpose' => 'nullable|string',
-        'RequestedBy' => 'nullable|string|max:100',
-        'ApprovedBy' => 'nullable|string|max:100',
-        'PaymentReceivedBy' => 'nullable|string|max:100',
-        'Date' => 'nullable|date',
-        'status' => 'nullable|string|max:50',
-    ]);
+        $validated = $request->validate([
+            'Chargeto' => 'nullable|string|max:255',
+            'PaymentForm' => 'nullable|string|max:50',
+            'RequestType' => 'nullable|string|max:100',
+            'Ammount' => 'nullable|numeric',
+            'purpose' => 'nullable|string',
+            'RequestedBy' => 'nullable|string|max:100',
+            'ApprovedBy' => 'nullable|string|max:100',
+            'PaymentReceivedBy' => 'nullable|string|max:100',
+            'Date' => 'nullable|date',
+            'status' => 'nullable|string|max:50',
+        ]);
 
-    $financialRequest->update($validated);
+        $financialRequest->update($validated);
 
-    return redirect()->route('financial_req.index')->with('success', 'Financial Request updated successfully.');
-}
+        return redirect()->route('financial_req.index')->with('success', 'Financial Request updated successfully.');
+    }
+
+    public function updateStatus($id, $status)
+    {
+        $user = Auth::user();  // Retrieve the authenticated user
+        $uuid = $user->uuid;   // Get the user's uuid
+        $employee = Employee::where('uuid', $uuid)->firstOrFail(); // Find the employee
+        $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
+
+        $financialRequest = FinancialReq::findOrFail($id);
+        $financialRequest->status = $status;
+        
+        if ($status == 'approved') {
+            $financialRequest->ApprovedBy = $fullname;  // Set ApprovedBy to the authenticated user's name
+        }
+
+        $financialRequest->save();
+
+        return redirect()->route('financial_req.show', $financialRequest->id)
+                        ->with('success', 'Financial Request status updated to ' . ucfirst($status) . '.');
+    }
+
+    public function archive($id)
+    {
+        $financialRequest = FinancialReq::findOrFail($id);
+        $financialRequest->IsArchived = 1;
+        $financialRequest->save();
+
+        return redirect()->route('financial_req.index')->with('success', 'Financial request archived successfully.');
+    }
+
 
 }

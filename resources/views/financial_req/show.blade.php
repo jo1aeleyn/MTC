@@ -68,12 +68,27 @@
                         </div>
                     </div>
 
+
+                @if(auth()->user()->user_role == 'HR Admin'||auth()->user()->user_role == 'Partner')
                     <div class="row mt-4">
                         <div class="col-md-12 text-end">
+                            <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
+                            
+                            <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'rejected']) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-danger">Disapprove</button>
+                            </form>
+                            
                             <a href="{{ route('financial_req.index') }}" class="btn btn-secondary">Back to List</a>
-                          
                         </div>
                     </div>
+                @endif
+
 
                 </div>
             </div>

@@ -26,7 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Username</th>s
+                                    <th>Username</th>
                                     <th>Profile Picture</th>
                                     <th>Edit Role</th>
                                     <th>Actions</th>
