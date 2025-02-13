@@ -57,8 +57,8 @@
                                             <td>{{ $leave->TotalDays }}</td>
                                             <td>{{ $leave->TypeOfLeave }}</td>
                                             <td>
-                                                <span class="badge bg-{{ $leave->status == 'pending' ? 'warning' : ($leave->status == 'approved' ? 'success' : 'danger') }}">
-                                                    {{ ucfirst($leave->status) }}
+                                                <span class="badge bg-{{ $leave->SStatus == 'pending' ? 'warning' : ($leave->Status == 'approved' ? 'success' : 'danger') }}">
+                                                    {{ ucfirst($leave->Status) }}
                                                 </span>
                                             </td>
                                             <td>

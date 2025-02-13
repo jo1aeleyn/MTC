@@ -66,28 +66,52 @@ class LeavesController extends Controller
         $leave = Leave::findOrFail($id);
         return view('leaves.edit', compact('leave'));
     }
-
-    // Update leave application
+    
     public function update(Request $request, $id)
     {
+        $leave = Leave::findOrFail($id);
+    
         $request->validate([
             'DateOfLeave' => 'required|date',
             'TotalDays' => 'required|integer|min:1',
             'TypeOfLeave' => 'required|string',
-            'OtherLeaveType' => 'nullable|string',
             'Remarks' => 'nullable|string',
+            'Status' => 'required|string|in:Pending,Approved,Disapproved',
         ]);
-
-        $leave = Leave::findOrFail($id);
+    
         $leave->update([
             'DateOfLeave' => $request->DateOfLeave,
             'TotalDays' => $request->TotalDays,
             'TypeOfLeave' => $request->TypeOfLeave,
             'OtherLeaveType' => $request->TypeOfLeave === 'Other Leave' ? $request->OtherLeaveType : null,
             'Remarks' => $request->Remarks,
+            'Status' => $request->Status,
+            'EditedBy' => auth()->user()->id,
         ]);
+    
+        return redirect()->route('leaves.index')->with('success', 'Leave updated successfully.');
+    }
 
-        return redirect()->route('leaves.index')->with('success', 'Leave application updated successfully.');
+    public function updateStatus($id, $status)
+    {
+        // Validate status input
+        if (!in_array($status, ['approved', 'rejected'])) {
+            return redirect()->back()->with('error', 'Invalid status update.');
+        }
+
+        // Find the leave request
+        $leave = Leave::findOrFail($id);
+
+        // Check if the user has permission
+        if (!in_array(Auth::user()->user_role, ['HR Admin', 'Partner'])) {
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        }
+
+        // Update the status
+        $leave->status = $status;
+        $leave->save();
+
+        return redirect()->route('leaves.index')->with('success', "Leave request has been $status.");
     }
 
     // Archive (soft delete) a leave application

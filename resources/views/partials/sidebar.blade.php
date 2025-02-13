@@ -180,7 +180,7 @@
                               </a>
                             </li>
                             <li>
-                              <a href="#">
+                              <a href="{{route('leaves.create')}}">
                                 <span class="sub-item" style="color: #ffffff;">Leave Request Form</span>
                               </a>
                             </li>
