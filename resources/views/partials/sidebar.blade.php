@@ -180,8 +180,8 @@
                         <div class="collapse" id="subnav3">
                           <ul class="nav nav-collapse subnav">
                             <li>
-                              <a href="#">
-                                <span class="sub-item" style="color: #ffffff;">Pending Leaves</span>
+                              <a href="{{route('leaves.index')}}">
+                                <span class="sub-item" style="color: #ffffff;">Leaves Application</span>
                               </a>
                             </li>
                             <li>

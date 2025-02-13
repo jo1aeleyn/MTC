@@ -13,6 +13,8 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FinancialRequestController;
+use App\Http\Controllers\LeavesController;
+
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
 
@@ -116,3 +118,13 @@ Route::get('/financial-req/{id}', [FinancialRequestController::class, 'show'])->
 Route::get('/financial-req/{id}/edit', [FinancialRequestController::class, 'edit'])->name('financial_req.edit');
 Route::put('/financial-req/{id}', [FinancialRequestController::class, 'update'])->name('financial_req.update');
 Route::delete('/financial-req/{id}', [FinancialRequestController::class, 'destroy'])->name('financial_req.destroy');
+
+Route::prefix('leaves')->group(function () {
+    Route::get('/', [LeavesController::class, 'index'])->name('leaves.index'); // List of leaves
+    Route::get('/create', [LeavesController::class, 'create'])->name('leaves.create'); // Show create form
+    Route::post('/store', [LeavesController::class, 'store'])->name('leaves.store'); // Store leave application
+    Route::get('/{id}/edit', [LeavesController::class, 'edit'])->name('leaves.edit'); // Show edit form
+    Route::put('/{id}/update', [LeavesController::class, 'update'])->name('leaves.update'); // Update leave
+    Route::get('/{id}', [LeavesController::class, 'show'])->name('leaves.show'); // Show leave details
+    Route::delete('/{id}/archive', [LeavesController::class, 'archive'])->name('leaves.archive'); // Archive leave
+});
