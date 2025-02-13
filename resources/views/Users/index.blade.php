@@ -10,7 +10,7 @@
                     <li class="breadcrumb-item text-muted">Manage Users</li>
                     <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Users List</li>
                 </ol>
-                </nav>
+            </nav>
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
@@ -26,9 +26,9 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Username</th>
-                                    <th>Role</th>
+                                    <th>Username</th>s
                                     <th>Profile Picture</th>
+                                    <th>Edit Role</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -37,7 +37,6 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $user->username }}</td>
-                                        <td>{{ $user->user_role }}</td>
                                         <td>
                                             @if ($user->profile_picture)
                                                 <img src="{{ asset('profile_pictures/' . $user->profile_picture) }}" width="50" height="50" class="rounded-circle">
@@ -46,27 +45,37 @@
                                             @endif
                                         </td>
                                         <td>
-                                        <div class="dropdown" style="text-align:center;">
-                                            <button  class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $user->id }}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $user->id }}">
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('users.edit', $user->uuid) }}">Edit</a>
-                                                </li>
-                                                <li>
-                                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this user?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                       <button class="dropdown-item" onclick="confirmDelete(event, this)">
-                                                            Archive
-                                                        </button>
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        </td>
+                                        <select class="form-select role-dropdown" data-user-id="{{ $user->id }}">
+                                            <option value="" disabled {{ is_null($user->user_role) ? 'selected' : '' }}>Select User Role</option>
+                                            <option value="Employee User" {{ $user->user_role == 'Employee User' ? 'selected' : '' }}>Employee User</option>
+                                            <option value="HR Admin" {{ $user->user_role == 'HR Admin' ? 'selected' : '' }}>HR Admin</option>
+                                            <option value="Partners" {{ $user->user_role == 'Partners' ? 'selected' : '' }}>Partners</option>
+                                            <option value="Supervisor" {{ $user->user_role == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
+                                            <option value="IT Admin" {{ $user->user_role == 'IT Admin' ? 'selected' : '' }}>IT Admin</option>
+                                        </select>
 
+
+                                        <td>
+                                            <div class="dropdown text-center">
+                                                <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $user->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $user->id }}">
+                                                    <li>
+                                                        <a class="dropdown-item" href="{{ route('users.edit', $user->uuid) }}">Edit</a>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this user?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="dropdown-item" onclick="confirmDelete(event, this)">
+                                                                Archive
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -80,3 +89,5 @@
 </div>
 
 @include('partials.footer')
+
+

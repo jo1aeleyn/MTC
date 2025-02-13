@@ -7,6 +7,7 @@
     <link rel="icon" href="{{ asset('assets/img/mtc/icon.png') }}" type="image/x-icon" />
     <link rel="stylesheet" href="{{ asset('/css/forms.css') }}">
     <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
     <script>

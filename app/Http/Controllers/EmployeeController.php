@@ -238,7 +238,7 @@ public function create()
             'uuid' => $uuid,
             'username' => $username,
             'password' => Hash::make($password),
-            'user_role' => 'employee',
+            'user_role' => 'Employee User',
             'email' => $request->email,
             'created_by' => auth()->id()
         ]);
@@ -344,7 +344,7 @@ public function create()
         }
 
         // Redirect with a success message
-        return redirect()->route('employees.index')->with('success', 'Employee successfully added.');
+     
     }
     public function edit($uuid)
     {
