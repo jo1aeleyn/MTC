@@ -155,18 +155,13 @@
                         <div class="collapse" id="subnav2">
                           <ul class="nav nav-collapse subnav">
                             <li>
-                              <a href="#">
-                                <span class="sub-item" style="color: #ffffff;">Reimbursement</span>
+                              <a href="{{route('financial_req.index')}}">
+                                <span class="sub-item" style="color: #ffffff;">Requests</span>
                               </a>
                             </li>
                             <li>
-                              <a href="#">
-                                <span class="sub-item" style="color: #ffffff;">Cash Advance</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <span class="sub-item" style="color: #ffffff;">Liquidation</span>
+                              <a href="{{route('financial_req.create')}}">
+                                <span class="sub-item" style="color: #ffffff;">Financial Request Form</span>
                               </a>
                             </li>
                           </ul>

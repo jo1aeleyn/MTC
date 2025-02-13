@@ -98,7 +98,7 @@
                         <!-- Submit and Cancel Buttons -->
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn text-white w-auto px-4" style="background-color:#326C79">Submit</button>
-                            <a href="{{ route('financial_req.create') }}" class="btn btn-secondary w-auto px-4 ms-3">Cancel</a>
+                            <a href="{{route('financial_req.index')}}" class="btn btn-secondary w-auto px-4 ms-3">Cancel</a>
                         </div>
                     </form>
                 </div>

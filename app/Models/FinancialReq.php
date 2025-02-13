@@ -24,12 +24,13 @@ class FinancialReq extends Model
         'ApprovedBy',
         'status',
         'PaymentReceivedBy',
-        'Date'
+        'Date',
+        'IsArchived'  // New column
     ];
 
-    // Optionally, if you want to cast some attributes
     protected $casts = [
         'Date' => 'date',
         'Ammount' => 'decimal:2',
+        'IsArchived' => 'boolean',
     ];
 }

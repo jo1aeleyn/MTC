@@ -111,6 +111,8 @@ Route::delete('overtime/{id}', [OvertimeController::class, 'destroy'])->name('ov
 });
 
 
+
+Route::put('/financial-req/{id}/status/{status}', [FinancialRequestController::class, 'updateStatus'])->name('financial_req.update_status');
 Route::get('/financial-req', [FinancialRequestController::class, 'index'])->name('financial_req.index');
 Route::get('/financial-req/create', [FinancialRequestController::class, 'create'])->name('financial_req.create');
 Route::post('/financial-req/store', [FinancialRequestController::class, 'store'])->name('financial_req.store');
@@ -118,6 +120,7 @@ Route::get('/financial-req/{id}', [FinancialRequestController::class, 'show'])->
 Route::get('/financial-req/{id}/edit', [FinancialRequestController::class, 'edit'])->name('financial_req.edit');
 Route::put('/financial-req/{id}', [FinancialRequestController::class, 'update'])->name('financial_req.update');
 Route::delete('/financial-req/{id}', [FinancialRequestController::class, 'destroy'])->name('financial_req.destroy');
+<<<<<<< HEAD
 
 Route::prefix('leaves')->group(function () {
     Route::get('/', [LeavesController::class, 'index'])->name('leaves.index'); // List of leaves
@@ -128,3 +131,6 @@ Route::prefix('leaves')->group(function () {
     Route::get('/{id}', [LeavesController::class, 'show'])->name('leaves.show'); // Show leave details
     Route::delete('/{id}/archive', [LeavesController::class, 'archive'])->name('leaves.archive'); // Archive leave
 });
+=======
+Route::put('/financial_req/{id}/archive', [FinancialRequestController::class, 'archive'])->name('financial_req.archive');
+>>>>>>> 6cae31ed4221bdda7523135b6c65a3411d3b8314
