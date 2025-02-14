@@ -109,7 +109,7 @@
 
                     <div class="row mt-4">
                         <div class="col-md-12 text-end">
-                            @if(auth()->user()->user_role == 'Partner')
+                            @if(auth()->user()->user_role == 'Partners')
                                 @if($empnum !== $leave->emp_num)
                                     <form action="{{ route('leave_requests.update_status', ['id' => $leave->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
                                         @csrf
