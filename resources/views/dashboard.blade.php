@@ -56,8 +56,8 @@
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Subscribers</p>
-                          <h4 class="card-title">1303</h4>
+                          <p class="card-category">Pending Request</p>
+                          <h4 class="card-title">15</h4>
                         </div>
                       </div>
                     </div>
@@ -77,8 +77,8 @@
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                          <p class="card-category">Sales</p>
-                          <h4 class="card-title">$ 1,345</h4>
+                          <p class="card-category">Number of Clients</p>
+                          <h4 class="card-title">{{ $clientCount }}</h4>
                         </div>
                       </div>
                     </div>
