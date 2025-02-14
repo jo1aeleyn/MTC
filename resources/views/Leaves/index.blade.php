@@ -28,11 +28,6 @@
                         </div>
                     @endif
 
-                    <!-- Add New Leave Application Button -->
-                    <div class="d-flex justify-content-between mb-3">
-                        <a href="{{ route('leaves.create') }}" class="btn text-white" style="background-color:#326C79">Apply for Leave</a>
-                    </div>
-
                     <!-- Leave Applications Table -->
                     <div class="col-md-12">
                         <div class="table-responsive">
@@ -57,7 +52,11 @@
                                             <td>{{ $leave->TotalDays }}</td>
                                             <td>{{ $leave->TypeOfLeave }}</td>
                                             <td>
-                                                <span class="badge bg-{{ $leave->SStatus == 'pending' ? 'warning' : ($leave->Status == 'approved' ? 'success' : 'danger') }}">
+                                            <span class="badge bg-{{ 
+                                                    $leave->Status == 'pending' ? 'secondary' : 
+                                                    ($leave->Status == 'approved' ? 'success' : 
+                                                    ($leave->Status == 'recommended' ? 'warning' : 'danger')) 
+                                                }}">
                                                     {{ ucfirst($leave->Status) }}
                                                 </span>
                                             </td>
@@ -70,9 +69,10 @@
                                                         <li>
                                                             <a class="dropdown-item" href="{{ route('leaves.show', $leave->id) }}">View</a>
                                                         </li>
-                                                        <li>
+                                                        <!-- <li>
                                                             <a class="dropdown-item" href="{{ route('leaves.edit', $leave->id) }}">Edit</a>
-                                                        </li>
+                                                        </li> -->
+                                                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
                                                         <li>
                                                             <form action="{{ route('leaves.archive', $leave->id) }}" method="POST">
                                                                 @csrf
@@ -80,6 +80,7 @@
                                                                 <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to delete this application?')">Delete</button>
                                                             </form>
                                                         </li>
+                                                        @endif
                                                     </ul>
                                                 </div>
                                             </td>

@@ -16,6 +16,16 @@
                 <div class="card-body">
                     <h4 class="card-title mb-4">Edit Leave Application</h4>
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form action="{{ route('leaves.update', $leave->id) }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -64,7 +74,7 @@
                                 <textarea class="form-control" name="Remarks">{{ $leave->Remarks }}</textarea>
                             </div>
                         </div>
-
+                        <input type="hidden" name="Status" value="{{ $leave->Status }}">
                         <div class="row mt-4">
                             <div class="col-md-12 text-end">
                                 <button type="submit" class="btn btn-primary">Update Leave</button>

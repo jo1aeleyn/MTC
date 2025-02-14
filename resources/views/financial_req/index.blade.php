@@ -84,11 +84,6 @@
                                                         <li>
                                                             <a class="dropdown-item" href="{{ route('financial_req.show', $request->id) }}">View</a>
                                                         </li>
-                                                        @if(auth()->user()->user_role == 'Employee User')
-                                                        <li>
-                                                            <a class="dropdown-item" href="{{ route('financial_req.edit', $request->id) }}">Edit</a>
-                                                        </li>
-                                                        @endif
 
                                                         @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
 

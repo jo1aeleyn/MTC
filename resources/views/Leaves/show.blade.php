@@ -57,9 +57,11 @@
                         </div>
                     </div>
 
-                    @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+                  
                         <div class="row mt-4">
                             <div class="col-md-12 text-end">
+                            @if(auth()->user()->user_role == 'Partner')
+                            @if($empnum !== $leave->emp_num)
                                 <form action="{{ route('leave_requests.update_status', ['id' => $leave->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('PUT')
@@ -71,11 +73,25 @@
                                     @method('PUT')
                                     <button type="submit" class="btn btn-danger">Disapprove</button>
                                 </form>
-
+                                @endif
+                                    @endif
+                                    @if($empnum !== $leave->emp_num)
+                                    @if(auth()->user()->user_role == 'HR Admin')
+                                    <form action="{{ route('leave_requests.update_status', ['id' => $leave->id, 'status' => 'recommended']) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-success">Recommend</button>
+                                    </form>
+                                    <form action="{{ route('leave_requests.update_status', ['id' => $leave->id, 'status' => 'declined']) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('PUT')      
+                                        <button type="submit" class="btn btn-danger">Decline</button>
+                                    </form>
+                                    @endif
+                                    @endif
                                 <a href="{{ route('leaves.index') }}" class="btn btn-secondary">Back to List</a>
                             </div>
                         </div>
-                    @endif
                 </div>
             </div>
         </div>

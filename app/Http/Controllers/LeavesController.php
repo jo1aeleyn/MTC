@@ -15,6 +15,17 @@ class LeavesController extends Controller
         $leaves = Leave::orderBy('created_at', 'desc')->paginate(10);
         return view('leaves.index', compact('leaves'));
     }
+    public function PersonalLeaves()
+    {
+
+        $user = Auth::user();  // Retrieve the authenticated user
+        $uuid = $user->uuid;   // Get the user's uuid
+        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+        $empnum = $employee->emp_num;
+        
+        $leaves = Leave::where('IsArchived', 0)-> where('emp_num', $empnum)->paginate(10);
+        return view('leaves.PersonalLeaves', compact('leaves'));
+    }
 
     // Show form to create a new leave
     public function create()
@@ -50,14 +61,18 @@ class LeavesController extends Controller
             'Remarks' => $request->Remarks,
         ]);
 
-        return redirect()->route('leaves.index')->with('success', 'Leave application submitted successfully.');
+        return redirect()->route('leaves.PersonalLeaves')->with('success', 'Leave application submitted successfully.');
     }
 
     // Show details of a leave application
     public function show($id)
     {
+        $user = Auth::user();
+        $uuid = $user->uuid;
+        $employee = Employee::where('uuid', $uuid)->firstOrFail();
+        $empnum = $employee->emp_num;
         $leave = Leave::findOrFail($id);
-        return view('leaves.show', compact('leave'));
+        $empnum = $employee->emp_num; return view('leaves.show', compact('leave','empnum'));
     }
 
     // Show edit form for a leave application
@@ -76,7 +91,7 @@ class LeavesController extends Controller
             'TotalDays' => 'required|integer|min:1',
             'TypeOfLeave' => 'required|string',
             'Remarks' => 'nullable|string',
-            'Status' => 'required|string|in:Pending,Approved,Disapproved',
+            'Status' => 'required|string|in:Pending,Approved,Disapproved,Recommended,cancelled,Declined,Rejected',
         ]);
     
         $leave->update([
@@ -94,24 +109,23 @@ class LeavesController extends Controller
 
     public function updateStatus($id, $status)
     {
-        // Validate status input
-        if (!in_array($status, ['approved', 'rejected'])) {
-            return redirect()->back()->with('error', 'Invalid status update.');
-        }
+        
+        $user = Auth::user();  // Retrieve the authenticated user
+        $uuid = $user->uuid;   // Get the user's uuid
+        $employee = Employee::where('uuid', $uuid)->firstOrFail(); // Find the employee
+        $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
 
-        // Find the leave request
         $leave = Leave::findOrFail($id);
-
-        // Check if the user has permission
-        if (!in_array(Auth::user()->user_role, ['HR Admin', 'Partner'])) {
-            return redirect()->back()->with('error', 'Unauthorized action.');
+        $leave->Status = $status;
+        
+        if ($status == 'approved') {
+            $leave->ReviewedBy = $fullname;  // Set ApprovedBy to the authenticated user's name
         }
 
-        // Update the status
-        $leave->status = $status;
         $leave->save();
 
-        return redirect()->route('leaves.index')->with('success', "Leave request has been $status.");
+        return redirect()->route('leaves.index', $leave->id)
+                        ->with('success', "Leave request has been $status.");
     }
 
     // Archive (soft delete) a leave application
@@ -122,4 +136,14 @@ class LeavesController extends Controller
 
         return redirect()->route('leaves.index')->with('success', 'Leave application archived successfully.');
     }
+
+    public function cancel($id)
+    {
+        $leave = Leave::findOrFail($id);
+        $leave->Status = 'cancelled';
+        $leave->save();
+    
+        return redirect()->route('leaves.PersonalLeaves')->with('success', 'Leave request cancelled successfully.');
+    }
+     
 }
