@@ -44,7 +44,7 @@
                                                     $overtime->status == 'pending' ? 'warning' : 
                                                     ($overtime->status == 'approved' ? 'success' : 
                                                     ($overtime->status == 'recommended' ? 'warning' : 'danger')) 
-                                                }}">
+                                                }}">                                    
                                                     {{ ucfirst($overtime->status) }}
                                                 </span>
                                             </td>

@@ -2,42 +2,60 @@
 @include('partials.sidebar')
 @include('partials.navbar')
 
-<link rel="stylesheet" href="{{ asset('assets/css/profilepage.css') }}">
+<link rel="stylesheet" href="{{ asset('css/profilepage.css') }}">
 
 <div class="container">
 <div class="page-inner">
 
-    <div class="row justify-content-center">
-        <div class="col-lg-12">
-            <div class="profile">
-                <div class="profile-head">
-                    <div class="photo-content">
-                        <div class="cover-photo"></div>
-                        <div class="profile-photo text-center">
-                            <img src="{{ asset('Profile_pictures/' . $user->profile_picture) }}" class="img-fluid rounded-circle" alt="">
-                        </div>
-                    </div>
-                    <div class="profile-info">
-                        <div class="row justify-content-center">
-                            <div class="col-12 col-md-10 col-lg-8">
-                                <div class="row">
-                                    <!-- Name Section -->
-                                    <div class="col-12 col-sm-6 col-md-4 border-right-1 prf-col">
-                                        <div class="profile-name">
-                                        <h4 class="text-primary" style="margin-bottom: 5px;">{{ $employee->first_name }} {{ $employee->surname }}</h4>
-                                        <h4 class="text-muted" style="margin-bottom: 5px; ">{{ $employee->email }}</h4>
-                                        <p style="margin-bottom: 0; ">{{ $employee->application ? $employee->application->position : 'N/A' }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+<div class="card">
+  <!-- Background image -->
+  <div class="rounded-top-3" style="background-image: url(../assets/img/bgprofile.png); background-position: center; background-size: cover; background-repeat: no-repeat; height: 300px; "></div>
+  
+  <div class="card-body p-md-5">
+    <div class="d-flex flex-column gap-5">
+      <!-- Profile picture with adjusted position -->
+      <div class="mt-n5" id="profilepic">
+        <img src="{{ asset('Profile_pictures/' . $user->profile_picture) }}" 
+             style="margin-top: -120px; width:15%;" 
+             alt="mentor 1" 
+             class="img-fluid rounded-4">
+      </div>
+      
+      <div class="d-flex flex-column gap-5" style="margin-top: -40px;"  id="profdetails">
+        <div class="d-flex flex-column gap-3">
+          <div class="d-flex flex-md-row flex-column justify-content-between gap-2">
+            <!-- Heading -->
+            <div>
+              <h1 class="mb-0">{{ $employee->first_name }} {{ $employee->surname }}</h1>
+              <!-- Content -->
+              <div class="d-flex flex-lg-row flex-column gap-2">
+                <small class="fw-medium text-gray-800">
+                  {{ $employee->application ? $employee->application->position : 'N/A' }}
+                </small>
+                <small class="fw-medium text-success">
+                  {{ $employee->email }}
+                </small>
+              </div>
             </div>
+          </div>
+          <div class="d-flex flex-md-row flex-column gap-md-4 gap-2">
+            <div class="d-flex flex-row gap-2 align-items-center lh-1">
+              <!-- Icon -->
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-geo-alt-fill text-danger" viewBox="0 0 16 16">
+                  <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"></path>
+                </svg>
+              </span>
+              <!-- Address -->
+              <span>{{ $employee->address }}</span>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</div>
+
 
     <!-- Profile Tab Section -->
     <div class="card">

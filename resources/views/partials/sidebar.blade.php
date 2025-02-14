@@ -264,15 +264,29 @@
                 </div>
               </li>
               @endif
-              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
               <li class="nav-item">
-                <a href="#">
-                  <i class="fas fa-desktop" style="color: #ffffff;"></i>
+                <a data-bs-toggle="collapse" href="#payroll">
+                  <i class="fas fa-solid fa-desktop" style="color: #ffffff;"></i>
                   <p style="color: #ffffff;">Payroll</p>
-                  <!-- <span class="badge badge-success" style="color: #ffffff;">4</span> -->
+                  <span class="caret" style="color: #ffffff;"></span>
                 </a>
+                <div class="collapse" id="payroll">
+                  <ul class="nav nav-collapse">
+                  <li>
+                      <a href="#">
+                        <span class="sub-item" style="color: #ffffff;">Payslip</span>
+                      </a>
+                    </li>
+                    @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+                    <li>
+                      <a href="#">
+                        <span class="sub-item" style="color: #ffffff;">Payroll Management</span>
+                      </a>
+                    </li>
+                    @endif
+                  </ul>
+                </div>
               </li>
-              @endif
 
               @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner' || auth()->user()->user_role == 'IT Admin')
               <li class="nav-item">
