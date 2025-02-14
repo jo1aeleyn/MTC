@@ -11,15 +11,21 @@ use App\Models\Employee;
 
 class OvertimeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
-    {
-        $overtimes = Overtime::where('is_archived', 0)->paginate(10);
-        return view('overtime.index', compact('overtimes'));
+{
+    $user = auth()->user();
+
+    if ($user->user_role == 'HR Admin') {
+        $overtimes = Overtime::where('status', 'pending')->paginate(10);
+    } elseif ($user->user_role == 'Partners') {
+        $overtimes = Overtime::where('status', 'recommended')->paginate(10);
+    } else {
+        $overtimes = Overtime::paginate(10); // Default behavior
     }
-    
+
+    return view('overtime.index', compact('overtimes'));
+}
+
 public function archive(Overtime $overtime)
 {
     // Set the 'is_archived' column to 1

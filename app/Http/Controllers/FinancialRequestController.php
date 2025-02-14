@@ -10,10 +10,27 @@ use Illuminate\Support\Facades\Auth;
 class FinancialRequestController extends Controller
 {
     public function index()
-    {
-        $financialRequests = FinancialReq::where('IsArchived', 0)->paginate(10);
-        return view('financial_req.index', compact('financialRequests'));
+{
+    $user = auth()->user();
+
+    if ($user->role == 'HR Admin') {
+        $financialRequests = FinancialReq::where('IsArchived', 0)
+            ->where('status', 'Pending')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+    } elseif ($user->role == 'Partners') {
+        $financialRequests = FinancialReq::where('IsArchived', 0)
+            ->where('status', 'Recommended')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+    } else {
+        $financialRequests = FinancialReq::where('IsArchived', 0)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
     }
+
+    return view('financial_req.index', compact('financialRequests'));
+}
 
     public function personalindex()
     {
