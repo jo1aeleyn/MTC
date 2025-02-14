@@ -12,9 +12,19 @@ class LeavesController extends Controller
     // Display all leave applications
     public function index()
     {
-        $leaves = Leave::orderBy('created_at', 'desc')->paginate(10);
+        $user = auth()->user();
+    
+        if ($user->user_role == 'HR Admin') {
+            $leaves = Leave::where('Status', 'Pending')->orderBy('created_at', 'desc')->paginate(10);
+        } elseif ($user->user_role == 'Partners') {
+            $leaves = Leave::where('Status', 'recommended')->orderBy('created_at', 'desc')->paginate(10);
+        } else {
+            $leaves = Leave::orderBy('created_at', 'desc')->paginate(10); // Default behavior
+        }
+    
         return view('leaves.index', compact('leaves'));
     }
+    
     public function PersonalLeaves()
     {
 
@@ -145,5 +155,33 @@ class LeavesController extends Controller
     
         return redirect()->route('leaves.PersonalLeaves')->with('success', 'Leave request cancelled successfully.');
     }
-     
+
+    public function leavestore(Request $request, $id)
+    {
+        $leave = Leave::findOrFail($id);
+
+        $request->validate([
+            'LeavesCredits' => 'required|numeric',
+            'WithPay' => 'required|numeric',
+            'WithoutPay' => 'required|numeric',
+            'LessApproedDays' => 'required|numeric',
+            'RemainingLeaves' => 'required|numeric',
+            'FilledUpBy' => 'required|string|max:255',
+            'FilledUpDate' => 'required|date',
+        ]);
+
+        $leave->update([
+            'LeavesCredits' => $request->LeavesCredits,
+            'WithPay' => $request->WithPay,
+            'WithoutPay' => $request->WithoutPay,
+            'LessApproedDays' => $request->LessApproedDays,
+            'RemainingLeaves' => $request->RemainingLeaves,
+            'FilledUpBy' => $request->FilledUpBy,
+            'FilledUpDate' => $request->FilledUpDate,
+            'Status' => 'Recommended',
+        ]);
+
+        return redirect()->route('leaves.index')
+                        ->with('success', 'Leave request has been updated and recommended.');
+    }   
 }

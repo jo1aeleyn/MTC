@@ -132,11 +132,13 @@ Route::prefix('leaves')->group(function () {
     Route::get('/create', [LeavesController::class, 'create'])->name('leaves.create'); // Show create form
     Route::post('/store', [LeavesController::class, 'store'])->name('leaves.store'); // Store leave application
     Route::get('/{id}/edit', [LeavesController::class, 'edit'])->name('leaves.edit'); // Show edit form
-    Route::put('/{id}/show', [LeavesController::class, 'show'])->name('leaves.show'); // Update leave
+    Route::put('/{id}/show', [LeavesController::class, 'show'])->name('leaves.show'); 
     Route::put('/{id}', [LeavesController::class, 'update'])->name('leaves.update');
     Route::get('/{id}', [LeavesController::class, 'show'])->name('leaves.show'); // Show leave details
     Route::delete('/{id}/archive', [LeavesController::class, 'archive'])->name('leaves.archive'); // Archive leave
     Route::put('/leave_requests/{id}/update_status/{status}', [LeavesController::class, 'updateStatus'])->name('leave_requests.update_status');
     Route::put('/leave_requests/{id}/cancel', [LeavesController::class, 'cancel'])->name('leaves.cancel');
+    Route::put('/leave-credits/{id}', [LeavesController::class, 'leavestore'])->name('leave.credits.store');
+
 });
 
