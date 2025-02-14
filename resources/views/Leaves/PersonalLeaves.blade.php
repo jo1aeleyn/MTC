@@ -36,7 +36,7 @@
                     <!-- Leave Applications Table -->
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table id="leaveTable" class="display table table-striped table-hover">
+                            <table id="personalleaveTable" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>

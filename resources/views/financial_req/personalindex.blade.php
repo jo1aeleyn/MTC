@@ -39,7 +39,7 @@
                     <!-- Financial Requests Table -->
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table id="financialReqTable" class="display table table-striped table-hover">
+                            <table id="personalfinancialReqTable" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>
