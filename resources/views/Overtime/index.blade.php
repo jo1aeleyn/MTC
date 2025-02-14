@@ -59,11 +59,12 @@
                                                         <a class="dropdown-item" href="{{ route('overtime.show', $overtime->id) }}">View</a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('overtime.archive', $overtime->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this overtime request?');">
+                                                    <form id="archiveForm{{ $overtime->id }}" action="{{ route('overtime.archive', $overtime->id) }}" method="POST">
                                                             @csrf
                                                             @method('POST')
-                                                            <button class="dropdown-item" type="submit">Archive</button>
+                                                            <button type="button" class="dropdown-item" onclick="confirmArchive({{ $overtime->id }})">Archive</button>
                                                         </form>
+
                                                     </li>
                                                 </ul>
 
@@ -82,7 +83,24 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmArchive(overtimeId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You are about to archive this overtime request.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, archive it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById("archiveForm" + overtimeId).submit();
+            }
+        });
+    }
+</script>
 @include('partials.footer')
 
 

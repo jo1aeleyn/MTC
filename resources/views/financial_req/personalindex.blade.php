@@ -86,11 +86,11 @@
                                                       
                                                       
                                                         <li>
-                                                            <form action="{{ route('financial_req.cancel', $request->id) }}" method="POST">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to cancel this request?')">Cancel</button>
-                                                            </form>
+                                                        <form id="cancelFinancialForm{{ $request->id }}" action="{{ route('financial_req.cancel', $request->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="button" class="dropdown-item" onclick="confirmFinancialCancel({{ $request->id }})">Cancel</button>
+                                                        </form>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -98,7 +98,7 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-                            </table>
+                            </table>s
                         </div>
                     </div>
 
@@ -119,5 +119,21 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmFinancialCancel(requestId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You are about to cancel this financial request.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, cancel it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById("cancelFinancialForm" + requestId).submit();
+            }
+        });
+    }
+</script>
 @include('partials.footer')

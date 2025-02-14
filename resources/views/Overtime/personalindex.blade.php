@@ -56,11 +56,11 @@
                                                         <a class="dropdown-item" href="{{ route('overtime.edit', $overtime->id) }}">Edit</a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('overtime.cancel', $overtime->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this overtime request?');">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button class="dropdown-item" type="submit">Cancel</button>
-                                                        </form>
+                                                    <form id="cancelForm{{ $overtime->id }}" action="{{ route('overtime.cancel', $overtime->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="button" class="dropdown-item" onclick="confirmAction('cancel', {{ $overtime->id }})">Cancel</button>
+                                                    </form>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -78,6 +78,26 @@
         </div>
     </div>
 </div>
+<script>
+    function confirmAction(action, overtimeId) {
+        let actionText = action === 'archive' ? 'archive this overtime request' : 'cancel this overtime request';
+        let confirmButtonText = action === 'archive' ? 'Yes, archive it!' : 'Yes, cancel it!';
+        let formId = action === 'archive' ? 'archiveForm' : 'cancelForm';
 
+        Swal.fire({
+            title: "Are you sure?",
+            text: `You are about to ${actionText}.`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: confirmButtonText
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(formId + overtimeId).submit();
+            }
+        });
+    }
+</script>
 @include('partials.footer')
 

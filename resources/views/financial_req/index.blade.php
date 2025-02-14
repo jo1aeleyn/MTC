@@ -88,11 +88,11 @@
                                                         @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
 
                                                         <li>
-                                                            <form action="{{ route('financial_req.archive', $request->id) }}" method="POST">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to archive this request?')">Archive</button>
-                                                            </form>
+                                                        <form id="archiveFinancialForm{{ $request->id }}" action="{{ route('financial_req.archive', $request->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="button" class="dropdown-item" onclick="confirmFinancialArchive({{ $request->id }})">Archive</button>
+                                                        </form>
                                                         </li>
                                                         @endif
                                             
@@ -123,5 +123,21 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmFinancialArchive(requestId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You are about to archive this financial request.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, archive it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById("archiveFinancialForm" + requestId).submit();
+            }
+        });
+    }
+</script>
 @include('partials.footer')

@@ -162,7 +162,7 @@
                         </a>
                         <div class="collapse" id="subnav2">
                           <ul class="nav nav-collapse subnav">
-                          @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partnerss')
+                          @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                             <li>
                               <a href="{{route('financial_req.index')}}">
                                 <span class="sub-item" style="color: #ffffff;">Requests</span>
