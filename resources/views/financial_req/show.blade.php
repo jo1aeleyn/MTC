@@ -77,7 +77,7 @@
                         
                             <div class="row mt-4">
                                 <div class="col-md-12 text-end">
-                                @if(auth()->user()->user_role == 'Partner')
+                                @if(auth()->user()->user_role == 'Partners')
                                      @if($empnum !== $financialRequest->emp_num)
                                     <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
                                         @csrf

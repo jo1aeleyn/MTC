@@ -72,7 +72,7 @@
                                                         <!-- <li>
                                                             <a class="dropdown-item" href="{{ route('leaves.edit', $leave->id) }}">Edit</a>
                                                         </li> -->
-                                                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+                                                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                                                         <li>
                                                             <form action="{{ route('leaves.archive', $leave->id) }}" method="POST">
                                                                 @csrf
@@ -92,11 +92,11 @@
                     </div>
 
                     <!-- No Records Found Message -->
-                    @if ($leaves->isEmpty())
+                    <!-- @if ($leaves->isEmpty())
                         <div id="noRecordsMessage" class="text-center text-muted mt-3" style="font-size: 18px;">
                             No leave applications found.
                         </div>
-                    @endif
+                    @endif  -->
 
                     <!-- Pagination -->
                     <div class="d-flex justify-content-center mt-3">

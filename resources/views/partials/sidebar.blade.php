@@ -44,7 +44,7 @@
                 </span>
               </li>
 
-              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
                 <i class="fa-solid fa-user" style="color: #ffffff;"></i>
@@ -69,7 +69,7 @@
               @endif
 
 
-              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarLayouts">
                   <i class="fas fa-th-list" style="color: #ffffff;"></i>
@@ -94,7 +94,7 @@
 
               @endif
 
-              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#forms">
                   <i class="fas fa-pen-square" style="color: #ffffff;"></i>
@@ -134,7 +134,7 @@
                       </a>
                       <div class="collapse" id="subnav1">
                         <ul class="nav nav-collapse subnav">
-                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                           <li>
                             <a href="{{route('overtime.index')}}">
                               <span class="sub-item" style="color: #ffffff;">Pending Overtime Request</span>
@@ -162,7 +162,7 @@
                         </a>
                         <div class="collapse" id="subnav2">
                           <ul class="nav nav-collapse subnav">
-                          @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+                          @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partnerss')
                             <li>
                               <a href="{{route('financial_req.index')}}">
                                 <span class="sub-item" style="color: #ffffff;">Requests</span>
@@ -195,7 +195,7 @@
                                 <span class="sub-item" style="color: #ffffff;">My Leaves Application</span>
                               </a>
                             </li>
-                            @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+                            @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                             <li>
                               <a href="{{route('leaves.index')}}">
                                 <span class="sub-item" style="color: #ffffff;">Leaves Application</span>
@@ -229,7 +229,7 @@
                         <span class="sub-item" style="color: #ffffff;">Company Announcements</span>
                       </a>
                     </li>
-                    @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+                    @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                     <li>
                       <a href="{{route('announcements.index')}}">
                         <span class="sub-item" style="color: #ffffff;">Announcements List</span>
@@ -246,7 +246,7 @@
               </li>
               
 
-              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#charts">
                   <i class="far fa-chart-bar" style="color: #ffffff;"></i>
@@ -277,7 +277,7 @@
                         <span class="sub-item" style="color: #ffffff;">Payslip</span>
                       </a>
                     </li>
-                    @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+                    @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                     <li>
                       <a href="#">
                         <span class="sub-item" style="color: #ffffff;">Payroll Management</span>
@@ -288,7 +288,7 @@
                 </div>
               </li>
 
-              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner' || auth()->user()->user_role == 'IT Admin')
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners' || auth()->user()->user_role == 'IT Admin')
               <li class="nav-item">
                 <a href="#">
                   <i class="fas fa-file" style="color: #ffffff;" ></i>

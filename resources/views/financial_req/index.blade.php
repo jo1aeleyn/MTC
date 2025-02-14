@@ -85,7 +85,7 @@
                                                             <a class="dropdown-item" href="{{ route('financial_req.show', $request->id) }}">View</a>
                                                         </li>
 
-                                                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
+                                                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
 
                                                         <li>
                                                             <form action="{{ route('financial_req.archive', $request->id) }}" method="POST">
