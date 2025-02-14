@@ -34,7 +34,13 @@
                                 </div>
                             </div>
                             @else
-                            <p><strong>Approval Status:</strong> Pending</p>
+                            <p><strong>Approval Status:</strong>  <span class="badge bg-{{ 
+                                $overtime->status == 'pending' ? 'warning' : 
+                                ($overtime->status == 'approved' ? 'success' : 
+                                ($overtime->status == 'recommended' ? 'warning' : 'danger')) 
+                            }}">
+                                {{ ucfirst($overtime->status) }}
+                            </span></p>
                             @endif
 
                             <!-- Reason -->
@@ -56,8 +62,43 @@
                 </div>
             </div>
 
-            <!-- Back Button -->
-            <a href="{{ route('overtime.index') }}" class="btn btn-primary" style="float:right;">Back to Overtime List</a>
+
+            @if(auth()->user()->user_role == 'Partner')
+            @if($empnum !== $overtime->emp_num)
+                  <form action="{{ route('overtime.update_status', ['id' => $overtime->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
+                      @csrf
+                      @method('PUT')
+                     <button type="submit" class="btn btn-success">Approve</button>
+                  </form>
+                                 
+                   <form action="{{ route('overtime.update_status', ['id' => $overtime->id, 'status' => 'rejected']) }}" method="POST" class="d-inline">
+                      @csrf
+                      @method('PUT')
+                      <button type="submit" class="btn btn-danger">Reject</button>
+                   </form>
+             @endif
+             @endif
+
+
+            @if($empnum !== $overtime->emp_num)
+            @if(auth()->user()->user_role == 'HR Admin')
+                <form action="{{ route('overtime.update_status', ['id' => $overtime->id, 'status' => 'recommended']) }}" method="POST" class="d-inline">
+                   @csrf
+                   @method('PUT')
+                 <button type="submit" class="btn btn-success">Recommend</button>
+                </form>
+                <form action="{{ route('overtime.update_status', ['id' => $overtime->id, 'status' => 'declined']) }}" method="POST" class="d-inline">
+                   @csrf
+                   @method('PUT')      
+                  <button type="submit" class="btn btn-danger">Decline</button>
+                </form>
+            @endif
+            @endif
+
+
+
+
+            <a href="javascript:history.back();" class="btn btn-primary" style="float:right;">Back to Overtime List</a>
         </div>  
     </div>
 </div>

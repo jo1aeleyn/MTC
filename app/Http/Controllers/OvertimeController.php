@@ -14,13 +14,44 @@ class OvertimeController extends Controller
     /**
      * Display a listing of the resource.
      */
-public function index()
+    public function index()
+    {
+        $overtimes = Overtime::where('is_archived', 0)->paginate(10);
+        return view('overtime.index', compact('overtimes'));
+    }
+    
+public function archive(Overtime $overtime)
 {
-    // Get all overtime records, paginated
-    $overtimes = Overtime::paginate(10);  // Adjust the number of records per page as needed
+    // Set the 'is_archived' column to 1
+    $overtime->update(['is_archived' => 1]);
 
-    // Return the 'index' view with the 'overtimes' variable
-    return view('overtime.index', compact('overtimes'));
+    // Redirect back to the index page with a success message
+    return redirect()->route('overtime.index')->with('success', 'Overtime request archived successfully.');
+}
+
+public function cancel(Overtime $overtime)
+{
+    // Update the 'status' column to 'Cancelled'
+    $overtime->update(['status' => 'Cancelled']);
+
+    // Redirect back with a success message
+    return redirect()->route('overtime.personalindex')->with('message', 'Overtime request has been cancelled successfully.');
+}
+
+
+
+
+public function personalindex()
+{
+
+    $user = Auth::user();  // Retrieve the authenticated user
+    $uuid = $user->uuid;   // Get the user's uuid
+    $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+    $empnum = $employee->emp_num;
+
+    $overtimes = Overtime::where('is_archived', 0)-> where('emp_num', $empnum)->paginate(10);  
+
+    return view('overtime.personalindex', compact('overtimes'));
 }
 
 
@@ -61,23 +92,44 @@ public function index()
         $overtime->updated_at = now();
         $overtime->save();
 
-        return redirect()->route('overtime.index')->with('success', 'Overtime Successfully Requested.');
+        return redirect()->route('overtime.personalindex')->with('success', 'Overtime Successfully Requested.');
     }
 
     public function show($id)
     {
+        
         // Find the overtime request by its ID
         $overtime = Overtime::find($id);
-    
+
+        $user = Auth::user();  // Retrieve the authenticated user
+        $uuid = $user->uuid;   // Get the user's uuid
+        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+        $empnum = $employee->emp_num;
         // If not found, redirect back with an error message
         if (!$overtime) {
             return redirect()->route('overtime.index')->with('error', 'Overtime request not found');
         }
     
         // Return the show view with the overtime request data
-        return view('overtime.show', compact('overtime'));
+        return view('overtime.show', compact('overtime','empnum'));
     }
     
+
+    public function updateStatus($id, $status)
+    {
+        $user = Auth::user();  // Retrieve the authenticated user
+        $uuid = $user->uuid;   // Get the user's uuid
+        $employee = Employee::where('uuid', $uuid)->firstOrFail(); // Find the employee
+
+        $overtime = Overtime::findOrFail($id);
+        $overtime->status = $status;
+        
+
+        $overtime->save();
+
+        return redirect()->route('overtime.index', $overtime->id)
+                        ->with('success', 'overtime status updated to ' . ucfirst($status) . '.');
+    }
     
     /**
  * Show the form for editing the specified resource.

@@ -134,11 +134,19 @@
                       </a>
                       <div class="collapse" id="subnav1">
                         <ul class="nav nav-collapse subnav">
+                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
                           <li>
                             <a href="{{route('overtime.index')}}">
                               <span class="sub-item" style="color: #ffffff;">Pending Overtime Request</span>
                             </a>
                           </li>
+                       @endif
+                          <li>
+                            <a href="{{route('overtime.personalindex')}}">
+                              <span class="sub-item" style="color: #ffffff;">My Overtime Request</span>
+                            </a>
+                          </li>
+                   
                           <li>
                             <a href="{{route('overtime.create')}}">
                               <span class="sub-item" style="color: #ffffff;">Overtime Request Form</span>

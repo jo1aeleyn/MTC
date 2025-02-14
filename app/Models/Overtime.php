@@ -36,7 +36,8 @@ class Overtime extends Model
         'created_by',
         'edited_by',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'status'
     ];
 
     /**

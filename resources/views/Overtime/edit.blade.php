@@ -40,11 +40,6 @@
                 <textarea class="form-control" id="purpose" name="purpose">{{ old('purpose', $overtime->purpose) }}</textarea>
             </div>
 
-            <div class="mb-3">
-                <label for="edited_by" class="form-label">Edited By</label>
-                <input type="text" class="form-control" id="edited_by" name="edited_by" value="{{ old('edited_by', $overtime->edited_by) }}" required>
-            </div>
-
             <button type="submit" class="btn btn-success">Update Overtime Request</button>
         </form>
     </div>

@@ -58,7 +58,7 @@
                         <!-- Submit and Cancel buttons -->
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn text-white w-auto px-4" style="background-color:#326C79">Submit</button>
-                            <a href="{{ route('overtime.index') }}" class="btn btn-secondary w-auto px-4 ms-3">Cancel</a>
+                            <a  href="javascript:history.back();" class="btn btn-secondary w-auto px-4 ms-3">Cancel</a>
                         </div>
                     </form>
                 </div>

@@ -94,7 +94,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+Route::put('/overtime/{id}/status/{status}', [OvertimeController::class, 'updateStatus'])->name('overtime.update_status');
+Route::put('/overtime/{overtime}/cancel', [OvertimeController::class, 'cancel'])->name('overtime.cancel');
+Route::post('/overtime/{overtime}/archive', [OvertimeController::class, 'archive'])->name('overtime.archive');
 Route::get('overtime', [OvertimeController::class, 'index'])->name('overtime.index');
+Route::get('overtime/personalindex', [OvertimeController::class, 'personalindex'])->name('overtime.personalindex');
 Route::get('overtime/create', [OvertimeController::class, 'create'])->name('overtime.create');
 Route::post('overtime', [OvertimeController::class, 'store'])->name('overtime.store');
 Route::get('overtime/{id}', [OvertimeController::class, 'show'])->name('overtime.show');

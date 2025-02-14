@@ -18,7 +18,9 @@
 
             <div class="card">
                 <div class="card-body">
-               
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{{ route('overtime.create') }}" class="btn btn-primary">Create New Overtime Request</a>
+                    </div>
                     <div class="table-responsive">
                         <table id="overtimeTable" class="display table table-striped table-hover">
                             <thead>
@@ -39,15 +41,7 @@
                                         <td>{{ $overtime->emp_name }}</td>
                                         <td>{{ $overtime->client_name }}</td>
                                         <td>{{ $overtime->date_filed }}</td>
-                                        <td>
-                                                <span class="badge bg-{{ 
-                                                    $overtime->status == 'pending' ? 'warning' : 
-                                                    ($overtime->status == 'approved' ? 'success' : 
-                                                    ($overtime->status == 'recommended' ? 'warning' : 'danger')) 
-                                                }}">
-                                                    {{ ucfirst($overtime->status) }}
-                                                </span>
-                                            </td>
+                                        <td>{{ $overtime->status }}</td>
                                         <td>{{ $overtime->requested_by }}</td>
                                         <td>
                                             <div class="dropdown" style="text-align:center;">
@@ -59,14 +53,16 @@
                                                         <a class="dropdown-item" href="{{ route('overtime.show', $overtime->id) }}">View</a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('overtime.archive', $overtime->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this overtime request?');">
+                                                        <a class="dropdown-item" href="{{ route('overtime.edit', $overtime->id) }}">Edit</a>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('overtime.cancel', $overtime->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this overtime request?');">
                                                             @csrf
-                                                            @method('POST')
-                                                            <button class="dropdown-item" type="submit">Archive</button>
+                                                            @method('PUT')
+                                                            <button class="dropdown-item" type="submit">Cancel</button>
                                                         </form>
                                                     </li>
                                                 </ul>
-
                                             </div>
                                         </td>
                                     </tr>

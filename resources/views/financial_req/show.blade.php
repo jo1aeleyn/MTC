@@ -106,8 +106,8 @@
                                     </form>
                                     @endif
                                     @endif
-                                    <a href="{{ route('financial_req.index') }}" class="btn btn-secondary">Back to List</a>
-                                </div>
+                                    <a href="javascript:history.back();" class="btn btn-secondary">Back to List</a>
+                                    </div>
                             </div>
                        
                     
