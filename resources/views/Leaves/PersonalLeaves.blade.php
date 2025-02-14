@@ -96,13 +96,6 @@
                         </div>
                     </div>
 
-                    <!-- No Records Found Message -->
-                    @if ($leaves->isEmpty())
-                        <div id="noRecordsMessage" class="text-center text-muted mt-3" style="font-size: 18px;">
-                            No leave applications found.
-                        </div>
-                    @endif
-
                     <!-- Pagination -->
                     <div class="d-flex justify-content-center mt-3">
                         {{ $leaves->links() }}
