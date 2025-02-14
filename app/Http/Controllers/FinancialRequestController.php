@@ -17,7 +17,7 @@ class FinancialRequestController extends Controller
 
     public function personalindex()
     {
-        $user = Auth::user();  // Retrieve the authenticated user
+        $user = Auth::user();  // Retrieve the authenticated users
         $uuid = $user->uuid;   // Get the user's uuid
         $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
         $empnum = $employee->emp_num;

@@ -161,20 +161,12 @@
                               </a>
                             </li>
                           @endif
-                          @if(auth()->user()->user_role == 'HR Admin')
                           <li>
                               <a href="{{route('financial_req.personalindex')}}">
                                 <span class="sub-item" style="color: #ffffff;">My Requests</span>
                               </a>
                             </li>
-                            @endif
-                          @if(auth()->user()->user_role == 'Employee User')
-                            <li>
-                              <a href="{{route('financial_req.personalindex')}}">
-                                <span class="sub-item" style="color: #ffffff;">Requests</span>
-                              </a>
-                            </li>
-                          @endif
+                           
                             <li>
                               <a href="{{route('financial_req.create')}}">
                                 <span class="sub-item" style="color: #ffffff;">Financial Request Form</span>
@@ -190,11 +182,18 @@
                         </a>
                         <div class="collapse" id="subnav3">
                           <ul class="nav nav-collapse subnav">
+                          <li>
+                              <a href="{{route('leaves.PersonalLeaves')}}">
+                                <span class="sub-item" style="color: #ffffff;">My Leaves Application</span>
+                              </a>
+                            </li>
+                            @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
                             <li>
                               <a href="{{route('leaves.index')}}">
                                 <span class="sub-item" style="color: #ffffff;">Leaves Application</span>
                               </a>
                             </li>
+                            @endif
                             <li>
                               <a href="{{route('leaves.create')}}">
                                 <span class="sub-item" style="color: #ffffff;">Leave Request Form</span>

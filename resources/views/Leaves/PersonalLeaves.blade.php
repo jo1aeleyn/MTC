@@ -10,7 +10,7 @@
             <nav aria-label="breadcrumb" class="mb-3">
                 <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
                     <li class="breadcrumb-item text-muted">Manage Leave Applications</li>
-                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">List of Leave Applications</li>
+                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">My Leave Applications</li>
                 </ol>
             </nav>
             <div class="card">
@@ -27,6 +27,11 @@
                             {{ session('error') }}
                         </div>
                     @endif
+
+                    <!-- Add New Leave Application Button -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <a href="{{ route('leaves.create') }}" class="btn text-white" style="background-color:#326C79">Apply for Leave</a>
+                    </div>
 
                     <!-- Leave Applications Table -->
                     <div class="col-md-12">
@@ -53,12 +58,14 @@
                                             <td>{{ $leave->TypeOfLeave }}</td>
                                             <td>
                                             <span class="badge bg-{{ 
-                                                    $leave->Status == 'pending' ? 'secondary' : 
-                                                    ($leave->Status == 'approved' ? 'success' : 
-                                                    ($leave->Status == 'recommended' ? 'warning' : 'danger')) 
-                                                }}">
-                                                    {{ ucfirst($leave->Status) }}
-                                                </span>
+                                                $leave->Status == 'pending' ? 'warning' : 
+                                                ($leave->Status == 'approved' ? 'success' : 
+                                                ($leave->Status == 'recommended' ? 'warning' : 
+                                                ($leave->Status == 'cancelled' ? 'secondary' : 'danger'))) 
+                                            }}">
+                                                {{ ucfirst($leave->Status) }}
+                                            </span>
+
                                             </td>
                                             <td>
                                                 <div class="dropdown text-center">
@@ -69,18 +76,16 @@
                                                         <li>
                                                             <a class="dropdown-item" href="{{ route('leaves.show', $leave->id) }}">View</a>
                                                         </li>
-                                                        <!-- <li>
-                                                            <a class="dropdown-item" href="{{ route('leaves.edit', $leave->id) }}">Edit</a>
-                                                        </li> -->
-                                                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partner')
                                                         <li>
-                                                            <form action="{{ route('leaves.archive', $leave->id) }}" method="POST">
+                                                            <a class="dropdown-item" href="{{ route('leaves.edit', $leave->id) }}">Edit</a>
+                                                        </li>
+                                                        <li>
+                                                            <form action="{{ route('leaves.cancel', $leave->id) }}" method="POST">
                                                                 @csrf
-                                                                @method('DELETE')
-                                                                <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to delete this application?')">Delete</button>
+                                                                @method('PUT')
+                                                                <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to cancel this request?')">Cancel</button>
                                                             </form>
                                                         </li>
-                                                        @endif
                                                     </ul>
                                                 </div>
                                             </td>

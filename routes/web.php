@@ -110,7 +110,6 @@ Route::delete('overtime/{id}', [OvertimeController::class, 'destroy'])->name('ov
     Route::post('/departments/{uuid}', [DepartmentController::class, 'archive'])->name('departments.archive');
 });
 
-
 Route::put('/financial_req/{id}/cancel', [FinancialRequestController::class, 'cancel'])->name('financial_req.cancel');
 Route::put('/financial-req/{id}/status/{status}', [FinancialRequestController::class, 'updateStatus'])->name('financial_req.update_status');
 Route::get('/financial-req', [FinancialRequestController::class, 'index'])->name('financial_req.index');
@@ -121,16 +120,19 @@ Route::get('/financial-req/{id}', [FinancialRequestController::class, 'show'])->
 Route::get('/financial-req/{id}/edit', [FinancialRequestController::class, 'edit'])->name('financial_req.edit');
 Route::put('/financial-req/{id}', [FinancialRequestController::class, 'update'])->name('financial_req.update');
 Route::delete('/financial-req/{id}', [FinancialRequestController::class, 'destroy'])->name('financial_req.destroy');
+Route::put('/financial_req/{id}/archive', [FinancialRequestController::class, 'archive'])->name('financial_req.archive');
 
 Route::prefix('leaves')->group(function () {
     Route::get('/', [LeavesController::class, 'index'])->name('leaves.index'); // List of leaves
+    Route::get('/PersonalLeaves', [LeavesController::class, 'PersonalLeaves'])->name('leaves.PersonalLeaves');
     Route::get('/create', [LeavesController::class, 'create'])->name('leaves.create'); // Show create form
     Route::post('/store', [LeavesController::class, 'store'])->name('leaves.store'); // Store leave application
     Route::get('/{id}/edit', [LeavesController::class, 'edit'])->name('leaves.edit'); // Show edit form
     Route::put('/{id}/show', [LeavesController::class, 'show'])->name('leaves.show'); // Update leave
-    Route::put('/{id}/update', [LeavesController::class, 'update'])->name('leaves.update'); // Update leave
+    Route::put('/{id}', [LeavesController::class, 'update'])->name('leaves.update');
     Route::get('/{id}', [LeavesController::class, 'show'])->name('leaves.show'); // Show leave details
     Route::delete('/{id}/archive', [LeavesController::class, 'archive'])->name('leaves.archive'); // Archive leave
     Route::put('/leave_requests/{id}/update_status/{status}', [LeavesController::class, 'updateStatus'])->name('leave_requests.update_status');
+    Route::put('/leave_requests/{id}/cancel', [LeavesController::class, 'cancel'])->name('leaves.cancel');
 });
-Route::put('/financial_req/{id}/archive', [FinancialRequestController::class, 'archive'])->name('financial_req.archive');
+

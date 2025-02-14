@@ -16,7 +16,7 @@ class AnnouncementController extends Controller
     $announcements = Announcement::where('IsArchived', 0)->latest()->get();
 
     return view('announcements.index', compact('announcements'));
-}
+}  
 public function companyannouncements()
 {
     // Retrieve announcements where IsArchived is 0, ordered by latest
