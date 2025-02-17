@@ -55,7 +55,7 @@
                                             <span class="badge bg-{{ 
                                                     $leave->Status == 'pending' ? 'secondary' : 
                                                     ($leave->Status == 'approved' ? 'success' : 
-                                                    ($leave->Status == 'recommended' ? 'warning' : 'danger')) 
+                                                    ($leave->Status == 'recommended' ? 'warning' : 'warning')) 
                                                 }}">
                                                     {{ ucfirst($leave->Status) }}
                                                 </span>

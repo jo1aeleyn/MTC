@@ -38,9 +38,10 @@
                     
 
                 <div class="card">
+                <div class="card-header text-white rounded-top p-1 d-flex align-items-center mt-5" style="background-color: #326C79">
+                    <h6 class ="m-1">Client Information</h6>
+                </div>
                     <div class="card-body">
-
-                    <div class="section-title">Client Information</div>
                     <div class="row">
                         <div class="col-md-4">
                             <p><span class="detail-label">Client Type:</span> <span class="detail-value">{{ $client->NewClient ? 'New Client' : 'Old Client '  }}</span></p>
@@ -63,9 +64,10 @@
 
 
                     <div class="card">
+                    <div class="card-header text-white rounded-top p-1 d-flex align-items-center"" style="background-color: #326C79">
+                    <h6 class ="m-1">Client Distribution</h6>
+                </div>
                     <div class="card-body">
-
-                    <div class="section-title">Client Distribution</div>
                     <div class="row">
                         <div class="col-md-6">
                             <p><span class="detail-label">Company Name:</span> <span class="detail-value">{{ $clientDistribution->company_name }}</span></p>
@@ -81,9 +83,11 @@
                     </div>
 
                     <div class="card">
+                    <div class="card-header text-white rounded-top p-1 d-flex align-items-center"" style="background-color: #326C79">
+                    <h6 class ="m-1">Client Service of Invoice</h6>
+                </div>
                     <div class="card-body">
 
-                    <div class="section-title">Client Service of Invoice</div>
                     <div class="row">
                         <div class="col-md-4">
                             <p><span class="detail-label">Tax Identification Number:</span> <span class="detail-value">{{ $clientServiceOfInvoice->tax_identification_number }}</span></p>
@@ -96,7 +100,7 @@
                         </div>
                     </div>
 
-                    <div class="section-title">Required Documents</div>
+                    <div class="section-title" style="color: red;">Required Documents</div>
                     <div class="row">
                         <div class="col-12">
                             @if($client->NewClient== '1')

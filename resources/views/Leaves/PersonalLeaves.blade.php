@@ -61,7 +61,7 @@
                                                 $leave->Status == 'pending' ? 'warning' : 
                                                 ($leave->Status == 'approved' ? 'success' : 
                                                 ($leave->Status == 'recommended' ? 'warning' : 
-                                                ($leave->Status == 'cancelled' ? 'secondary' : 'danger'))) 
+                                                ($leave->Status == 'cancelled' ? 'secondary' : 'warning'))) 
                                             }}">
                                                 {{ ucfirst($leave->Status) }}
                                             </span>

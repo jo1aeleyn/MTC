@@ -43,11 +43,15 @@
                         <p class="fs-5">{{ $leave->Remarks }}</p>
                     </div>
                     <div class="col-md-6">
-                        <strong>Status:</strong>
-                        <span class="badge bg-{{ $leave->Status == 'pending' ? 'warning' : ($leave->Status == 'approved' ? 'success' : 'danger') }} rounded-pill">
-                            {{ ucfirst($leave->Status) }}
-                        </span>
-                    </div>
+                    <strong>Status:</strong>
+                    <span class="badge bg-{{ 
+                        $leave->Status == 'pending' ? 'warning' : 
+                        ($leave->Status == 'approved' ? 'success' : 
+                        ($leave->Status == 'recommended' ? 'warning' : 'danger'))
+                    }} rounded-pill">
+                        {{ ucfirst($leave->Status) }}
+                    </span>
+                </div>  
                 </div>
 
                 <div class="row mb-4">

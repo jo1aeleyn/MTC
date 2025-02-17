@@ -6,7 +6,7 @@
     <div class="page-inner">
         <div class="container mb-5">
             <nav aria-label="breadcrumb" class="mb-3">
-                <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+            <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
                     <li class="breadcrumb-item text-muted">Manage Overtime</li>
                     <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Overtime Requests</li>
                 </ol>
