@@ -46,7 +46,7 @@
 <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
 <!-- Kaiadmin JS -->
-<script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>
+<script src="{{ asset('assets/js/mtcadmin.min.js') }}"></script>
 <script>
   // Function to format the date and time in Philippines time (UTC+8)
   function getFormattedDateTime() {

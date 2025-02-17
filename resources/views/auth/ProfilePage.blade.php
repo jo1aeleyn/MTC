@@ -9,7 +9,7 @@
 
 <div class="card">
   <!-- Background image -->
-  <div class="rounded-top-3" style="background-image: url(../assets/img/bgprofile.png); background-position: center; background-size: cover; background-repeat: no-repeat; height: 300px; "></div>
+  <div class="rounded-top-3" style="background-image: url(../assets/img/mtc/bgprofile.png); background-position: center; background-size: cover; background-repeat: no-repeat; height: 300px; "></div>
   
   <div class="card-body p-md-5">
     <div class="d-flex flex-column gap-5">

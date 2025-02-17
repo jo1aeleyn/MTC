@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>MTCO</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="{{ asset('assets/img/mtc/icon.png') }}" type="image/x-icon" />
+    <link rel="icon" href="{{ asset('assets/img/mtc/mtc logo 1.png') }}" type="image/x-icon" />
     <link rel="stylesheet" href="{{ asset('/css/forms.css') }}">
     <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -30,7 +30,7 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/mtcadmin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/employeeindex.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/usersedit.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/profilepage.css') }}" />
