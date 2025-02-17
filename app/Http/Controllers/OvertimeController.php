@@ -153,34 +153,30 @@ public function create()
 
 
 
-    public function update(Request $request, $uuid)
-    {
-        $overtime = Overtime::find($uuid);
+public function update(Request $request, Overtime $overtime)
+{
+    // The overtime is automatically resolved by the uuid thanks to implicit model binding
 
-        if (!$overtime) {
-            return response()->json(['message' => 'Overtime request not found'], 404);
-        }
+    $request->validate([
+        'emp_name' => 'required|string',
+        'client_name' => 'required|string',
+        'date_filed' => 'required|date',
+        'number_of_hours' => 'required|integer',
+        'purpose' => 'nullable|string',
+    ]);
 
-        $request->validate([
-            'emp_name' => 'required|string',
-            'client_name' => 'required|string',
-            'date_filed' => 'required|date',
-            'number_of_hours' => 'required|integer',
-            'purpose' => 'nullable|string',
-            'edited_by' => 'required|string',
-        ]);
+    $overtime->emp_name = $request->emp_name;
+    $overtime->client_name = $request->client_name;
+    $overtime->date_filed = $request->date_filed;
+    $overtime->number_of_hours = $request->number_of_hours;
+    $overtime->purpose = $request->purpose;
+    $overtime->edited_by = auth::id();
+    $overtime->updated_at = now();
+    $overtime->save();
 
-        $overtime->emp_name = $request->emp_name;
-        $overtime->client_name = $request->client_name;
-        $overtime->date_filed = $request->date_filed;
-        $overtime->number_of_hours = $request->number_of_hours;
-        $overtime->purpose = $request->purpose;
-        $overtime->edited_by = $request->edited_by;
-        $overtime->updated_at = now();
-        $overtime->save();
+    return redirect()->route('overtime.personalindex')->with('success', 'Overtime request updated successfully.');
+}
 
-        return response()->json(['message' => 'Overtime request updated successfully', 'data' => $overtime]);
-    }
 
     /**
      * Remove the specified resource from storage.
