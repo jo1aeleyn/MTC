@@ -48,7 +48,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3>Assign Client to Employee</h3>
+                    <h5>Assign Client to Employee</h5>
                     <form action="{{ route('client.assignment.store') }}" method="POST">
                         @csrf
                         <div class="row">

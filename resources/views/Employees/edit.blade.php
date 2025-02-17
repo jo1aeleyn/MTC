@@ -25,7 +25,7 @@
     @method('PATCH')
     <div class="card">
         <div class="card-body">
-                <h3>Application Details</h3>
+                <h5>Application Details</h5>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="referred_by" class="form-label">Referred By</label>
@@ -126,7 +126,7 @@
                 </div>
 
 
-                <h3>Company Details</h3>
+                <h5>Company Details</h5>
 <div class="row">
     <div class="col-md-6 mb-3">
         <label for="AccessCard_release" class="form-label">Access Card Release Date</label>
@@ -212,7 +212,7 @@
     </div>
 </div>
 
-                <h3>Personal Information</h3>
+                <h5>Personal Information</h5>
 <div class="row">
     <div class="col-md-4 mb-3">
         <label for="surname" class="form-label">Surname</label>
@@ -377,7 +377,7 @@
 
 
                 <div id="familyBackgroundSection">
-                    <h3>Family Background</h3>
+                    <h5>Family Background</h5>
                     <div id="familyBackgroundWrapper">
                         @forelse ($family as $index => $member)
                             <div class="familyBackgroundRow mb-3 row">
@@ -464,7 +464,7 @@
             </div>
 
             <div id="emergencyContactWrapper">
-                <h3>Emergency</h3>
+                <h5>Emergency</h5>
                 @forelse ($emergencyContacts as $index => $contact)
                     <div class="emergencyContactRow mb-3 row">
                         <!-- Name -->
@@ -577,7 +577,7 @@
 
             </div>
 
-        <h3>Employment Information</h3>
+        <h5>Employment Information</h5>
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label for="tin_num" class="form-label">TIN Number</label>
@@ -651,7 +651,7 @@
 
 <!-- Employment History Section -->
 <div class="employment-history">
-    <h3>Employment History</h3>
+    <h5>Employment History</h5>
 
     <!-- Even if no records, display the form -->
     @foreach ($employment as $index => $history)
@@ -894,7 +894,7 @@
 
 
 
-<h3>Educational Background</h3>
+<h5>Educational Background</h5>
 <div id="educational-background">
     @foreach ($education as $edu)
         <div class="educational-background-entry">
@@ -970,7 +970,7 @@
 <button type="button" class="btn btn-secondary mb-3" onclick="addEducationField()" id="add-education-btn">Add More</button>
 
 
-<h3>Training</h3>
+<h5>Training</h5>
 <div id="training">
     @foreach ($training as $train)
         <div class="training-entry">

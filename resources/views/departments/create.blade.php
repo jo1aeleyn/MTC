@@ -26,7 +26,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3>Create Department</h3>
+                    <h5>Create Department</h5>
                     <form action="{{ route('departments.store') }}" method="POST" id="departmentForm">
                         @csrf
                         <div class="mb-3">

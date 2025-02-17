@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Overtime Request</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
+@include('partials.header')
+@include('partials.sidebar')
+@include('partials.navbar')
+
+<div class="container">
+    <div class="page-inner">
+        <div class="container mb-5">
+            <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+                    <li class="breadcrumb-item text-muted">Manage Overtime</li>
+                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Overtime Requests</li>
+                </ol>
+            </nav>
     <div class="container mt-5">
-        <h2>Edit Overtime Request</h2>
+       
         <a href="{{ route('overtime.index') }}" class="btn btn-primary mb-3">Back to Overtime List</a>
 
         <form action="{{ route('overtime.update', $overtime->id) }}" method="POST">
@@ -43,5 +47,10 @@
             <button type="submit" class="btn btn-success">Update Overtime Request</button>
         </form>
     </div>
-</body>
-</html>
+
+    </div>
+</div>
+</div>
+
+
+@include('partials.footer')

@@ -15,7 +15,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3>Announcement Details</h3>
+                    <h5>Announcement Details</h5>
 
                     <div class="mb-3">
                         <label class="form-label">Title:</label>

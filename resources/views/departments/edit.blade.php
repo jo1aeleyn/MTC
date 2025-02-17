@@ -26,7 +26,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3>Edit Department</h3>
+                    <h5>Edit Department</h5>
                     <form action="{{ route('departments.update', $department->uuid) }}" method="POST" id="departmentForm">
                         @csrf
                         @method('PUT') <!-- Indicates this is an update form -->

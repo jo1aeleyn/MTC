@@ -34,7 +34,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3>Client Details</h3>
+                    <h5>Client Details</h5>
                     
 
                 <div class="card">

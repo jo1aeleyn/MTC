@@ -27,7 +27,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3>Create Announcement</h3>
+                    <h5>Create Announcement</h5>
                     <form action="{{ route('announcements.store') }}" method="POST" id="announcementForm" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">

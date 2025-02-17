@@ -27,7 +27,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3>Edit Announcement</h3>
+                    <h5>Edit Announcement</h5>
                     <form action="{{ route('announcements.update', $announcement->uuid) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')

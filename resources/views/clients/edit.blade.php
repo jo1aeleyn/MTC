@@ -49,7 +49,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3>Preparation of Engagement Letter</h3>
+                    <h5>Preparation of Engagement Letter</h5>
                     <form action="{{ route('clients.update', ['uuid' => $client->uuid]) }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -122,7 +122,7 @@
                             </div>
                         </div>
 
-                        <h3>Client Distribution</h3>
+                        <h5>Client Distribution</h5>
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div class="mb-3">
@@ -151,7 +151,7 @@
                             </div>
                         </div>
 
-                        <h3>Client Service of Invoice</h3>
+                        <h5>Client Service of Invoice</h5>
                         <div class="row">
                             <div class="col-12 col-md-4">
                                 <div class="mb-3">

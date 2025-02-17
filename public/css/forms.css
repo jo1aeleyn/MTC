@@ -16,11 +16,12 @@
 
   
 
-  h3 {
-    background-color: #326c79 ;
-    color: white !important;
-    padding: 5px 10px;
-    border-radius: 10px;
-    text-align: center;
-   }
+h5 {
+  background-color: rgba(50, 108, 121, 0.9); /* 0.7 controls the transparency */
+  color: white !important;
+  padding: 5px 10px;
+  border-radius: 20px;
+  text-align: center;
+}
+
    
