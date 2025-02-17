@@ -69,18 +69,19 @@
                                             </td>
                                             <td>
                                                 <div class="dropdown text-center">
-                                                    <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $leave->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $leave->uuid }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $leave->id }}">
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $leave->uuid }}">
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ route('leaves.show', $leave->id) }}">View</a>
+                                                            <a class="dropdown-item" href="{{ route('leaves.show', $leave->uuid) }}">View</a>
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ route('leaves.edit', $leave->id) }}">Edit</a>
+                                                        <a class="dropdown-item" href="{{ route('leaves.edit', $leave->uuid) }}">Edit</a>
+
                                                         </li>
                                                         <li>
-                                                            <form action="{{ route('leaves.cancel', $leave->id) }}" method="POST">
+                                                            <form action="{{ route('leaves.cancel', $leave->uuid) }}" method="POST">
                                                                 @csrf
                                                                 @method('PUT')
                                                                 <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to cancel this request?')">Cancel</button>

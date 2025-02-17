@@ -79,13 +79,13 @@
                                 <div class="col-md-12 text-end">
                                 @if(auth()->user()->user_role == 'Partners')
                                      @if($empnum !== $financialRequest->emp_num)
-                                    <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('financial_req.update_status', ['uuid' => $financialRequest->uuid, 'status' => 'approved']) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-success">Approve</button>
                                     </form>
                                  
-                                    <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'rejected']) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('financial_req.update_status', ['uuid' => $financialRequest->uuid, 'status' => 'rejected']) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-danger">Disapprove</button>
@@ -94,12 +94,12 @@
                                     @endif
                                     @if($empnum !== $financialRequest->emp_num)
                                     @if(auth()->user()->user_role == 'HR Admin')
-                                    <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'recommended']) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('financial_req.update_status', ['uuid' => $financialRequest->uuid, 'status' => 'recommended']) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-success">Recommend</button>
                                     </form>
-                                    <form action="{{ route('financial_req.update_status', ['id' => $financialRequest->id, 'status' => 'declined']) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('financial_req.update_status', ['uuid' => $financialRequest->uuid, 'status' => 'declined']) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('PUT')      
                                         <button type="submit" class="btn btn-danger">Decline</button>

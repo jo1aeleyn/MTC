@@ -12,9 +12,10 @@
                 </ol>
             </nav>
 
-            @if(session('message'))
-                <div class="alert alert-success">{{ session('message') }}</div>
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
             @endif
+
 
             <div class="card">
                 <div class="card-body">
@@ -51,18 +52,19 @@
                                         <td>{{ $overtime->requested_by }}</td>
                                         <td>
                                             <div class="dropdown" style="text-align:center;">
-                                                <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $overtime->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $overtime->uuid  }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $overtime->id }}">
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $overtime->uuid  }}">
                                                     <li>
-                                                        <a class="dropdown-item" href="{{ route('overtime.show', $overtime->id) }}">View</a>
+                                                        <a class="dropdown-item" href="{{ route('overtime.show', $overtime->uuid ) }}">View</a>
                                                     </li>
                                                     <li>
-                                                    <form id="archiveForm{{ $overtime->id }}" action="{{ route('overtime.archive', $overtime->id) }}" method="POST">
+                                                    <form id="archiveForm{{ $overtime->uuid  }}" action="{{ route('overtime.archive', $overtime->uuid ) }}" method="POST">
                                                             @csrf
                                                             @method('POST')
-                                                            <button type="button" class="dropdown-item" onclick="confirmArchive({{ $overtime->id }})">Archive</button>
+                                                            <button type="button" class="dropdown-item" onclick="confirmAction('archive', '{{ $overtime->uuid }}')">Archive</button>
+
                                                         </form>
 
                                                     </li>
@@ -85,18 +87,22 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmArchive(overtimeId) {
+    function confirmAction(action, overtimeUuid) {
+        let actionText = action === 'archive' ? 'archive this overtime request' : 'cancel this overtime request';
+        let confirmButtonText = action === 'archive' ? 'Yes, archive it!' : 'Yes, cancel it!';
+        let formId = action === 'archive' ? 'archiveForm' : 'cancelForm';
+
         Swal.fire({
             title: "Are you sure?",
-            text: "You are about to archive this overtime request.",
+            text: `You are about to ${actionText}.`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, archive it!"
+            confirmButtonText: confirmButtonText
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById("archiveForm" + overtimeId).submit();
+                document.getElementById(formId + overtimeUuid).submit();
             }
         });
     }

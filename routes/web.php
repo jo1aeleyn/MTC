@@ -95,17 +95,17 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-Route::put('/overtime/{id}/status/{status}', [OvertimeController::class, 'updateStatus'])->name('overtime.update_status');
-Route::put('/overtime/{overtime}/cancel', [OvertimeController::class, 'cancel'])->name('overtime.cancel');
-Route::post('/overtime/{overtime}/archive', [OvertimeController::class, 'archive'])->name('overtime.archive');
-Route::get('overtime', [OvertimeController::class, 'index'])->name('overtime.index');
-Route::get('overtime/personalindex', [OvertimeController::class, 'personalindex'])->name('overtime.personalindex');
-Route::get('overtime/create', [OvertimeController::class, 'create'])->name('overtime.create');
-Route::post('overtime', [OvertimeController::class, 'store'])->name('overtime.store');
-Route::get('overtime/{id}', [OvertimeController::class, 'show'])->name('overtime.show');
-Route::get('overtime/{id}/edit', [OvertimeController::class, 'edit'])->name('overtime.edit');
-Route::put('overtime/{id}', [OvertimeController::class, 'update'])->name('overtime.update');
-Route::delete('overtime/{id}', [OvertimeController::class, 'destroy'])->name('overtime.destroy');
+    Route::put('/overtime/{overtime:uuid}/status/{status}', [OvertimeController::class, 'updateStatus'])->name('overtime.update_status');
+    Route::put('/overtime/{overtime:uuid}/cancel', [OvertimeController::class, 'cancel'])->name('overtime.cancel');
+    Route::post('/overtime/{overtime:uuid}/archive', [OvertimeController::class, 'archive'])->name('overtime.archive');
+    Route::get('overtime', [OvertimeController::class, 'index'])->name('overtime.index');
+    Route::get('overtime/personalindex', [OvertimeController::class, 'personalindex'])->name('overtime.personalindex');
+    Route::get('overtime/create', [OvertimeController::class, 'create'])->name('overtime.create');
+    Route::post('overtime', [OvertimeController::class, 'store'])->name('overtime.store');
+    Route::get('overtime/{overtime:uuid}', [OvertimeController::class, 'show'])->name('overtime.show');
+    Route::get('overtime/{overtime:uuid}/edit', [OvertimeController::class, 'edit'])->name('overtime.edit');
+    Route::put('overtime/{overtime:uuid}', [OvertimeController::class, 'update'])->name('overtime.update');
+    Route::delete('overtime/{overtime:uuid}', [OvertimeController::class, 'destroy'])->name('overtime.destroy');
 
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
     Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
@@ -115,33 +115,33 @@ Route::delete('overtime/{id}', [OvertimeController::class, 'destroy'])->name('ov
     Route::post('/departments/{uuid}', [DepartmentController::class, 'archive'])->name('departments.archive');
 });
 
-Route::put('/financial_req/{id}/cancel', [FinancialRequestController::class, 'cancel'])->name('financial_req.cancel');
-Route::put('/financial-req/{id}/status/{status}', [FinancialRequestController::class, 'updateStatus'])->name('financial_req.update_status');
+Route::put('/financial_req/{uuid}/cancel', [FinancialRequestController::class, 'cancel'])->name('financial_req.cancel');
+Route::put('/financial-req/{uuid}/status/{status}', [FinancialRequestController::class, 'updateStatus'])->name('financial_req.update_status');
 Route::get('/financial-req', [FinancialRequestController::class, 'index'])->name('financial_req.index');
 Route::get('/financial-req/personalindex', [FinancialRequestController::class, 'personalindex'])->name('financial_req.personalindex');
 Route::get('/financial-req/create', [FinancialRequestController::class, 'create'])->name('financial_req.create');
 Route::post('/financial-req/store', [FinancialRequestController::class, 'store'])->name('financial_req.store');
-Route::get('/financial-req/{id}', [FinancialRequestController::class, 'show'])->name('financial_req.show');
-Route::get('/financial-req/{id}/edit', [FinancialRequestController::class, 'edit'])->name('financial_req.edit');
-Route::put('/financial-req/{id}', [FinancialRequestController::class, 'update'])->name('financial_req.update');
-Route::delete('/financial-req/{id}', [FinancialRequestController::class, 'destroy'])->name('financial_req.destroy');
-Route::put('/financial_req/{id}/archive', [FinancialRequestController::class, 'archive'])->name('financial_req.archive');
+Route::get('/financial-req/{uuid}', [FinancialRequestController::class, 'show'])->name('financial_req.show');
+Route::get('/financial-req/{uuid}/edit', [FinancialRequestController::class, 'edit'])->name('financial_req.edit');
+Route::put('/financial-req/{uuid}', [FinancialRequestController::class, 'update'])->name('financial_req.update');
+Route::delete('/financial-req/{uuid}', [FinancialRequestController::class, 'destroy'])->name('financial_req.destroy');
+Route::put('/financial_req/{financialRequest}/archive', [FinancialRequestController::class, 'archive'])->name('financial_req.archive');
 
 Route::prefix('leaves')->group(function () {
     Route::get('/', [LeavesController::class, 'index'])->name('leaves.index'); // List of leaves
     Route::get('/PersonalLeaves', [LeavesController::class, 'PersonalLeaves'])->name('leaves.PersonalLeaves');
     Route::get('/create', [LeavesController::class, 'create'])->name('leaves.create'); // Show create form
     Route::post('/store', [LeavesController::class, 'store'])->name('leaves.store'); // Store leave application
-    Route::get('/{id}/edit', [LeavesController::class, 'edit'])->name('leaves.edit'); // Show edit form
-    Route::put('/{id}/show', [LeavesController::class, 'show'])->name('leaves.show'); 
-    Route::put('/{id}', [LeavesController::class, 'update'])->name('leaves.update');
-    Route::get('/{id}', [LeavesController::class, 'show'])->name('leaves.show'); // Show leave details
-    Route::delete('/{id}/archive', [LeavesController::class, 'archive'])->name('leaves.archive'); // Archive leave
-    Route::put('/leave_requests/{id}/update_status/{status}', [LeavesController::class, 'updateStatus'])->name('leave_requests.update_status');
-    Route::put('/leave_requests/{id}/cancel', [LeavesController::class, 'cancel'])->name('leaves.cancel');
-    Route::put('/leave-credits/{id}', [LeavesController::class, 'leavestore'])->name('leave.credits.store');
-
+    Route::get('/{uuid}/edit', [LeavesController::class, 'edit'])->name('leaves.edit');
+    Route::put('/{uuid}/show', [LeavesController::class, 'show'])->name('leaves.show'); 
+    Route::put('/{uuid}', [LeavesController::class, 'update'])->name('leaves.update');
+    Route::get('/{uuid}', [LeavesController::class, 'show'])->name('leaves.show'); // Show leave details
+    Route::put('/{uuid}/archive', [LeavesController::class, 'archive'])->name('leaves.archive');
+    Route::put('/leave_requests/{uuid}/update_status/{status}', [LeavesController::class, 'updateStatus'])->name('leave_requests.update_status');
+    Route::put('/leave_requests/{uuid}/cancel', [LeavesController::class, 'cancel'])->name('leaves.cancel');
+    Route::put('/leave-credits/{uuid}', [LeavesController::class, 'leavestore'])->name('leave.credits.store');
 });
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/client-assignment', [ClientAssignmentController::class, 'index'])->name('client.assignment.index');

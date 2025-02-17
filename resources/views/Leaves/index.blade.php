@@ -62,23 +62,20 @@
                                             </td>
                                             <td>
                                                 <div class="dropdown text-center">
-                                                    <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $leave->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $leave->uuid }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $leave->id }}">
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $leave->uuid }}">
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ route('leaves.show', $leave->id) }}">View</a>
+                                                            <a class="dropdown-item" href="{{ route('leaves.show', $leave->uuid) }}">View</a>
                                                         </li>
-                                                        <!-- <li>
-                                                            <a class="dropdown-item" href="{{ route('leaves.edit', $leave->id) }}">Edit</a>
-                                                        </li> -->
                                                         @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                                                         <li>
-                                                            <form action="{{ route('leaves.archive', $leave->id) }}" method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to delete this application?')">Delete</button>
-                                                            </form>
+                                                        <form id="archiveForm{{ $leave->uuid }}" action="{{ route('leaves.archive', $leave->uuid) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="button" class="dropdown-item" onclick="confirmArchive('{{ $leave->uuid }}')">Archive</button>
+                                                        </form>
                                                         </li>
                                                         @endif
                                                     </ul>
@@ -91,13 +88,6 @@
                         </div>
                     </div>
 
-                    <!-- No Records Found Message -->
-                    <!-- @if ($leaves->isEmpty())
-                        <div id="noRecordsMessage" class="text-center text-muted mt-3" style="font-size: 18px;">
-                            No leave applications found.
-                        </div>
-                    @endif  -->
-
                     <!-- Pagination -->
                     <div class="d-flex justify-content-center mt-3">
                         {{ $leaves->links() }}
@@ -109,4 +99,30 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmArchive(uuid) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you really want to archive this leave request?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, archive it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form if confirmed
+                document.getElementById('archiveForm' + uuid).submit();
+
+                // After submitting, show the success message
+                Swal.fire(
+                    'Archived!',
+                    'The leave request has been archived.',
+                    'success'
+                );
+            }
+        });
+    }
+</script>
+
 @include('partials.footer')

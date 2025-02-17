@@ -72,25 +72,25 @@
                                             <td>{{ $request->Date->format('Y-m-d') }}</td>
                                             <td>
                                                 <div class="dropdown" style="text-align:center;">
-                                                    <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $request->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $request->uuid }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $request->id }}">
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $request->uuid }}">
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ route('financial_req.show', $request->id) }}">View</a>
+                                                            <a class="dropdown-item" href="{{ route('financial_req.show', $request->uuid) }}">View</a>
                                                         </li>
                                                         
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ route('financial_req.edit', $request->id) }}">Edit</a>
+                                                            <a class="dropdown-item" href="{{ route('financial_req.edit', $request->uuid) }}">Edit</a>
                                                         </li>
                                                       
                                                       
                                                         <li>
-                                                        <form id="cancelFinancialForm{{ $request->id }}" action="{{ route('financial_req.cancel', $request->id) }}" method="POST">
+                                                        <form id="cancelFinancialForm{{ $request->uuid }}" action="{{ route('financial_req.cancel', $request->uuid) }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button type="button" class="dropdown-item" onclick="confirmFinancialCancel({{ $request->id }})">Cancel</button>
-                                                        </form>
+                                                            <button type="button" class="dropdown-item" onclick="confirmAction('cancel', '{{ $request->uuid }}')">Cancel</button>
+                                                            </form>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -118,20 +118,23 @@
         </div>
     </div>
 </div>
-
 <script>
-    function confirmFinancialCancel(requestId) {
+    function confirmAction(action, overtimeUuid) {
+        let actionText = action === 'archive' ? 'archive this overtime request' : 'cancel this overtime request';
+        let confirmButtonText = action === 'archive' ? 'Yes, archive it!' : 'Yes, cancel it!';
+        let formId = action === 'archive' ? 'archiveForm' : 'cancelForm';
+
         Swal.fire({
             title: "Are you sure?",
-            text: "You are about to cancel this financial request.",
+            text: `You are about to ${actionText}.`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, cancel it!"
+            confirmButtonText: confirmButtonText
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById("cancelFinancialForm" + requestId).submit();
+                document.getElementById(formId + overtimeUuid).submit();
             }
         });
     }

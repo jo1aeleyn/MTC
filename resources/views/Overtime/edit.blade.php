@@ -15,7 +15,7 @@
        
         <a href="{{ route('overtime.index') }}" class="btn btn-primary mb-3">Back to Overtime List</a>
 
-        <form action="{{ route('overtime.update', $overtime->id) }}" method="POST">
+        <form action="{{ route('overtime.update', $overtime->uuid) }}" method="POST">
             @csrf
             @method('PUT')
 

@@ -75,49 +75,54 @@ class LeavesController extends Controller
     }
 
     // Show details of a leave application
-    public function show($id)
+    public function show($uuid)
     {
         $user = Auth::user();
-        $uuid = $user->uuid;
-        $employee = Employee::where('uuid', $uuid)->firstOrFail();
-        $empnum = $employee->emp_num;
-        $leave = Leave::findOrFail($id);
-        $empnum = $employee->emp_num; return view('leaves.show', compact('leave','empnum'));
+        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+        $leave = Leave::where('uuid', $uuid)->firstOrFail(); // Use uuid instead of id
+        return view('leaves.show', compact('leave'));
     }
 
     // Show edit form for a leave application
-    public function edit($id)
-    {
-        $leave = Leave::findOrFail($id);
-        return view('leaves.edit', compact('leave'));
-    }
-    
-    public function update(Request $request, $id)
-    {
-        $leave = Leave::findOrFail($id);
-    
-        $request->validate([
-            'DateOfLeave' => 'required|date',
-            'TotalDays' => 'required|integer|min:1',
-            'TypeOfLeave' => 'required|string',
-            'Remarks' => 'nullable|string',
-            'Status' => 'required|string|in:Pending,Approved,Disapproved,Recommended,cancelled,Declined,Rejected',
-        ]);
-    
-        $leave->update([
-            'DateOfLeave' => $request->DateOfLeave,
-            'TotalDays' => $request->TotalDays,
-            'TypeOfLeave' => $request->TypeOfLeave,
-            'OtherLeaveType' => $request->TypeOfLeave === 'Other Leave' ? $request->OtherLeaveType : null,
-            'Remarks' => $request->Remarks,
-            'Status' => $request->Status,
-            'EditedBy' => auth()->user()->id,
-        ]);
-    
-        return redirect()->route('leaves.index')->with('success', 'Leave updated successfully.');
+    public function edit($uuid)
+{
+    $leave = Leave::where('uuid', $uuid)->first();
+    if (!$leave) {
+        return redirect()->route('leaves.PersonalLeaves')->with('error', 'Leave not found');
     }
 
-    public function updateStatus($id, $status)
+    return view('leaves.edit', compact('leave'));
+}
+
+
+    
+    public function update(Request $request, $uuid)
+{
+    $leave = Leave::where('uuid', $uuid)->firstOrFail(); // Use uuid instead of id
+ 
+    $request->validate([
+        'DateOfLeave' => 'required|date',
+        'TotalDays' => 'required|integer|min:1',
+        'TypeOfLeave' => 'required|string',
+        'Remarks' => 'nullable|string',
+        'Status' => 'required|string|in:Pending,Approved,Disapproved,Recommended,cancelled,Declined,Rejected',
+    ]);
+ 
+    $leave->update([
+        'DateOfLeave' => $request->DateOfLeave,
+        'TotalDays' => $request->TotalDays,
+        'TypeOfLeave' => $request->TypeOfLeave,
+        'OtherLeaveType' => $request->TypeOfLeave === 'Other Leave' ? $request->OtherLeaveType : null,
+        'Remarks' => $request->Remarks,
+        'Status' => $request->Status,
+        'EditedBy' => auth()->user()->id,
+    ]);
+ 
+    return redirect()->route('leaves.index')->with('success', 'Leave updated successfully.');
+}
+
+
+    public function updateStatus($uuid, $status)
     {
         
         $user = Auth::user();  // Retrieve the authenticated user
@@ -138,27 +143,27 @@ class LeavesController extends Controller
                         ->with('success', "Leave request has been $status.");
     }
 
-    // Archive (soft delete) a leave application
-    public function archive($id)
+    public function archive(Leave $leave)
     {
-        $leave = Leave::findOrFail($id);
-        $leave->delete(); // Soft delete
-
-        return redirect()->route('leaves.index')->with('success', 'Leave application archived successfully.');
+        $leave->update(['IsArchived' => 1]);
+    
+        return redirect()->route('leaves.index')->with('success', 'Leave request archived successfully.');
     }
+    
+    
 
-    public function cancel($id)
+    public function cancel($uuid)
     {
-        $leave = Leave::findOrFail($id);
+        $leave = Leave::findOrFail($uuid);
         $leave->Status = 'cancelled';
         $leave->save();
     
         return redirect()->route('leaves.PersonalLeaves')->with('success', 'Leave request cancelled successfully.');
     }
 
-    public function leavestore(Request $request, $id)
+    public function leavestore(Request $request, $uuid)
     {
-        $leave = Leave::findOrFail($id);
+        $leave = Leave::findOrFail($uuid);
 
         $request->validate([
             'LeavesCredits' => 'required|numeric',

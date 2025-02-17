@@ -65,13 +65,13 @@
 
             @if(auth()->user()->user_role == 'Partner')
             @if($empnum !== $overtime->emp_num)
-                  <form action="{{ route('overtime.update_status', ['id' => $overtime->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
+                  <form action="{{ route('overtime.update_status', ['uuid' => $overtime->uuid, 'status' => 'approved']) }}" method="POST" class="d-inline">
                       @csrf
                       @method('PUT')
                      <button type="submit" class="btn btn-success">Approve</button>
                   </form>
                                  
-                   <form action="{{ route('overtime.update_status', ['id' => $overtime->id, 'status' => 'rejected']) }}" method="POST" class="d-inline">
+                   <form action="{{ route('overtime.update_status', ['uuid' => $overtime->uuid, 'status' => 'rejected']) }}" method="POST" class="d-inline">
                       @csrf
                       @method('PUT')
                       <button type="submit" class="btn btn-danger">Reject</button>
@@ -82,12 +82,12 @@
 
             @if($empnum !== $overtime->emp_num)
             @if(auth()->user()->user_role == 'HR Admin')
-                <form action="{{ route('overtime.update_status', ['id' => $overtime->id, 'status' => 'recommended']) }}" method="POST" class="d-inline">
+                <form action="{{ route('overtime.update_status', ['uuid' => $overtime->uuid, 'status' => 'recommended']) }}" method="POST" class="d-inline">
                    @csrf
                    @method('PUT')
                  <button type="submit" class="btn btn-success">Recommend</button>
                 </form>
-                <form action="{{ route('overtime.update_status', ['id' => $overtime->id, 'status' => 'declined']) }}" method="POST" class="d-inline">
+                <form action="{{ route('overtime.update_status', ['uuid' => $overtime->uuid, 'status' => 'declined']) }}" method="POST" class="d-inline">
                    @csrf
                    @method('PUT')      
                   <button type="submit" class="btn btn-danger">Decline</button>
