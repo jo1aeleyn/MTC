@@ -113,6 +113,11 @@
                         <span class="sub-item" style="color: #ffffff;">Client Information Sheet</span>
                       </a>
                     </li>
+                    <li>
+                      <a href="{{ route('client.assignment.index') }}">
+                        <span class="sub-item" style="color: #ffffff;">Client Assignment</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </li>

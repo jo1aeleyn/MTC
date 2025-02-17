@@ -21,10 +21,11 @@ class Employee extends Model
     /**
      * Get the user associated with the employee.
      */
-    public function user()
-    {
-        return $this->hasOne(UserAccount::class, 'employee_id');
-    }
+   // Employee.php (Model)
+public function user()
+{
+    return $this->belongsTo(UserAccount::class, 'uuid', 'uuid');
+}
 
     /**
      * Get the educational background associated with the employee.

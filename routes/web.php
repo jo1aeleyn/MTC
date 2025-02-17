@@ -14,6 +14,7 @@ use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FinancialRequestController;
 use App\Http\Controllers\LeavesController;
+use App\Http\Controllers\ClientAssignmentController;
 
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
@@ -141,4 +142,14 @@ Route::prefix('leaves')->group(function () {
     Route::put('/leave-credits/{id}', [LeavesController::class, 'leavestore'])->name('leave.credits.store');
 
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/client-assignment', [ClientAssignmentController::class, 'index'])->name('client.assignment.index');
+    Route::get('/client-assignment/create', [ClientAssignmentController::class, 'create'])->name('client.assignment.create');
+    Route::post('/client-assignment', [ClientAssignmentController::class, 'store'])->name('client.assignment.store');
+    Route::get('/client-assignment/{id}/edit', [ClientAssignmentController::class, 'edit'])->name('client.assignment.edit');
+    Route::put('/client-assignment/{id}', [ClientAssignmentController::class, 'update'])->name('client.assignment.update');
+    Route::delete('/client-assignment/{id}', [ClientAssignmentController::class, 'archive'])->name('client.assignment.archive');
+});
+
 
