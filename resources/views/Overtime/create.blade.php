@@ -30,11 +30,17 @@
                     <form action="{{ route('overtime.store') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <!-- Client Name -->
-                            <div class="mb-3 col-6">
-                                <label for="client_name" class="form-label">Client Name</label>
-                                <input type="text" name="client_name" id="client_name" class="form-control" required>
-                            </div>
+                        <div class="mb-3 col-6">
+                            <label for="client_name" class="form-label">Client Name</label>
+                            <select name="client_name" id="client_name" class="form-control" required>
+                                <option value="">Select Client</option>
+                                @foreach($assignedClients as $assignment)
+                                    @if($assignment->client) <!-- Check if the client exists -->
+                                        <option value="{{ $assignment->client->registered_company_name }}">{{ $assignment->client->registered_company_name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
 
                             <!-- Number of Hours -->
                             <div class="mb-3 col-6">

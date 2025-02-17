@@ -21,6 +21,11 @@ class UserAccount extends Authenticatable
     {
         return $this->email;
     }
+// UserAccount.php (Model)
+public function employee()
+{
+    return $this->hasOne(Employee::class, 'uuid', 'uuid');
+}
 
     
 }

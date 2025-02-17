@@ -7,6 +7,7 @@ use App\Models\Overtime; // Import the model
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Employee;
+use App\Models\ClientAssignment;
 
 
 class OvertimeController extends Controller
@@ -151,11 +152,27 @@ public function edit($id)
     return view('overtime.edit', compact('overtime'));
 }
 
+public function create()
+{
+    // Get the logged-in user
+    $user = auth()->user();
 
-    public function create()
-    {
-        return view('overtime.create');
+    // Get the employee's emp_num from the UserAccount model
+    $employee = Employee::where('uuid', $user->uuid)->first();
+
+    if ($employee) {
+        // Get the client assignments where the employee's emp_num matches the client assignment's emp_num
+        $assignedClients = ClientAssignment::where('emp_num', $employee->emp_num)
+            ->with('client')  // Eager load the client details
+            ->get();
+    } else {
+        // If no employee found, set an empty collection
+        $assignedClients = collect();
     }
+
+    // Pass the assigned clients to the view
+    return view('overtime.create', compact('assignedClients'));
+}
 
 
 
