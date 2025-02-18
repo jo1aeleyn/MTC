@@ -15,6 +15,17 @@
             <div class="card-body">
                 <h4 class="card-title mb-4">Leave Request Overview</h4>
 
+                @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <strong>Employee Name:</strong>
@@ -124,8 +135,8 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="LessApproedDays" class="form-label">Less Approved Leave Days:</label>
-                                <input type="text" class="form-control" id="LessApproedDays" name="LessApproedDays">
+                                <label for="LessApprovedDays" class="form-label">Less Approved Leave Days:</label>
+                                <input type="text" class="form-control" id="LessApprovedDays" name="LessApprovedDays">
                             </div>
                         </div>
 
@@ -151,12 +162,12 @@
                 <div class="row mt-4">
                     <div class="col-md-12 text-end">
                         @if(auth()->user()->user_role == 'Partners' && $empnum !== $leave->emp_num)
-                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
+                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->uuid, 'status' => 'approved']) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-success">Approve</button>
                             </form>
-                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->id, 'status' => 'rejected']) }}" method="POST" class="d-inline">
+                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->uuid, 'status' => 'rejected']) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-danger">Disapprove</button>

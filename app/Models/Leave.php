@@ -29,7 +29,7 @@ class Leave extends Model
             $leave->ReviewedBy = $leave->ReviewedBy ?? '';
             $leave->ReviewedDate = $leave->ReviewedDate ?? null;
             $leave->LeavesCredits = $leave->LeavesCredits ?? 0;
-            $leave->LessApproedDays = $leave->LessApproedDays ?? 0;
+            $leave->LessApprovedDays = $leave->LessApproedDays ?? 0;
             $leave->RemainingLeaves = $leave->RemainingLeaves ?? 0;
             $leave->WithPay = $leave->WithPay ?? 0;
             $leave->WithoutPay = $leave->WithoutPay ?? 0;

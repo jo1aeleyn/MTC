@@ -26,6 +26,7 @@
                         </div>
                     @endif
 
+
                     <form action="{{ route('leaves.update', $leave->uuid) }}" method="POST">
                         @csrf
                         @method('PUT')
