@@ -173,11 +173,14 @@
                                 <button type="submit" class="btn btn-danger">Disapprove</button>
                             </form>
                         @endif
-                        <a href="{{ route('leaves.index') }}" class="btn btn-secondary">Back to List</a>
+                        
                     </div>
                 </div>
             </div>
         </div>
+        <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+        Back to Announcements List
+    </a>
     </div>
 </div>
 
