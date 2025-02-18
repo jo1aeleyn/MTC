@@ -40,9 +40,12 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
                             <select name="category" id="category" class="form-select" required>
-                                <option value="a" {{ $announcement->category == 'a' ? 'selected' : '' }}>a</option>
-                                <option value="b" {{ $announcement->category == 'b' ? 'selected' : '' }}>b</option>
-                                <option value="c" {{ $announcement->category == 'c' ? 'selected' : '' }}>c</option>
+                                <option value="a" {{ $announcement->category == 'General Updates' ? 'selected' : '' }}>a</option>
+                                <option value="b" {{ $announcement->category == 'Events' ? 'selected' : '' }}>b</option>
+                                <option value="c" {{ $announcement->category == 'Policy Changes' ? 'selected' : '' }}>c</option>
+                                <option value="a" {{ $announcement->category == 'Employee Recognition' ? 'selected' : '' }}>a</option>
+                                <option value="b" {{ $announcement->category == 'Internal Communications' ? 'selected' : '' }}>b</option>
+                                <option value="c" {{ $announcement->category == 'Legal Updates' ? 'selected' : '' }}>c</option>
                             </select>
                         </div>
 

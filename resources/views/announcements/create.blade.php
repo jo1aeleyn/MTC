@@ -38,9 +38,12 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
                             <select name="category" id="category" class="form-select" required>
-                                <option value="a">a</option>
-                                <option value="b">b</option>
-                                <option value="c">c</option>
+                                <option value="General Updates">General Updates</option>
+                                <option value="Events">Events</option>
+                                <option value="Policy Changes">Policy Changes</option>
+                                <option value="Employee Recognition">Employee Recognition</option>
+                                <option value="Internal Communications">Internal Communications</option>
+                                <option value="Legal Updates">Legal Updates</option>
                             </select>
                         </div>
 
