@@ -201,6 +201,98 @@
     </div>
 </div>
 
+    <div class="col-lg-4">
+        <div class="card mb-4 shadow-lg rounded-3 h-100">
+            <div class="card-header text-white rounded-top p-1 d-flex align-items-center" style="background-color: #326C79">
+                <h6 class ="m-1">Training History</h6>
+            </div>
+            <div class="card-body">
+                @foreach ($employee->training as $train)
+                    <div class="mb-3">
+                        <p><strong>Title:</strong> {{ $train->title }}</p>
+                        <p><strong>Inclusive Dates:</strong> {{ $train->inclusive_dates }}</p>
+                        <p><strong>Conducted By:</strong> {{ $train->conducted_by }}</p>
+                        <p><strong>Venue:</strong> {{ $train->venue }}</p>
+                    </div>
+                    <hr>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+    <div class="card mb-4 shadow-lg rounded-3 h-100 ">
+    <div class="card-header text-white rounded-top p-1 d-flex align-items-center" style="background-color: #326C79">
+    <h6 class ="m-1">Employment History</h6>
+    </div>
+    <div class="card-body">
+        @foreach ($employee->employment as $job)
+            <div class="mb-3">
+                <p><strong>Company:</strong> {{ $job->company }}</p>
+                <p><strong>Position:</strong> {{ $job->position }}</p>
+                <p><strong>Salary:</strong> ₱{{ number_format($job->salary, 2) }}</p>
+                <p><strong>Supervisor:</strong> {{ $job->superior }}</p>
+                <p><strong>Department:</strong> {{ $job->department }}</p>
+                <p><strong>Reason for Leaving:</strong> {{ $job->reason_for_leaving }}</p>
+            </div>
+            <hr class="my-3">
+        @endforeach
+    </div>
+    </div>
+</div>
+</div>
+
+
+<div class="row d-flex align-items-stretch mb-3">
+    <div class="col-lg-6">
+        <div class="card mb-4 shadow-lg rounded-3 h-100">
+            <div class="card-header text-white rounded-top p-1 d-flex align-items-center"" style="background-color: #326C79">
+                <h6 class ="m-1">Family Background</h6>
+            </div>
+            <div class="card-body">
+                @foreach ($employee->family as $familyMember)
+                    <div class="mb-3">
+                        <p><strong>Name:</strong> {{ $familyMember->name }}</p>
+                        <p><strong>Relationship:</strong> {{ $familyMember->relationship }}</p>
+                        <p><strong>Occupation:</strong> {{ $familyMember->occupation }}</p>
+                        <p><strong>Birthdate:</strong> {{ $familyMember->birthdate }}</p>
+                        <p><strong>Contact Number:</strong> {{ $familyMember->phone }}</p>
+                    </div>
+                    <hr class="my-3">
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card mb-4 shadow-lg rounded-3 h-100">
+            <div class="card-header text-white rounded-top p-1 d-flex align-items-center"" style="background-color: #326C79">
+                <h6 class ="m-1">Emergency Contacts</h6>
+            </div>
+            <div class="card-body">
+                @foreach ($employee->emergencyContacts as $contact)
+                    <div class="mb-3">
+                        <p><strong>Name:</strong> {{ $contact->name }}</p>
+                        <p><strong>Relationship:</strong> {{ $contact->relationship }}</p>
+                        <p><strong>Address:</strong> {{ $contact->address }}</p>
+                        <p><strong>Contact Number:</strong> {{ $contact->contact_num }}</p>
+                    </div>
+                    <hr>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+<button id="exportPdf" style="width: 100%; background-color: #326C79; border-color:#326C79; color:white;">Export as PDF</button> -->
+
+    <!-- Back Button -->
+    <a href="{{ route('employees.index') }}" class="btn btn-danger" style="float:right;">Back to Employee List</a>
+</div>
+
+
+</div>
+
+
 @include('partials.footer')
 
 <script>

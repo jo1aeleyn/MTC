@@ -104,7 +104,7 @@
                 @if(auth()->user()->user_role == 'HR Admin')
                     <hr class="my-4">
                     <h5 class="mb-4">Leave Credits Form (To be filled up by Personnel)</h5>
-                    <form method="POST" action="{{ route('leave.credits.store', $leave->id) }}">
+                    <form method="POST" action="{{ route('leave.credits.store', $leave->uuid) }}">
                         @method('PUT')
                         @csrf
                         <div class="row mb-3">
@@ -151,12 +151,12 @@
                 <div class="row mt-4">
                     <div class="col-md-12 text-end">
                         @if(auth()->user()->user_role == 'Partners' && $empnum !== $leave->emp_num)
-                            <form action="{{ route('leave_requests.update_status', ['id' => $leave->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
+                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->id, 'status' => 'approved']) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-success">Approve</button>
                             </form>
-                            <form action="{{ route('leave_requests.update_status', ['id' => $leave->id, 'status' => 'rejected']) }}" method="POST" class="d-inline">
+                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->id, 'status' => 'rejected']) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-danger">Disapprove</button>

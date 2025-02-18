@@ -82,28 +82,32 @@ class FinancialRequestController extends Controller
         return redirect()->route('financial_req.create')->with('success', 'Financial Request created successfully.');
     }
 
-    public function show($id)
+    public function show($uuid)
     {
         $user = Auth::user();
-        $uuid = $user->uuid;
-        $employee = Employee::where('uuid', $uuid)->firstOrFail();
+        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
         $empnum = $employee->emp_num;
     
-        $financialRequest = FinancialReq::findOrFail($id);
-        
+        // Fetch the FinancialReq by its UUID
+        $financialRequest = FinancialReq::where('uuid', $uuid)->firstOrFail();
+    
         return view('financial_req.show', compact('financialRequest', 'empnum'));
     }
     
+    
 
-        public function edit($id)
+    public function edit($uuid)
     {
-        $financialRequest = FinancialReq::findOrFail($id);
+        // Fetch the FinancialReq by its UUID
+        $financialRequest = FinancialReq::where('uuid', $uuid)->firstOrFail();
+        
         return view('financial_req.edit', compact('financialRequest'));
     }
+    
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {
-        $financialRequest = FinancialReq::findOrFail($id);
+        $financialRequest = FinancialReq::findOrFail($uuid);
 
         $validated = $request->validate([
             'Chargeto' => 'nullable|string|max:255',
@@ -123,14 +127,14 @@ class FinancialRequestController extends Controller
         return redirect()->route('financial_req.index')->with('success', 'Financial Request updated successfully.');
     }
 
-    public function updateStatus($id, $status)
+    public function updateStatus($uuid, $status)
     {
         $user = Auth::user();  // Retrieve the authenticated user
         $uuid = $user->uuid;   // Get the user's uuid
         $employee = Employee::where('uuid', $uuid)->firstOrFail(); // Find the employee
         $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
 
-        $financialRequest = FinancialReq::findOrFail($id);
+        $financialRequest = FinancialReq::findOrFail($uuid);
         $financialRequest->status = $status;
         
         if ($status == 'approved') {
@@ -143,17 +147,21 @@ class FinancialRequestController extends Controller
                         ->with('success', 'Financial Request status updated to ' . ucfirst($status) . '.');
     }
 
-    public function archive($id)
+    public function archive(FinancialReq $financialRequest)
     {
-        $financialRequest = FinancialReq::findOrFail($id);
-        $financialRequest->IsArchived = 1;
-        $financialRequest->save();
-
+        // Update the IsArchived field to 1 (indicating archived)
+        $financialRequest->update(['IsArchived' => 1]);
+    
+        // Redirect back to the financial request index page with a success message
         return redirect()->route('financial_req.index')->with('success', 'Financial request archived successfully.');
     }
-    public function cancel($id)
+    
+
+
+
+    public function cancel($uuid)
 {
-    $financialRequest = FinancialReq::findOrFail($id);
+    $financialRequest = FinancialReq::findOrFail($uuid);
     $financialRequest->status = 'cancelled';
     $financialRequest->save();
 

@@ -28,22 +28,19 @@ class OvertimeController extends Controller
 }
 
 public function archive(Overtime $overtime)
-{
-    // Set the 'is_archived' column to 1
-    $overtime->update(['is_archived' => 1]);
+    {
+        $overtime->update(['is_archived' => 1]);
 
-    // Redirect back to the index page with a success message
-    return redirect()->route('overtime.index')->with('success', 'Overtime request archived successfully.');
-}
+        return redirect()->route('overtime.index')->with('success', 'Overtime request archived successfully.');
+    }
 
-public function cancel(Overtime $overtime)
-{
-    // Update the 'status' column to 'Cancelled'
-    $overtime->update(['status' => 'Cancelled']);
+    public function cancel(Overtime $overtime)
+    {
+        $overtime->update(['status' => 'Cancelled']);
 
-    // Redirect back with a success message
-    return redirect()->route('overtime.personalindex')->with('message', 'Overtime request has been cancelled successfully.');
-}
+        return redirect()->route('overtime.personalindex')->with('message', 'Overtime request has been cancelled successfully.');
+    }
+
 
 
 
@@ -102,52 +99,32 @@ public function personalindex()
         return redirect()->route('overtime.personalindex')->with('success', 'Overtime Successfully Requested.');
     }
 
-    public function show($id)
+    public function show(Overtime $overtime)
     {
-        
-        // Find the overtime request by its ID
-        $overtime = Overtime::find($id);
-
         $user = Auth::user();  // Retrieve the authenticated user
-        $uuid = $user->uuid;   // Get the user's uuid
         $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
         $empnum = $employee->emp_num;
-        // If not found, redirect back with an error message
-        if (!$overtime) {
-            return redirect()->route('overtime.index')->with('error', 'Overtime request not found');
-        }
     
         // Return the show view with the overtime request data
-        return view('overtime.show', compact('overtime','empnum'));
+        return view('overtime.show', compact('overtime', 'empnum'));
     }
     
 
-    public function updateStatus($id, $status)
+    public function updateStatus($uuid, $status)
     {
-        $user = Auth::user();  // Retrieve the authenticated user
-        $uuid = $user->uuid;   // Get the user's uuid
-        $employee = Employee::where('uuid', $uuid)->firstOrFail(); // Find the employee
-
-        $overtime = Overtime::findOrFail($id);
+        $overtime = Overtime::where('uuid', $uuid)->firstOrFail();
         $overtime->status = $status;
-        
-
         $overtime->save();
 
-        return redirect()->route('overtime.index', $overtime->id)
-                        ->with('success', 'overtime status updated to ' . ucfirst($status) . '.');
+        return redirect()->route('overtime.index')->with('success', 'Overtime status updated to ' . ucfirst($status) . '.');
     }
     
     /**
  * Show the form for editing the specified resource.
  */
-public function edit($id)
+public function edit($uuid)
 {
-    $overtime = Overtime::find($id);
-
-    if (!$overtime) {
-        return redirect()->route('overtime.index')->with('error', 'Overtime request not found');
-    }
+    $overtime = Overtime::where('uuid', $uuid)->firstOrFail();
 
     return view('overtime.edit', compact('overtime'));
 }
@@ -176,41 +153,37 @@ public function create()
 
 
 
-    public function update(Request $request, $id)
-    {
-        $overtime = Overtime::find($id);
+public function update(Request $request, Overtime $overtime)
+{
+    // The overtime is automatically resolved by the uuid thanks to implicit model binding
 
-        if (!$overtime) {
-            return response()->json(['message' => 'Overtime request not found'], 404);
-        }
+    $request->validate([
+        'emp_name' => 'required|string',
+        'client_name' => 'required|string',
+        'date_filed' => 'required|date',
+        'number_of_hours' => 'required|integer',
+        'purpose' => 'nullable|string',
+    ]);
 
-        $request->validate([
-            'emp_name' => 'required|string',
-            'client_name' => 'required|string',
-            'date_filed' => 'required|date',
-            'number_of_hours' => 'required|integer',
-            'purpose' => 'nullable|string',
-            'edited_by' => 'required|string',
-        ]);
+    $overtime->emp_name = $request->emp_name;
+    $overtime->client_name = $request->client_name;
+    $overtime->date_filed = $request->date_filed;
+    $overtime->number_of_hours = $request->number_of_hours;
+    $overtime->purpose = $request->purpose;
+    $overtime->edited_by = auth::id();
+    $overtime->updated_at = now();
+    $overtime->save();
 
-        $overtime->emp_name = $request->emp_name;
-        $overtime->client_name = $request->client_name;
-        $overtime->date_filed = $request->date_filed;
-        $overtime->number_of_hours = $request->number_of_hours;
-        $overtime->purpose = $request->purpose;
-        $overtime->edited_by = $request->edited_by;
-        $overtime->updated_at = now();
-        $overtime->save();
+    return redirect()->route('overtime.personalindex')->with('success', 'Overtime request updated successfully.');
+}
 
-        return response()->json(['message' => 'Overtime request updated successfully', 'data' => $overtime]);
-    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($uuid)
     {
-        $overtime = Overtime::find($id);
+        $overtime = Overtime::find($uuid);
 
         if (!$overtime) {
             return response()->json(['message' => 'Overtime request not found'], 404);

@@ -24,7 +24,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('financial_req.update', $financialRequest->id) }}" method="POST">
+                    <form action="{{ route('financial_req.update', $financialRequest->uuid) }}" method="POST">
                         @csrf
                         @method('PUT')
 

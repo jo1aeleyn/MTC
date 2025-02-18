@@ -77,21 +77,21 @@
                                             <td>{{ $request->Date->format('Y-m-d') }}</td>
                                             <td>
                                                 <div class="dropdown" style="text-align:center;">
-                                                    <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $request->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $request->uuid }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $request->id }}">
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $request->uuid }}">
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ route('financial_req.show', $request->id) }}">View</a>
+                                                            <a class="dropdown-item" href="{{ route('financial_req.show', $request->uuid) }}">View</a>
                                                         </li>
 
                                                         @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
 
                                                         <li>
-                                                        <form id="archiveFinancialForm{{ $request->id }}" action="{{ route('financial_req.archive', $request->id) }}" method="POST">
+                                                        <form id="archiveFinancialForm{{ $request->uuid }}" action="{{ route('financial_req.archive', $request) }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button type="button" class="dropdown-item" onclick="confirmFinancialArchive({{ $request->id }})">Archive</button>
+                                                            <button type="button" class="dropdown-item" onclick="confirmAction('archive', '{{ $request->uuid }}')">Archive</button>
                                                         </form>
                                                         </li>
                                                         @endif
@@ -124,20 +124,27 @@
 </div>
 
 <script>
-    function confirmFinancialArchive(requestId) {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You are about to archive this financial request.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, archive it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById("archiveFinancialForm" + requestId).submit();
-            }
-        });
-    }
+function confirmAction(action, uuid) {
+    let actionText = action === 'archive' ? 'archive this request' : 'cancel this request';
+    let confirmButtonText = action === 'archive' ? 'Yes, archive it!' : 'Yes, cancel it!';
+    let formId = 'archiveFinancialForm' + uuid; // dynamically create formId
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: `You are about to ${actionText}.`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: confirmButtonText
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Submit the form manually
+            document.getElementById(formId).submit();
+        }
+    });
+}
+
+
 </script>
 @include('partials.footer')
