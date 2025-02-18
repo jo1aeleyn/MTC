@@ -85,11 +85,6 @@ class AuthController extends Controller
 }
 
 
-
-
-
-
-
      // Display the profile page
      public function showProfilePage()
      {
