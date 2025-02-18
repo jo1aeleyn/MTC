@@ -98,7 +98,7 @@
 
 
 
-            <a href="javascript:history.back();" class="btn btn-primary" style="float:right;">Back to Overtime List</a>
+            <a href="javascript:history.back();" class="btn" style="background-color:#326C79;color:white;float:right;">Back to Overtime List</a>
         </div>  
     </div>
 </div>

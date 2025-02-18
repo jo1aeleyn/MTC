@@ -61,13 +61,16 @@
                             @endif
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Update Announcement</button>
+                  
                     </form>
 
-                    <a href="{{ route('announcements.index') }}" class="btn btn-secondary mt-3">Back to Announcements</a>
                 </div>
             </div>
         </div>
+        <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+        Back to Announcements List
+    </a>
+            <button type="submit" class="btn mb-3" style="float:right; background-color: #326C79; color:white;">Update Announcement</button>
     </div>
 </div>
 

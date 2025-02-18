@@ -106,7 +106,6 @@
                                     </form>
                                     @endif
                                     @endif
-                                    <a href="javascript:history.back();" class="btn btn-secondary">Back to List</a>
                                     </div>
                             </div>
                        
@@ -114,6 +113,8 @@
 
                 </div>
             </div>
+            <a href="javascript:history.back();" class="btn mb-3" style="background-color:#326C79; color:white; float:right;">Back to List</a>
+
         </div>
     </div>
 </div>

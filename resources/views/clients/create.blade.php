@@ -192,10 +192,16 @@
                             <label class="form-check-label" for="trial_balance_current_year">Trial balance for Current year</label>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    
                 </div>
             </div>
+            <div style="text-align: left;">
+    <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+        Back to Client List
+    </a>
+</div>
+            <button type="submit" class="btn mb-3" style="background-color:#326C79; color: white; float:right;">Submit</button>
+            </form>
         </div>
     </div>
 </div>
