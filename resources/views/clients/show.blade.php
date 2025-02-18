@@ -7,11 +7,11 @@
 <style>
     .detail-label {
         font-weight: bold;
-        font-size: 16px;
+        font-size: 15px;
         color: #333;
     }
     .detail-value {
-        font-size: 16px;
+        font-size: 14px;
         color: #555;
     }
     .section-title {

@@ -75,6 +75,8 @@
                                         <p><strong>Honors Received:</strong> {{ $employee->education[0]->honors_received }}</p>
                                     </div>
                                     <hr class="my-3">
+                                @else
+                                    <p>No data available</p>
                                 @endif
                             </div>
                             
@@ -82,11 +84,11 @@
                             <div class="more-education-records" style="display: none;">
                                 @foreach ($employee->education->skip(1) as $edu)
                                     <div class="mb-3">
-                                    <p><strong>Level:</strong> {{ $edu->level }}</p>
-                                    <p><strong>School:</strong> {{ $edu->school }}</p>
-                                    <p><strong>Degree:</strong> {{ $edu->degree }}</p>
-                                    <p><strong>Year Attended:</strong> {{ $edu->year_attended_from }} - {{ $edu->year_attended_to }}</p>
-                                    <p><strong>Honors Received:</strong> {{ $edu->honors_received }}</p>
+                                        <p><strong>Level:</strong> {{ $edu->level }}</p>
+                                        <p><strong>School:</strong> {{ $edu->school }}</p>
+                                        <p><strong>Degree:</strong> {{ $edu->degree }}</p>
+                                        <p><strong>Year Attended:</strong> {{ $edu->year_attended_from }} - {{ $edu->year_attended_to }}</p>
+                                        <p><strong>Honors Received:</strong> {{ $edu->honors_received }}</p>
                                     </div>
                                     <hr class="my-3">
                                 @endforeach
@@ -94,9 +96,9 @@
                             
                             <!-- Display "Read More" button only if there is more than 1 record -->
                             @if ($employee->education->count() > 1)
-                            <div class="btn-container">
-                                <button class="btn btn-read-more" onclick="toggleContent('education')">Read More</button>
-                            </div>                           
+                                <div class="btn-container">
+                                    <button class="btn btn-read-more" onclick="toggleContent('education')">Read More</button>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -119,9 +121,10 @@
                                         <p><strong>Inclusive Dates:</strong> {{ $employee->training[0]->inclusive_dates }}</p>
                                         <p><strong>Conducted By:</strong> {{ $employee->training[0]->conducted_by }}</p>
                                         <p><strong>Venue:</strong> {{ $employee->training[0]->venue }}</p>
-
                                     </div>
                                     <hr class="my-3">
+                                @else
+                                    <p>No data available</p>
                                 @endif
                             </div>
 
@@ -129,10 +132,10 @@
                             <div class="more-training-records" style="display: none;">
                                 @foreach ($employee->training->skip(1) as $train)
                                     <div class="mb-3">
-                                    <p><strong>Title:</strong> {{ $train->title }}</p>
-                                    <p><strong>Inclusive Dates:</strong> {{ $train->inclusive_dates }}</p>
-                                    <p><strong>Conducted By:</strong> {{ $train->conducted_by }}</p>
-                                    <p><strong>Venue:</strong> {{ $train->venue }}</p>
+                                        <p><strong>Title:</strong> {{ $train->title }}</p>
+                                        <p><strong>Inclusive Dates:</strong> {{ $train->inclusive_dates }}</p>
+                                        <p><strong>Conducted By:</strong> {{ $train->conducted_by }}</p>
+                                        <p><strong>Venue:</strong> {{ $train->venue }}</p>
                                     </div>
                                     <hr>
                                 @endforeach
@@ -140,9 +143,9 @@
 
                             <!-- Display "Read More" button only if there is more than 1 record -->
                             @if ($employee->training->count() > 1)
-                            <div class="btn-container">
-                                <button class="btn btn-read-more" onclick="toggleContent('training')">Read More</button>
-                            </div>                            
+                                <div class="btn-container">
+                                    <button class="btn btn-read-more" onclick="toggleContent('training')">Read More</button>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -163,12 +166,14 @@
                                     <div class="mb-3">
                                         <p><strong>Company:</strong> {{ $employee->employment[0]->company }}</p>
                                         <p><strong>Position:</strong> {{ $employee->employment[0]->position }}</p>
-                                        <p><strong>Salary:</strong> ₱{{ $employee->employment[0]->salary,2 }}</p>
+                                        <p><strong>Salary:</strong> ₱{{ number_format($employee->employment[0]->salary, 2) }}</p>
                                         <p><strong>Supervisor:</strong> {{ $employee->employment[0]->superior }}</p>
                                         <p><strong>Department:</strong> {{ $employee->employment[0]->department }}</p>
                                         <p><strong>Reason for Leaving:</strong> {{ $employee->employment[0]->reason_for_leaving }}</p>
                                     </div>
                                     <hr class="my-3">
+                                @else
+                                    <p>No data available</p>
                                 @endif
                             </div>
 
@@ -176,12 +181,12 @@
                             <div class="more-employment-records" style="display: none;">
                                 @foreach ($employee->employment->skip(1) as $job)
                                     <div class="mb-3">
-                                    <p><strong>Company:</strong> {{ $job->company }}</p>
-                                    <p><strong>Position:</strong> {{ $job->position }}</p>
-                                    <p><strong>Salary:</strong> ₱{{ number_format($job->salary, 2) }}</p>
-                                    <p><strong>Supervisor:</strong> {{ $job->superior }}</p>
-                                    <p><strong>Department:</strong> {{ $job->department }}</p>
-                                    <p><strong>Reason for Leaving:</strong> {{ $job->reason_for_leaving }}</p>
+                                        <p><strong>Company:</strong> {{ $job->company }}</p>
+                                        <p><strong>Position:</strong> {{ $job->position }}</p>
+                                        <p><strong>Salary:</strong> ₱{{ number_format($job->salary, 2) }}</p>
+                                        <p><strong>Supervisor:</strong> {{ $job->superior }}</p>
+                                        <p><strong>Department:</strong> {{ $job->department }}</p>
+                                        <p><strong>Reason for Leaving:</strong> {{ $job->reason_for_leaving }}</p>
                                     </div>
                                     <hr class="my-3">
                                 @endforeach
@@ -189,116 +194,79 @@
 
                             <!-- Display "Read More" button only if there is more than 1 record -->
                             @if ($employee->employment->count() > 1)
-                            <div class="btn-container">
-                                <button class="btn btn-read-more" onclick="toggleContent('employment')">Read More</button>
-                            </div>
-                              @endif
+                                <div class="btn-container">
+                                    <button class="btn btn-read-more" onclick="toggleContent('employment')">Read More</button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-    <div class="col-lg-4">
-        <div class="card mb-4 shadow-lg rounded-3 h-100">
-            <div class="card-header text-white rounded-top p-1 d-flex align-items-center" style="background-color: #326C79">
-                <h6 class ="m-1">Training History</h6>
-            </div>
-            <div class="card-body">
-                @foreach ($employee->training as $train)
-                    <div class="mb-3">
-                        <p><strong>Title:</strong> {{ $train->title }}</p>
-                        <p><strong>Inclusive Dates:</strong> {{ $train->inclusive_dates }}</p>
-                        <p><strong>Conducted By:</strong> {{ $train->conducted_by }}</p>
-                        <p><strong>Venue:</strong> {{ $train->venue }}</p>
+        <div class="row d-flex align-items-stretch mb-3">
+            <div class="col-lg-6">
+                <div class="card mb-4 shadow-lg rounded-3 h-100">
+                    <div class="card-header text-white rounded-top p-1 d-flex align-items-center" style="background-color: #326C79">
+                        <h6 class="m-1">Family Background</h6>
                     </div>
-                    <hr>
-                @endforeach
+                    <div class="card-body">
+                        @if ($employee->family->isNotEmpty())
+                            @foreach ($employee->family as $familyMember)
+                                <div class="mb-3">
+                                    <p><strong>Name:</strong> {{ $familyMember->name }}</p>
+                                    <p><strong>Relationship:</strong> {{ $familyMember->relationship }}</p>
+                                    <p><strong>Occupation:</strong> {{ $familyMember->occupation }}</p>
+                                    <p><strong>Birthdate:</strong> {{ $familyMember->birthdate }}</p>
+                                    <p><strong>Contact Number:</strong> {{ $familyMember->phone }}</p>
+                                </div>
+                                <hr class="my-3">
+                            @endforeach
+                        @else
+                            <p>No data available</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card mb-4 shadow-lg rounded-3 h-100">
+                    <div class="card-header text-white rounded-top p-1 d-flex align-items-center" style="background-color: #326C79">
+                        <h6 class="m-1">Emergency Contacts</h6>
+                    </div>
+                    <div class="card-body">
+                        @if ($employee->emergencyContacts->isNotEmpty())
+                            @foreach ($employee->emergencyContacts as $contact)
+                                <div class="mb-3">
+                                    <p><strong>Name:</strong> {{ $contact->name }}</p>
+                                    <p><strong>Relationship:</strong> {{ $contact->relationship }}</p>
+                                    <p><strong>Contact Number:</strong> {{ $contact->contact_num }}</p>
+                                </div>
+                                <hr class="my-3">
+                            @endforeach
+                        @else
+                            <p>No data available</p>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-4">
-    <div class="card mb-4 shadow-lg rounded-3 h-100 ">
-    <div class="card-header text-white rounded-top p-1 d-flex align-items-center" style="background-color: #326C79">
-    <h6 class ="m-1">Employment History</h6>
-    </div>
-    <div class="card-body">
-        @foreach ($employee->employment as $job)
-            <div class="mb-3">
-                <p><strong>Company:</strong> {{ $job->company }}</p>
-                <p><strong>Position:</strong> {{ $job->position }}</p>
-                <p><strong>Salary:</strong> ₱{{ number_format($job->salary, 2) }}</p>
-                <p><strong>Supervisor:</strong> {{ $job->superior }}</p>
-                <p><strong>Department:</strong> {{ $job->department }}</p>
-                <p><strong>Reason for Leaving:</strong> {{ $job->reason_for_leaving }}</p>
-            </div>
-            <hr class="my-3">
-        @endforeach
-    </div>
+
     </div>
 </div>
-</div>
-
-
-<div class="row d-flex align-items-stretch mb-3">
-    <div class="col-lg-6">
-        <div class="card mb-4 shadow-lg rounded-3 h-100">
-            <div class="card-header text-white rounded-top p-1 d-flex align-items-center"" style="background-color: #326C79">
-                <h6 class ="m-1">Family Background</h6>
-            </div>
-            <div class="card-body">
-                @foreach ($employee->family as $familyMember)
-                    <div class="mb-3">
-                        <p><strong>Name:</strong> {{ $familyMember->name }}</p>
-                        <p><strong>Relationship:</strong> {{ $familyMember->relationship }}</p>
-                        <p><strong>Occupation:</strong> {{ $familyMember->occupation }}</p>
-                        <p><strong>Birthdate:</strong> {{ $familyMember->birthdate }}</p>
-                        <p><strong>Contact Number:</strong> {{ $familyMember->phone }}</p>
-                    </div>
-                    <hr class="my-3">
-                @endforeach
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-6">
-        <div class="card mb-4 shadow-lg rounded-3 h-100">
-            <div class="card-header text-white rounded-top p-1 d-flex align-items-center"" style="background-color: #326C79">
-                <h6 class ="m-1">Emergency Contacts</h6>
-            </div>
-            <div class="card-body">
-                @foreach ($employee->emergencyContacts as $contact)
-                    <div class="mb-3">
-                        <p><strong>Name:</strong> {{ $contact->name }}</p>
-                        <p><strong>Relationship:</strong> {{ $contact->relationship }}</p>
-                        <p><strong>Address:</strong> {{ $contact->address }}</p>
-                        <p><strong>Contact Number:</strong> {{ $contact->contact_num }}</p>
-                    </div>
-                    <hr>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 
-<button id="exportPdf" style="width: 100%; background-color: #326C79; border-color:#326C79; color:white;">Export as PDF</button> -->
-
-    <!-- Back Button -->
-    <a href="{{ route('employees.index') }}" class="btn btn-danger" style="float:right;">Back to Employee List</a>
-</div>
-
-
-</div>
-
 
 @include('partials.footer')
 
 <script>
     function toggleContent(section) {
-        const content = document.querySelector(`.${section}-content`);
-        const moreRecords = content.querySelector(`.more-${section}-records`);
+        const content = document.querySelector(`.more-${section}-records`);
+        content.style.display = content.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+<script>
+    function toggleContent(section) {
+        const content = document.querySelector(.${section}-content);
+        const moreRecords = content.querySelector(.more-${section}-records);
         const button = content.querySelector('.btn-read-more');
 
         // Toggle visibility of additional records
@@ -314,23 +282,24 @@
 
 <style>
     .btn-read-more {
-    background-color: #326C79;
-    color: #fff;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 80%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-transform: uppercase;
-    display: inline-block;
-    margin: 0 auto; /* This will center the button horizontally */
-}
-.btn-container {
-    display: flex;
-    justify-content: center; /* Centers horizontally */
-    align-items: center; /* Centers vertically */
-}
+        background-color: #326C79;
+        color: #fff;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 80%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-transform: uppercase;
+        display: inline-block;
+        margin: 0 auto;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
     .btn-read-more:hover {
         background-color: #264f59;
@@ -344,4 +313,3 @@
         background-color: #203a42;
     }
 </style>
-    
