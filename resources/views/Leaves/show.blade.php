@@ -162,12 +162,12 @@
                 <div class="row mt-4">
                     <div class="col-md-12 text-end">
                         @if(auth()->user()->user_role == 'Partners' && $empnum !== $leave->emp_num)
-                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->uuid, 'status' => 'approved']) }}" method="POST" class="d-inline">
+                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->uuid, 'status' => 'Approved']) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-success">Approve</button>
                             </form>
-                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->uuid, 'status' => 'rejected']) }}" method="POST" class="d-inline">
+                            <form action="{{ route('leave_requests.update_status', ['uuid' => $leave->uuid, 'status' => 'Rejected']) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-danger">Disapprove</button>

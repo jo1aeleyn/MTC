@@ -113,7 +113,7 @@ class LeavesController extends Controller
         'TotalDays' => 'required|integer|min:1',
         'TypeOfLeave' => 'required|string',
         'Remarks' => 'nullable|string',
-       'Status' => 'sometimes|string|in:Pending,Approved,Disapproved,Recommended,cancelled,Declined,Rejected',
+       'Status' => 'sometimes|string|in:Pending,Approved,Disapproved,Recommended,Cancelled,Declined,Rejected',
     ]);
  
     $leave->update([
@@ -141,7 +141,7 @@ class LeavesController extends Controller
         $leave = Leave::where('uuid', $uuid)->firstOrFail();
         $leave->Status = $status;
         
-        if ($status == 'approved') {
+        if ($status == 'Approved') {
             $leave->ReviewedBy = $fullname;  // Set ApprovedBy to the authenticated user's name
         }
 
@@ -163,7 +163,7 @@ class LeavesController extends Controller
     public function cancel($uuid)
     {
         $leave = Leave::findOrFail($uuid);
-        $leave->Status = 'cancelled';
+        $leave->Status = 'Cancelled';
         $leave->save();
     
         return redirect()->route('leaves.PersonalLeaves')->with('success', 'Leave request cancelled successfully.');
