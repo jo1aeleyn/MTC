@@ -40,12 +40,12 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
                             <select name="category" id="category" class="form-select" required>
-                                <option value="a" {{ $announcement->category == 'General Updates' ? 'selected' : '' }}>a</option>
-                                <option value="b" {{ $announcement->category == 'Events' ? 'selected' : '' }}>b</option>
-                                <option value="c" {{ $announcement->category == 'Policy Changes' ? 'selected' : '' }}>c</option>
-                                <option value="a" {{ $announcement->category == 'Employee Recognition' ? 'selected' : '' }}>a</option>
-                                <option value="b" {{ $announcement->category == 'Internal Communications' ? 'selected' : '' }}>b</option>
-                                <option value="c" {{ $announcement->category == 'Legal Updates' ? 'selected' : '' }}>c</option>
+                                <option value="a" {{ $announcement->category == 'General Updates' ? 'selected' : '' }}>General Updates</option>
+                                <option value="b" {{ $announcement->category == 'Events' ? 'selected' : '' }}>Events</option>
+                                <option value="c" {{ $announcement->category == 'Policy Changes' ? 'selected' : '' }}>Policy Changes</option>
+                                <option value="a" {{ $announcement->category == 'Employee Recognition' ? 'selected' : '' }}>Employee Recognition</option>
+                                <option value="b" {{ $announcement->category == 'Internal Communications' ? 'selected' : '' }}>Internal Communications</option>
+                                <option value="c" {{ $announcement->category == 'Legal Updates' ? 'selected' : '' }}>Legal Updates</option>
                             </select>
                         </div>
 
@@ -63,17 +63,18 @@
                                 </div>
                             @endif
                         </div>
-
-                  
+                        <button type="submit" class="btn mb-3" style="float:right; background-color: #326C79; color:white;">Update Announcement</button>
+                
                     </form>
 
                 </div>
             </div>
-        </div>
-        <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+            <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
         Back to Announcements List
     </a>
-            <button type="submit" class="btn mb-3" style="float:right; background-color: #326C79; color:white;">Update Announcement</button>
+        </div>
+        
+            
     </div>
 </div>
 

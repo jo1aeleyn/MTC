@@ -38,14 +38,18 @@
                         <div class="mb-3">
                             <label class="form-label">Image:</label>
                             <div>
-                                <img src="{{ asset('storage/' . $announcement->image) }}" alt="Announcement Image" class="img-fluid" style="max-height: 300px;">
+                                <img src="{{ asset('storage/announcements/' . $announcement->image) }}" alt="Announcement Image" class="img-fluid" style="max-height: 300px;">
                             </div>
                         </div>
                     @endif
 
-                    <a href="{{ route('announcements.index') }}" class="btn btn-secondary">Back to Announcements</a>
+                    
                 </div>
+                
             </div>
+            <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+        Back to Announcements List
+    </a>
         </div>
     </div>
 </div>
