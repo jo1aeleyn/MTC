@@ -52,6 +52,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [AuthController::class, 'showProfilePage'])->name('profile');
     Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/profile/{uuid}', [AuthController::class, 'update'])->name('profile.updatepicture');
+
 });
 
 Route::prefix('users')->middleware('auth')->group(function() {

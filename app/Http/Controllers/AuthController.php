@@ -61,6 +61,35 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', 'You have been logged out.');
     }
 
+
+
+    public function update(Request $request, $uuid)
+{
+    $user = UserAccount::where('uuid', $uuid)->firstOrFail();
+
+    if ($request->hasFile('profile_picture')) {
+        $request->validate([
+            'profile_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Store the new profile picture
+        $fileName = time().'.'.$request->profile_picture->extension();
+        $request->profile_picture->move(public_path('Profile_pictures'), $fileName);
+
+        // Update user's profile picture
+        $user->profile_picture = $fileName;
+        $user->save();
+    }
+
+    return redirect()->back()->with('success', 'Profile picture updated successfully.');
+}
+
+
+
+
+
+
+
      // Display the profile page
      public function showProfilePage()
      {

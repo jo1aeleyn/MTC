@@ -14,12 +14,47 @@
   <div class="card-body p-md-5">
     <div class="d-flex flex-column gap-5">
       <!-- Profile picture with adjusted position -->
-      <div class="mt-n5" id="profilepic">
-        <img src="{{ asset('Profile_pictures/' . $user->profile_picture) }}" 
-             style="margin-top: -120px; width:15%;" 
-             alt="mentor 1" 
-             class="img-fluid rounded-4">
-      </div>
+      <div class="profile-container" id="profilepic" data-bs-toggle="modal" data-bs-target="#profilePicModal">
+    <img src="{{ asset('Profile_pictures/' . $user->profile_picture) }}" 
+         alt="mentor 1" 
+         class="img-fluid">
+    <div class="profile-overlay">Change Profile Picture</div>
+    <div class="edit-icon">
+        <i class="fas fa-pencil-alt"></i> <!-- Font Awesome Edit Icon -->
+    </div>
+</div>
+
+<!-- Modal (Placed on Show Page) -->
+<div class="modal fade" id="profilePicModal" tabindex="-1" aria-labelledby="profilePicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profilePicModalLabel">Change Profile Picture</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+            <form action="{{ route('profile.updatepicture', $user->uuid) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="mt-2 d-flex justify-content-center">
+                        <!-- Placeholder Image -->
+                        <img id="profile_preview" src="{{ asset('Profile_pictures/' . $user->profile_picture) }}" alt="Profile Preview" class="img-fluid rounded-4 mt-4" style="margin-top: -120px; width:15%;">
+                    </div>
+                    <div class="mt-3">
+                        <label for="profile_picture" class="form-label">Change Profile Picture</label>
+                        <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
       
       <div class="d-flex flex-column gap-5" style="margin-top: -40px;"  id="profdetails">
         <div class="d-flex flex-column gap-3">
@@ -234,6 +269,16 @@
  </div>
 </div>
 
-
+<!-- JavaScript to Preview Image -->
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('profile_preview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 
 @include('partials.footer')
