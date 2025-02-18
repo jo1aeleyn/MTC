@@ -76,12 +76,20 @@ class LeavesController extends Controller
 
     // Show details of a leave application
     public function show($uuid)
-    {
-        $user = Auth::user();
-        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
-        $leave = Leave::where('uuid', $uuid)->firstOrFail(); // Use uuid instead of id
-        return view('leaves.show', compact('leave'));
+{
+    $user = Auth::user();
+    $leave = Leave::where('uuid', $uuid)->firstOrFail(); 
+
+    if ($user->user_role == 'Partners') {
+        $employee = Employee::where('uuid', $user->uuid)->first();
+        $empnum = $employee ? $employee->emp_num : null; // Avoid errors if employee record is missing
+    } else {
+        $empnum = null;
     }
+
+    return view('leaves.show', compact('leave', 'empnum'));
+}
+
 
     // Show edit form for a leave application
     public function edit($uuid)
@@ -105,7 +113,7 @@ class LeavesController extends Controller
         'TotalDays' => 'required|integer|min:1',
         'TypeOfLeave' => 'required|string',
         'Remarks' => 'nullable|string',
-        'Status' => 'required|string|in:Pending,Approved,Disapproved,Recommended,cancelled,Declined,Rejected',
+       'Status' => 'sometimes|string|in:Pending,Approved,Disapproved,Recommended,Cancelled,Declined,Rejected',
     ]);
  
     $leave->update([
@@ -130,10 +138,10 @@ class LeavesController extends Controller
         $employee = Employee::where('uuid', $uuid)->firstOrFail(); // Find the employee
         $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
 
-        $leave = Leave::findOrFail($id);
+        $leave = Leave::where('uuid', $uuid)->firstOrFail();
         $leave->Status = $status;
         
-        if ($status == 'approved') {
+        if ($status == 'Approved') {
             $leave->ReviewedBy = $fullname;  // Set ApprovedBy to the authenticated user's name
         }
 
@@ -155,7 +163,7 @@ class LeavesController extends Controller
     public function cancel($uuid)
     {
         $leave = Leave::findOrFail($uuid);
-        $leave->Status = 'cancelled';
+        $leave->Status = 'Cancelled';
         $leave->save();
     
         return redirect()->route('leaves.PersonalLeaves')->with('success', 'Leave request cancelled successfully.');
@@ -163,23 +171,28 @@ class LeavesController extends Controller
 
     public function leavestore(Request $request, $uuid)
     {
-        $leave = Leave::findOrFail($uuid);
+        $leave = Leave::where('uuid', $uuid)->firstOrFail();
 
         $request->validate([
-            'LeavesCredits' => 'required|numeric',
-            'WithPay' => 'required|numeric',
-            'WithoutPay' => 'required|numeric',
-            'LessApproedDays' => 'required|numeric',
-            'RemainingLeaves' => 'required|numeric',
-            'FilledUpBy' => 'required|string|max:255',
-            'FilledUpDate' => 'required|date',
+            'LeavesCredits' => 'nullable|numeric',
+            'WithPay' => 'nullable|numeric',
+            'WithoutPay' => 'nullable|numeric',
+            'LessApprovedDays' => 'nullable|numeric',
+            'RemainingLeaves' => 'nullable|numeric',
+            'FilledUpBy' => 'nullable|string|max:255',
+            'FilledUpDate' => 'nullable|date',
+        ], [
+            'LeavesCredits.required' => 'Leave credits are required.',
+            'LeavesCredits.numeric' => 'Leave credits must be a number.',
+            'WithPay.required' => 'With pay field is required.',
+            'FilledUpDate.date' => 'Invalid date format.',
         ]);
-
+        
         $leave->update([
             'LeavesCredits' => $request->LeavesCredits,
             'WithPay' => $request->WithPay,
             'WithoutPay' => $request->WithoutPay,
-            'LessApproedDays' => $request->LessApproedDays,
+            'LessApprovedDays' => $request->LessApprovedDays,
             'RemainingLeaves' => $request->RemainingLeaves,
             'FilledUpBy' => $request->FilledUpBy,
             'FilledUpDate' => $request->FilledUpDate,

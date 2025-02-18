@@ -107,7 +107,8 @@ class FinancialRequestController extends Controller
 
     public function update(Request $request, $uuid)
     {
-        $financialRequest = FinancialReq::findOrFail($uuid);
+        $financialRequest = FinancialReq::where('uuid', $uuid)->firstOrFail();
+
 
         $validated = $request->validate([
             'Chargeto' => 'nullable|string|max:255',
