@@ -2,15 +2,15 @@
 @include('partials.sidebar')
 @include('partials.navbar')
 
-<div class="container my-4">
+<div class="container">
     <div class="page-inner">
-        <nav aria-label="breadcrumb" class="mb-3">
-            <ol class="breadcrumb bg-transparent p-0 m-0 fs-6">
-                <li class="breadcrumb-item text-muted">Leave Requests</li>
-                <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Request Details</li>
-            </ol>
-        </nav>
-
+    <div class="container">
+    <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+                    <li class="breadcrumb-item text-muted">Manage Leaves</li>
+                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">View </li>
+                </ol>
+            </nav>
         <div class="card shadow-sm">
             <div class="card-body">
                 <h4 class="card-title mb-4">Leave Request Overview</h4>

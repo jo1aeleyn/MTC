@@ -121,12 +121,14 @@
                           <?php if (!empty($announcements) && count($announcements) > 0): ?>
                               <?php $latestAnnouncement = $announcements->first(); ?>
                               <?php if (!empty($latestAnnouncement->image)): ?>
-                                  <img src=" {{asset('announcements/' . $latestAnnouncement->image)}}" class="d-block w-100" alt="Announcement Image" style="height: 375px; object-fit: cover;">
-                            
+                                <img src="{{ asset('storage/announcements/' . $latestAnnouncement->image) }}" class="d-block w-100" alt="{{ $latestAnnouncement->image }}" style="height: 375px; object-fit: cover;">
+                               
                                   <?php endif; ?>
                               <div class="mt-3">
-                              <h5>{!! $latestAnnouncement->title !!}</h5>
+                              <h6>{!! $latestAnnouncement->title !!}</h6>
                               <p>{!! Str::limit($latestAnnouncement->content, 100) !!}</p>
+                              
+
                               </div>
                           <?php else: ?>
                               <p>No announcements available.</p>
