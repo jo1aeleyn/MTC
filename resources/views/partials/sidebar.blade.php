@@ -142,7 +142,7 @@
                         @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                           <li>
                             <a href="{{route('overtime.index')}}">
-                              <span class="sub-item" style="color: #ffffff;">Pending Overtime Request</span>
+                              <span class="sub-item" style="color: #ffffff;">All Pending Overtime Request</span>
                             </a>
                           </li>
                        @endif
@@ -170,7 +170,7 @@
                           @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                             <li>
                               <a href="{{route('financial_req.index')}}">
-                                <span class="sub-item" style="color: #ffffff;">Requests</span>
+                                <span class="sub-item" style="color: #ffffff;">All Requests</span>
                               </a>
                             </li>
                           @endif
@@ -203,7 +203,7 @@
                             @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
                             <li>
                               <a href="{{route('leaves.index')}}">
-                                <span class="sub-item" style="color: #ffffff;">Leaves Application</span>
+                                <span class="sub-item" style="color: #ffffff;">All Leaves Application</span>
                               </a>
                             </li>
                             @endif
@@ -219,7 +219,6 @@
                   </ul>
                 </div>
               </li>
-
               
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#maps">
