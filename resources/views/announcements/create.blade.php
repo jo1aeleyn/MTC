@@ -48,9 +48,12 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
                             <select name="category" id="category" class="form-select" required>
-                                <option value="a">a</option>
-                                <option value="b">b</option>
-                                <option value="c">c</option>
+                                <option value="General Updates">General Updates</option>
+                                <option value="Events">Events</option>
+                                <option value="Policy Changes">Policy Changes</option>
+                                <option value="Employee Recognition">Employee Recognition</option>
+                                <option value="Internal Communications">Internal Communications</option>
+                                <option value="Legal Updates">Legal Updates</option>
                             </select>
                         </div>
 
@@ -59,17 +62,18 @@
                             <textarea name="content" id="content" class="form-control" required></textarea>
                         </div>
 
-                      
+                        <button type="submit" class="btn mb-2" style="float:right; color:white; background-color: #326C79;">Create Announcement</button>
 
                 </div>
             </div>
-            
-        </div>
-    <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+            <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
         Back to Announcements List
     </a>
-        <button type="submit" class="btn" style="float:right; color:white; background-color: #326C79;">Create Announcement</button>
+        </div>
+    
+        
             </form>
+           
     </div>
 </div>
 

@@ -32,36 +32,38 @@ public function companyannouncements()
     }
 
     public function store(Request $request)
-    {
-        // Validate the incoming request
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required',
-            'category' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate image
-        ]);
+{
+    // Validate the incoming request
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required',
+        'category' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate image
+    ]);
 
-        // Handle the file upload if there's an image
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('announcements', 'public');
-        } else {
-            $imagePath = null; // If no image is uploaded
-        }
-
-        // Create a new announcement without specifying the 'id' field (auto-incremented)
-        Announcement::create([
-            'uuid' => Str::uuid(), // Generate a unique UUID and store it in the 'uuid' column
-            'announcementID' => 'ANN-' . time(), // Generate a custom announcement ID using the current timestamp
-            'title' => $request->title, // Title from the form input
-            'content' => $request->content, // Content from the form input
-            'category' => $request->category, // Category from the form input
-            'createdBy' => Auth::id(), // The ID of the authenticated user
-            'image' => $imagePath, // Save the image path
-        ]);
-
-        // Redirect to the announcement index page with a success message
-        return redirect()->route('announcements.index')->with('success', 'Announcement created successfully.');
+    // Handle the file upload if there's an image
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        // Store the image and get its filename (without 'announcements/' folder)
+        $imagePath = $request->file('image')->store('announcements', 'public');
+        $imagePath = basename($imagePath); // Get only the filename (no folder path)
     }
+
+    // Create a new announcement without specifying the 'id' field (auto-incremented)
+    Announcement::create([
+        'uuid' => Str::uuid(), // Generate a unique UUID and store it in the 'uuid' column
+        'announcementID' => 'ANN-' . time(), // Generate a custom announcement ID using the current timestamp
+        'title' => $request->title, // Title from the form input
+        'content' => $request->content, // Content from the form input
+        'category' => $request->category, // Category from the form input
+        'createdBy' => Auth::id(), // The ID of the authenticated user
+        'image' => $imagePath, // Save only the image filename
+    ]);
+
+    // Redirect to the announcement index page with a success message
+    return redirect()->route('announcements.index')->with('success', 'Announcement created successfully.');
+}
+
 
     public function show(Announcement $announcement)
     {
