@@ -168,63 +168,72 @@ document.getElementById("familyBackgroundWrapper").addEventListener("click", fun
     }
 });
 
-         // Emergency Contact Section
-    let emergencyContactIndex = document.querySelectorAll(".emergencyContactRow").length || 0;
+// Initialize the emergency contact index
+let emergencyContactIndex = document.querySelectorAll(".emergencyContactRow").length || 0;
 
 document.getElementById("addEmergencyContact").addEventListener("click", function () {
     const wrapper = document.getElementById("emergencyContactWrapper");
+    const addMoreButton = document.getElementById("addEmergencyContact").parentElement; // Get button's parent div
     const newRow = document.createElement("div");
     newRow.classList.add("emergencyContactRow", "mb-3", "row");
 
+    // Create the inner HTML for the new row
     newRow.innerHTML = `
-                    <hr>
-                    <div class="row">
-                        <!-- Name -->
-                        <div class="col-md-3 mb-3">
-                            <input type="text" name="emergency_contacts[${emergencyContactIndex}][name]"
-                                class="form-control"
-                                placeholder="Name" required>
-                        </div>
+        <hr>
+        <div class="row">
+            <!-- Name -->
+            <div class="col-md-3 mb-3">
+                <input type="text" name="emergency_contacts[${emergencyContactIndex}][name]"
+                    class="form-control"
+                    placeholder="Name" required>
+            </div>
 
-                        <!-- Relationship -->
-                        <div class="col-md-3 mb-3">
-                            <select class="form-control" name="emergency_contacts[${emergencyContactIndex}][relationship]" required>
-                                <option value="" selected disabled>Select Relationship</option>
-                                <option value="Mother">Mother</option>
-                                <option value="Father">Father</option>
-                                <option value="Sibling">Sibling</option>
-                            </select>
-                        </div>
+            <!-- Relationship -->
+            <div class="col-md-3 mb-3">
+                <select class="form-control" name="emergency_contacts[${emergencyContactIndex}][relationship]" required>
+                    <option value="" selected disabled>Select Relationship</option>
+                    <option value="Mother">Mother</option>
+                    <option value="Father">Father</option>
+                    <option value="Sibling">Sibling</option>
+                </select>
+            </div>
 
-                        <!-- Address -->
-                        <div class="col-md-3 mb-3">
-                            <input type="text" name="emergency_contacts[${emergencyContactIndex}][address]"
-                                class="form-control"
-                                placeholder="Address">
-                        </div>
+            <!-- Address -->
+            <div class="col-md-3 mb-3">
+                <input type="text" name="emergency_contacts[${emergencyContactIndex}][address]"
+                    class="form-control"
+                    placeholder="Address">
+            </div>
 
-                        <!-- Contact Number -->
-                        <div class="col-md-3 mb-3">
-                            <input type="text" name="emergency_contacts[${emergencyContactIndex}][contact_num]"
-                                class="form-control"
-                                placeholder="Phone (e.g., 09123456789)"
-                                pattern="^(09)\\d{9}$" required
-                                title="Phone number must start with 09 and be 11 digits long">
-                        </div>
+            <!-- Contact Number -->
+            <div class="col-md-3 mb-3">
+                <input type="text" name="emergency_contacts[${emergencyContactIndex}][contact_num]"
+                    class="form-control"
+                    placeholder="Phone (e.g., 09123456789)"
+                    pattern="^(09)\\d{9}$" required
+                    title="Phone number must start with 09 and be 11 digits long">
+            </div>
 
-                        <!-- Remove Button aligned to the far right -->
-                        <div class="col-md-12 mb-3 d-flex justify-content-end">
-                            <button type="button" class="btn btn-danger removeRow">Remove</button>
-                        </div>
-                    </div>
-                    <hr>
-
-
+            <!-- Remove Button aligned to the far right -->
+            <div class="col-md-12 mb-3 d-flex justify-content-end">
+                <button type="button" class="btn btn-danger removeRow">Remove</button>
+            </div>
+        </div>
+        <hr>
     `;
 
+    // Append the new row to the wrapper
     wrapper.appendChild(newRow);
+
+    // Increment the index for the next row
     emergencyContactIndex++;
+
+    // Add the remove functionality for the new row
+    newRow.querySelector(".removeRow").addEventListener("click", function () {
+        newRow.remove();
+    });
 });
+
 
 // Remove Row Button
 document.addEventListener("click", function (e) {

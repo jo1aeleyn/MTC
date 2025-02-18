@@ -69,9 +69,9 @@
 </div>
 
 
-                                <!-- Submit Button -->
+                                <!-- Submit Button -->      
                                 <div class="d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary w-auto px-4" style='background-color:#326C79'>Update Profile</button>
+                                    <button type="submit" class="btn  w-auto px-4" style='background-color:#326C79; color:white;'>Update Profile</button>
                                 </div>
                             
                             </form>

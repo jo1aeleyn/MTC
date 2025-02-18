@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{{ route('users.create') }}" class="btn btn-primary">Create User</a>
+                        <a href="{{ route('users.create') }}" style="background-color: #326C79; color: white;" class="btn ">Create User</a>
                     </div>
                     <div class="table-responsive">
                         <table id="usersTable" class="display table table-striped table-hover">

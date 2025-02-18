@@ -2,6 +2,8 @@
 @include('partials.sidebar')
 @include('partials.navbar')
 
+
+
 <div class="container">
 <div class="page-inner">
         <div class="container">
@@ -376,92 +378,57 @@
 </div>
 
 
-                <div id="familyBackgroundSection">
-                    <h5>Family Background</h5>
-                    <div id="familyBackgroundWrapper">
-                        @forelse ($family as $index => $member)
-                            <div class="familyBackgroundRow mb-3 row">
-                                <!-- Name -->
-                                <div class="col-md-4 mb-3">
-                                    <input
-                                        type="text"
-                                        name="family_background[{{ $index }}][name]"
-                                        id ="famname"
-                                        class="form-control"
-                                        placeholder="Name"
-                                        value="{{ old('family_background.' . $index . '.name', $member->name) }}"
-                                        required>
-                                </div>
-                                <!-- Relationship -->
-                                <div class="col-md-4 mb-3">
-                                    <select
-                                        name="family_background[{{ $index }}][relationship]"
-                                        class="form-control"
-                                        id="famrelation"
-                                        required>
-                                        <option value="" selected disabled>Select Relationship</option>
-                                        <option value="Mother" {{ old('family_background.' . $index . '.relationship', $member->relationship) == 'Mother' ? 'selected' : '' }}>Mother</option>
-                                        <option value="Father" {{ old('family_background.' . $index . '.relationship', $member->relationship) == 'Father' ? 'selected' : '' }}>Father</option>
-                                        <option value="Sibling" {{ old('family_background.' . $index . '.relationship', $member->relationship) == 'Sibling' ? 'selected' : '' }}>Sibling</option>
-                                    </select>
-                                </div>
-                                <!-- Occupation -->
-                                <div class="col-md-4 mb-3">
-                                    <input
-                                        type="text"
-                                        name="family_background[{{ $index }}][occupation]"
-                                        class="form-control"
-                                        id="famoccupation"
-                                        placeholder="Occupation"
-                                        value="{{ old('family_background.' . $index . '.occupation', $member->occupation) }}"
-                                        >
-                                </div>
-                                <!-- Birthdate -->
-                                <div class="col-md-4 mb-3">
-                                    <input
-                                        type="date"
-                                        name="family_background[{{ $index }}][birthdate]"
-                                        class="form-control"
-                                        id="fambdate"
-                                        value="{{ old('family_background.' . $index . '.birthdate', $member->birthdate) }}"
-                                        placeholder="Birthdate"
-                                      >
-                                </div>
-                                <!-- Address -->
-                                <div class="col-md-4 mb-3">
-                                    <input
-                                        type="text"
-                                        name="family_background[{{ $index }}][address]"
-                                        class="form-control"
-                                        id="famaddress"
-                                        placeholder="Address"
-                                        value="{{ old('family_background.' . $index . '.address', $member->address) }}"
-                                 >
-                                </div>
-                                <!-- Phone -->
-                                <div class="col-md-4 mb-3">
-                                    <input
-                                        type="text"
-                                        name="family_background[{{ $index }}][phone]"
-                                        class="form-control"
-                                        placeholder="Phone"
-                                        id="famphone"
-                                        pattern="09[0-9]{9}"
-                                        title="Please enter a valid Philippine phone number starting with 09 and containing 11 digits."
-                                        value="{{ old('family_background.' . $index . '.phone', $member->phone) }}"
-                                      >
-                                </div>
-
-                        @empty
-                            <p>No family background data found.</p>
-                        @endforelse
-                    </div>
+<div id="familyBackgroundSection">
+    <h5>Family Background</h5>
+    <div id="familyBackgroundWrapper">
+        @forelse ($family as $index => $member)
+            <div class="familyBackgroundRow mb-3 row">
+                <!-- Name -->
+                <div class="col-md-4 mb-3">
+                    <input type="text" name="family_background[{{ $index }}][name]" id="famname" class="form-control" placeholder="Name"
+                        value="{{ old('family_background.' . $index . '.name', $member->name) }}" required>
                 </div>
-
-                <div class="col-md-12 mb-3" style="text-align: center;">
-                            <button type="button" id="addFamilyBackground" class="btn btn-secondary mb-3">Add More</button>
+                <!-- Relationship -->
+                <div class="col-md-4 mb-3">
+                    <select name="family_background[{{ $index }}][relationship]" class="form-control" id="famrelation" required>
+                        <option value="" selected disabled>Select Relationship</option>
+                        <option value="Mother" {{ old('family_background.' . $index . '.relationship', $member->relationship) == 'Mother' ? 'selected' : '' }}>Mother</option>
+                        <option value="Father" {{ old('family_background.' . $index . '.relationship', $member->relationship) == 'Father' ? 'selected' : '' }}>Father</option>
+                        <option value="Sibling" {{ old('family_background.' . $index . '.relationship', $member->relationship) == 'Sibling' ? 'selected' : '' }}>Sibling</option>
+                    </select>
+                </div>
+                <!-- Occupation -->
+                <div class="col-md-4 mb-3">
+                    <input type="text" name="family_background[{{ $index }}][occupation]" class="form-control" id="famoccupation" placeholder="Occupation"
+                        value="{{ old('family_background.' . $index . '.occupation', $member->occupation) }}">
+                </div>
+                <!-- Birthdate -->
+                <div class="col-md-4 mb-3">
+                    <input type="date" name="family_background[{{ $index }}][birthdate]" class="form-control" id="fambdate"
+                        value="{{ old('family_background.' . $index . '.birthdate', $member->birthdate) }}" placeholder="Birthdate">
+                </div>
+                <!-- Address -->
+                <div class="col-md-4 mb-3">
+                    <input type="text" name="family_background[{{ $index }}][address]" class="form-control" id="famaddress" placeholder="Address"
+                        value="{{ old('family_background.' . $index . '.address', $member->address) }}">
+                </div>
+                <!-- Phone -->
+                <div class="col-md-4 mb-3">
+                    <input type="text" name="family_background[{{ $index }}][phone]" class="form-control" placeholder="Phone" id="famphone"
+                        pattern="09[0-9]{9}" title="Please enter a valid Philippine phone number starting with 09 and containing 11 digits."
+                        value="{{ old('family_background.' . $index . '.phone', $member->phone) }}">
                 </div>
             </div>
+        @empty
+            <p>No family background data found.</p>
+        @endforelse
+    </div>
+    <div class="col-md-12 mb-3 d-flex justify-content-start">
+    <button type="button" id="addFamilyBackground" class="btn btn-secondary mb-3">Add More</button>
+</div>
+
+</div>
+
 
             <div id="emergencyContactWrapper">
                 <h5>Emergency</h5>
@@ -571,9 +538,10 @@
                     </div>
                 @endforelse
 
-                <div class="col-md-12 mb-3" style="text-align: center;">
-                     <button type="button" id="addEmergencyContact" class="btn btn-secondary mb-3">Add More</button>
-                </div>
+                <div class="col-md-12 mb-3 d-flex justify-content-start">
+    <button type="button" id="addEmergencyContact" class="btn btn-secondary mb-3">Add More</button>
+</div>
+
 
             </div>
 
@@ -1021,17 +989,22 @@
         </div>
     @endforeach
 </div>
-<button type="button" class="btn btn-secondary mb-3" onclick="addTrainingField()" id="addTrainingBtn">Add Mores</button>
-<button style="float: right; background-color: #326c79;"type="submit" class="btn btn-primary">Save</button>
+<button type="button" class="btn btn-secondary mb-3" onclick="addTrainingField()" id="addTrainingBtn">Add More</button>
 
-
-</form>
 </div>
 
 </div>
-<div style="display: flex; justify-content: center; align-items: center; padding-bottom: 50px;">
-    <button onclick="window.location.href='{{ url('employees') }}';" class="btn btn-primary" style="background-color: #326c79;">Back To Employee List</button>
+<button style="float: right; background-color: #326C79; color: white;" type="submit" class="btn mb-4">Save</button>
+</form> 
+<div style="text-align: left;">
+    <a href="{{ url('employees') }}" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+        Back to Employee List
+    </a>
 </div>
+
+
+
+
 </div>
 </div>
 </div>

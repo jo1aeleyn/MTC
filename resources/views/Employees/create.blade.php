@@ -328,131 +328,137 @@
     </div>
 </div>
                 
-            <div id="familyBackgroundSection">
-                <h5>Family Background</h5>
-                    <div id="familyBackgroundWrapper">
-                        <div class="familyBackgroundRow mb-3 row">
-                            <div class="col-md-4 mb-3">
-                                <input 
-                                type="text" 
-                                name="family_background[0][name]" 
-                                class="form-control" 
-                                placeholder="Name" 
-                                value="{{ old('family_background.0.name') }}" 
-                                style="background-color: #E2E2E2;"
-                                required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <select 
-                                name="family_background[0][relationship]" 
-                                class="form-control" style="background-color: #E2E2E2;"
-                                required>
-                                <option value="" selected disabled>Select Relationship</option>
-                                <option value="Mother" {{ old('family_background.0.relationship') == 'Mother' ? 'selected' : '' }}>Mother</option>
-                                <option value="Father" {{ old('family_background.0.relationship') == 'Father' ? 'selected' : '' }}>Father</option>
-                                <option value="Sibling" {{ old('family_background.0.relationship') == 'Sibling' ? 'selected' : '' }}>Sibling</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <input 
-                            type="text" 
-                            name="family_background[0][occupation]" 
-                            class="form-control" 
-                            placeholder="Occupation" 
-                            value="{{ old('family_background.0.occupation') }}"
-                            style="background-color: #E2E2E2;">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <input 
-                            type="date" 
-                            name="family_background[0][birthdate]" 
-                            class="form-control" 
-                            value="{{ old('family_background.0.birthdate') }}" 
-                            style="background-color: #E2E2E2;"
-                            placeholder="Birthdate">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <input 
-                            type="text" 
-                            name="family_background[0][address]" 
-                            class="form-control" 
-                            placeholder="Address" 
-                            value="{{ old('family_background.0.address') }}"
-                            style="background-color: #E2E2E2;">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <input 
-                            type="text" 
-                            name="family_background[0][phone]" 
-                            class="form-control" 
-                            placeholder="Phone" 
-                            pattern="09[0-9]{9}" 
-                            title="Please enter a valid Philippine phone number starting with 09 and containing 11 digits." 
-                            value="{{ old('family_background.0.phone') }}"
-                            style="background-color: #E2E2E2;" 
-                            required>
-                        </div>
-                        <div class="col-md-12" style="float:left;">
-                            <button type="button" id="addFamilyBackground" class="btn btn-secondary mb-3">Add More</button>
-                        </div>
-                    </div>
-                </div>
+<div id="familyBackgroundSection">
+    <h5>Family Background</h5>
+    <div id="familyBackgroundWrapper">
+        <div class="familyBackgroundRow mb-3 row" id="familyBackgroundRow1">
+            <div class="col-md-4 mb-3">
+                <input 
+                    type="text" 
+                    name="family_background[0][name]" 
+                    class="form-control" 
+                    placeholder="Name" 
+                    value="{{ old('family_background.0.name') }}" 
+                    style="background-color: #E2E2E2;"
+                    required>
             </div>
-            
-            <div id="emergencyContactSection">
-            <h5>Emergency Contact Details</h5>
-                <div id="emergencyContactWrapper">
-
-                    <div class="emergencyContactRow mb-3 row">
-                        <div class="col-md-3 mb-3">
-                            <input 
-                            type="text" 
-                            name="emergency_contacts[0][name]" 
-                            class="form-control" 
-                            placeholder="Name" 
-                            value="{{ old('emergency_contacts.0.name') }}" 
-                            style="background-color: #E2E2E2;"
-                            required>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <select 
-                            name="emergency_contacts[0][relationship]" 
-                            class="form-control"
-                            style="background-color: #E2E2E2;"
-                            required>
-                            <option value="" selected disabled>Select Relationship</option>
-                            <option value="Mother" {{ old('emergency_contacts.0.relationship') == 'Mother' ? 'selected' : '' }}>Mother</option>
-                            <option value="Father" {{ old('emergency_contacts.0.relationship') == 'Father' ? 'selected' : '' }}>Father</option>
-                            <option value="Sibling" {{ old('emergency_contacts.0.relationship') == 'Sibling' ? 'selected' : '' }}>Sibling</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <input 
-                        type="text" 
-                        name="emergency_contacts[0][address]" 
-                        class="form-control" 
-                        placeholder="Address" 
-                        value="{{ old('emergency_contacts.0.address') }}"
-                        style="background-color: #E2E2E2;">
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <input 
-                        type="text" 
-                        name="emergency_contacts[0][contact_num]" 
-                        class="form-control" 
-                        placeholder="Contact Number" 
-                        pattern="09[0-9]{9}" 
-                        title="Please enter a valid Philippine phone number starting with 09 and containing 11 digits." 
-                        value="{{ old('emergency_contacts.0.contact_num') }}" 
-                        style="background-color: #E2E2E2;"
-                        required>
-                    </div>
-                    <div class="col-md-12 " style="float:left;">
-                     <button type="button" id="addEmergencyContact"  class="btn btn-secondary mb-3">Add More</button>
-                    </div>
-                </div>
+            <div class="col-md-4 mb-3">
+                <select 
+                    name="family_background[0][relationship]" 
+                    class="form-control" style="background-color: #E2E2E2;"
+                    required>
+                    <option value="" selected disabled>Select Relationship</option>
+                    <option value="Mother" {{ old('family_background.0.relationship') == 'Mother' ? 'selected' : '' }}>Mother</option>
+                    <option value="Father" {{ old('family_background.0.relationship') == 'Father' ? 'selected' : '' }}>Father</option>
+                    <option value="Sibling" {{ old('family_background.0.relationship') == 'Sibling' ? 'selected' : '' }}>Sibling</option>
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <input 
+                    type="text" 
+                    name="family_background[0][occupation]" 
+                    class="form-control" 
+                    placeholder="Occupation" 
+                    value="{{ old('family_background.0.occupation') }}"
+                    style="background-color: #E2E2E2;">
+            </div>
+            <div class="col-md-4 mb-3">
+                <input 
+                    type="date" 
+                    name="family_background[0][birthdate]" 
+                    class="form-control" 
+                    value="{{ old('family_background.0.birthdate') }}" 
+                    style="background-color: #E2E2E2;"
+                    placeholder="Birthdate">
+            </div>
+            <div class="col-md-4 mb-3">
+                <input 
+                    type="text" 
+                    name="family_background[0][address]" 
+                    class="form-control" 
+                    placeholder="Address" 
+                    value="{{ old('family_background.0.address') }}"
+                    style="background-color: #E2E2E2;">
+            </div>
+            <div class="col-md-4 mb-3">
+                <input 
+                    type="text" 
+                    name="family_background[0][phone]" 
+                    class="form-control" 
+                    placeholder="Phone" 
+                    pattern="09[0-9]{9}" 
+                    title="Please enter a valid Philippine phone number starting with 09 and containing 11 digits." 
+                    value="{{ old('family_background.0.phone') }}"
+                    style="background-color: #E2E2E2;" 
+                    required>
+            </div>
+            <div class="col-md-12" style="float:left;">
+                <button type="button" class="btn btn-danger mb-3 removeFamilyBackground" style="display: none;">Remove</button>
             </div>
         </div>
+    </div>
+    <div class="col-md-12">
+        <button type="button" id="addFamilyBackground" class="btn btn-secondary mb-3">Add More</button>
+    </div>
+</div>
+<div id="emergencyContactSection">
+    <h5>Emergency Contact Details</h5>
+    <div id="emergencyContactWrapper">
+
+        <div class="emergencyContactRow mb-3 row" id="emergencyContactRow1">
+            <div class="col-md-3 mb-3">
+                <input 
+                    type="text" 
+                    name="emergency_contacts[0][name]" 
+                    class="form-control" 
+                    placeholder="Name" 
+                    value="{{ old('emergency_contacts.0.name') }}" 
+                    style="background-color: #E2E2E2;"
+                    required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select 
+                    name="emergency_contacts[0][relationship]" 
+                    class="form-control"
+                    style="background-color: #E2E2E2;"
+                    required>
+                    <option value="" selected disabled>Select Relationship</option>
+                    <option value="Mother" {{ old('emergency_contacts.0.relationship') == 'Mother' ? 'selected' : '' }}>Mother</option>
+                    <option value="Father" {{ old('emergency_contacts.0.relationship') == 'Father' ? 'selected' : '' }}>Father</option>
+                    <option value="Sibling" {{ old('emergency_contacts.0.relationship') == 'Sibling' ? 'selected' : '' }}>Sibling</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <input 
+                    type="text" 
+                    name="emergency_contacts[0][address]" 
+                    class="form-control" 
+                    placeholder="Address" 
+                    value="{{ old('emergency_contacts.0.address') }}"
+                    style="background-color: #E2E2E2;">
+            </div>
+            <div class="col-md-3 mb-3">
+                <input 
+                    type="text" 
+                    name="emergency_contacts[0][contact_num]" 
+                    class="form-control" 
+                    placeholder="Contact Number" 
+                    pattern="09[0-9]{9}" 
+                    title="Please enter a valid Philippine phone number starting with 09 and containing 11 digits." 
+                    value="{{ old('emergency_contacts.0.contact_num') }}" 
+                    style="background-color: #E2E2E2;"
+                    required>
+            </div>
+            <div class="col-md-12" style="float:left;">
+                <button type="button" class="btn btn-danger mb-3 removeEmergencyContact" style="display: none;">Remove</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-12 mb-3 d-flex justify-content-start">
+        <button type="button" id="addEmergencyContact" class="btn btn-secondary mb-3">Add More</button>
+    </div>
+</div>
         
         
         <h5>Employment Information</h5>
@@ -721,16 +727,18 @@
 <button type="button" class="btn btn-secondary mb-3" onclick="addTrainingField()" id="addTrainingBtn">Add More</button>
 
 
-<div style="display: flex; justify-content: center; align-items: center; padding-bottom: 50px;">
-<button type="submit" class="btn" style="float: right; background-color: #FFDE59;">Submit</button>
+
 </div>
 
+</div>
+<button type="submit" class="btn mb-4" style="float: right; background-color: #289DD2;">Submit</button>
 </form>
 </div>
+<div style="text-align: left;">
+    <a href="{{ url('employees') }}" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+        Back to Employee List
+    </a>
 </div>
-</div>
-<button onclick="window.location.href='{{ url('employees') }}';" class="btn" style="background-color: #289DD2">Back To Employee List</button>
-
 </div>
 </div>
 </div>

@@ -35,9 +35,9 @@
     <!-- Filter and Export Buttons Section -->
     <div class="d-flex">
         <!-- Export Button placed left of Filter Button -->
-        <a href="{{ route('employee.export', ['year' => request('year')]) }}" class="btn me-2 text-white" style="background-color: #289DD2">
+        <a href="{{ route('employee.export', ['year' => request('year')]) }}" class="btn me-2" style="background-color: #FFDE59">
     Export
-</a>
+        </a>
 
 
         <!-- Filter Section -->
