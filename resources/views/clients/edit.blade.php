@@ -198,16 +198,16 @@
                             </div>
                         </div>
 
-                 
+                        <div class="mb-3">
+              <button type="submit" class="btn mb-3" style="background-color: #326C79; float:right; color:white;">Update Client</button>
+            </div>
                     </form>
                 </div>
             </div>
             <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
         Back to Client List
             </a>    
-            <div class="mb-3">
-              <button type="submit" class="btn mb-3" style="background-color: #326C79; float:right; color:white;">Update Client</button>
-            </div>
+            
         </div>
     </div>
 </div>

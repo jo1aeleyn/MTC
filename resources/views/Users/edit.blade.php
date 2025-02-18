@@ -76,10 +76,12 @@
                             
                             </form>
                         </div>
+                        
                     </div>
-                
-
-            <div class="d-flex justify-content-end mt-3">
+                    <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+        Back to Users List
+    </a>
+            <div class="d-flex justify-content-end">
                 <form action="{{ route('users.resetPassword', $user->uuid) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-warning">Reset Password</button>

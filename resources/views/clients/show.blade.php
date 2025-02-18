@@ -114,9 +114,12 @@
                     </div>
        </div>
                     </div>
-                    <a href="{{ route('clients.index') }}" class="btn btn-secondary">Back to Clients</a>
                 </div>
             </div>
+            <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+        Back to Clients List
+    </a>
+
         </div>
     </div>
 </div>
