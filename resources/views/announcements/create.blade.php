@@ -30,6 +30,16 @@
                     <h5>Create Announcement</h5>
                     <form action="{{ route('announcements.store') }}" method="POST" id="announcementForm" enctype="multipart/form-data">
                         @csrf
+
+                        <!-- Image Upload with Preview -->
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image (Optional)</label>
+                            <!-- Placeholder Image Preview -->
+                            <div class="d-flex justify-content-center mb-2">
+                                <img id="image_preview" src="https://via.placeholder.com/150" alt="Image Preview" class="img-thumbnail" style="max-width: 150px; display: none;">
+                            </div>
+                            <input type="file" name="image" id="image" class="form-control" accept="image/*" onchange="previewImage(event)">
+                        </div>
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
                             <input type="text" name="title" id="title" class="form-control" required>
@@ -52,10 +62,7 @@
                             <textarea name="content" id="content" class="form-control" required></textarea>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Image (Optional)</label>
-                            <input type="file" name="image" id="image" class="form-control" accept="image/*">
-                        </div>
+                      
 
                 </div>
             </div>
@@ -64,7 +71,7 @@
     <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
         Back to Announcements List
     </a>
-        <button type="submit" class="btn mb-4" style="float:right; color:white; background-color: #326C79;">Create Announcement</button>
+        <button type="submit" class="btn" style="float:right; color:white; background-color: #326C79;">Create Announcement</button>
             </form>
     </div>
 </div>
@@ -85,4 +92,17 @@
     });
 </script>
 </body>
+
+<script>
+    // Function to preview the image when a user selects a file
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var preview = document.getElementById('image_preview');
+            preview.style.display = 'block'; // Show the preview
+            preview.src = reader.result; // Set the preview image source
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 </html>
