@@ -64,9 +64,9 @@
                                                     <li>
                                                         <form id="archiveForm{{ $assignment->id }}" action="{{ route('client.assignment.archive', $assignment->uuid) }}" method="POST">
                                                             @csrf
-                                                            @method('PATCH')
-                                                            <button class="dropdown-item" type="button" onclick="confirmArchive({{ $assignment->id }})">Archive</button>
-                                                        </form>
+                                                            @method('PUT')
+                                                            <button class="dropdown-item" type="button" onclick="confirmArchive('{{ $assignment->uuid }}')">Archive</button>
+                                                            </form>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -90,22 +90,23 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmArchive(id) {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "Do you really want to archive this assignment?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, archive it!",
-            cancelButtonText: "Cancel"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('archiveForm' + id).submit();
-            }
-        });
-    }
+    function confirmArchive(uuid) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to archive this assignment?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, archive it!",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.querySelector(`form[action*="${uuid}"]`).submit();
+        }
+    });
+}
+
 </script>
 
 @include('partials.footer')

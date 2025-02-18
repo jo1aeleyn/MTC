@@ -91,28 +91,32 @@ class ClientAssignmentController extends Controller
     public function update(Request $request, $uuid)
     {
         $request->validate([
-            'employee_id' => 'required|exists:employees,id',
-            'client_id' => 'required|exists:clients,id',
+            'emp_num' => 'required|exists:employees,emp_num',
+            'client_id' => 'required|exists:client_tbl,client_id',
         ]);
 
         $assignment = ClientAssignment::where('uuid', $uuid)->firstOrFail();
         $assignment->update([
-            'employee_id' => $request->employee_id,
+            'emp_num' => $request->emp_num,
             'client_id' => $request->client_id,
             'edited_by' => Auth::id(),
         ]);
 
         return redirect()->route('client.assignment.index')->with('success', 'Client assignment updated successfully.');
     }
-
+    
     public function archive($uuid)
     {
         $assignment = ClientAssignment::where('uuid', $uuid)->firstOrFail();
-        $assignment->update([
-            'is_archived' => true,
-            'archived_by' => Auth::id(),
-        ]);
-
-        return redirect()->route('client.assignment.index')->with('success', 'Client assignment archived successfully.');
+    
+        $assignment->is_archived = true;
+        $assignment->archived_by = Auth::id();
+        
+        if ($assignment->save()) {
+            return redirect()->route('client.assignment.index')->with('success', 'Client assignment archived successfully.');
+        }
+    
+        return redirect()->route('client.assignment.index')->with('error', 'Failed to archive assignment.');
     }
+    
 }

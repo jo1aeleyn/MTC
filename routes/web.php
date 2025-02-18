@@ -149,9 +149,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client-assignment', [ClientAssignmentController::class, 'index'])->name('client.assignment.index');
     Route::get('/client-assignment/create', [ClientAssignmentController::class, 'create'])->name('client.assignment.create');
     Route::post('/client-assignment', [ClientAssignmentController::class, 'store'])->name('client.assignment.store');
-    Route::get('/client-assignment/{id}/edit', [ClientAssignmentController::class, 'edit'])->name('client.assignment.edit');
-    Route::put('/client-assignment/{id}', [ClientAssignmentController::class, 'update'])->name('client.assignment.update');
-    Route::delete('/client-assignment/{id}', [ClientAssignmentController::class, 'archive'])->name('client.assignment.archive');
+    Route::get('/client-assignment/{uuid}/edit', [ClientAssignmentController::class, 'edit'])->name('client.assignment.edit');
+    Route::put('/client-assignment/{uuid}', [ClientAssignmentController::class, 'update'])->name('client.assignment.update');
+    Route::put('/client-assignment/archive/{uuid}', [ClientAssignmentController::class, 'archive'])->name('client.assignment.archive');
 });
 
 
