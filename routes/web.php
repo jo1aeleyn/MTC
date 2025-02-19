@@ -16,6 +16,7 @@ use App\Http\Controllers\FinancialRequestController;
 use App\Http\Controllers\LeavesController;
 use App\Http\Controllers\ClientAssignmentController;
 use App\Http\Controllers\CompanyPositionController;
+use App\Http\Controllers\EventController;
 
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
@@ -164,4 +165,11 @@ Route::prefix('company-positions')->group(function () {
     Route::post('/{uuid}/archive', [CompanyPositionController::class, 'archive'])->name('company_positions.archive');
 });
 
+
+Route::get('/calendar', [EventController::class, 'index'])->name('calendar.index');
+Route::get('/events/get', [EventController::class, 'getEvents'])->name('events.get');
+Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
+Route::get('/events/edit/{id}', [EventController::class, 'edit'])->name('events.edit');
+Route::put('/events/update/{id}', [EventController::class, 'update'])->name('events.update');
+Route::put('/events/archive/{id}', [EventController::class, 'archive'])->name('events.archive');
 
