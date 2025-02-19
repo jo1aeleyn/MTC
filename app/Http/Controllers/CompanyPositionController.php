@@ -51,27 +51,34 @@ class CompanyPositionController extends Controller
     /**
      * Show the form for editing the specified position.
      */
-    public function edit(CompanyPosition $companyPosition)
-    {
-        return view('company_positions.edit', compact('companyPosition'));
-    }
+    public function edit($uuid)
+{
+    $companyPosition = CompanyPosition::where('uuid', $uuid)->firstOrFail();
+    return view('company_positions.edit', compact('companyPosition'));
+}
 
+    
+    
     /**
      * Update the specified position in the database.
      */
-    public function update(Request $request, CompanyPosition $companyPosition)
-    {
-        $request->validate([
-            'Position_name' => 'required|string|max:255|unique:CompanyPositions_tbl,Position_name,' . $companyPosition->id,
-        ]);
+    public function update(Request $request, $uuid)
+{
+    $companyPosition = CompanyPosition::where('uuid', $uuid)->firstOrFail();
 
-        $companyPosition->update([
-            'Position_name' => $request->Position_name,
-            'edited_by' => Auth::id(),
-        ]);
+    $request->validate([
+        'PositionName' => 'required|string|max:255|unique:companypositions_tbl,Position_name,' . $companyPosition->id,
+    ]);
 
-        return redirect()->route('company_positions.index')->with('success', 'Position updated successfully.');
-    }
+    $companyPosition->update([
+        'Position_name' => $request->PositionName,
+        'edited_by' => Auth::id(),
+    ]);
+
+    return redirect()->route('company_positions.index')->with('success', 'Position updated successfully.');
+}
+
+
 
     /**
      * Archive the specified position instead of deleting it.
