@@ -159,8 +159,8 @@ Route::prefix('company-positions')->group(function () {
     Route::get('/', [CompanyPositionController::class, 'index'])->name('company_positions.index'); // List all positions
     Route::get('/create', [CompanyPositionController::class, 'create'])->name('company_positions.create'); // Show create form
     Route::post('/store', [CompanyPositionController::class, 'store'])->name('company_positions.store'); // Store new position
-    Route::get('/edit/{uuid}', [CompanyPositionController::class, 'edit'])->name('company_positions.edit'); // Show edit form
-    Route::put('/update/{uuid}', [CompanyPositionController::class, 'update'])->name('company_positions.update'); // Update position
+    Route::get('/company-positions/edit/{uuid}', [CompanyPositionController::class, 'edit'])->name('company_positions.edit');
+    Route::put('/company-positions/update/{uuid}', [CompanyPositionController::class, 'update'])->name('company_positions.update');
     Route::post('/{uuid}/archive', [CompanyPositionController::class, 'archive'])->name('company_positions.archive');
 });
 

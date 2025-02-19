@@ -27,13 +27,14 @@
             <div class="card">
                 <div class="card-body">
                     <h5>Edit Position</h5>
-                    <form action="{{ route('company_positions.update', $position->uuid) }}" method="POST" id="positionForm">
-                        @csrf
+                    <form action="{{ route('company_positions.update', ['uuid' => $companyPosition->uuid]) }}" method="POST">
+
+                    @csrf
                         @method('PUT') <!-- Indicates this is an update form -->
 
                         <div class="mb-3">
                             <label for="PositionName" class="form-label">Position Name</label>
-                            <input type="text" name="PositionName" id="PositionName" class="form-control" value="{{ old('PositionName', $position->Position_name) }}" required>
+                            <input type="text" name="PositionName" id="PositionName" class="form-control" value="{{ old('PositionName', $companyPosition->Position_name) }}" required>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update Position</button>

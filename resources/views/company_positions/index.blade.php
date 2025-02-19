@@ -53,9 +53,9 @@
                                                 <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $position->id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $position->id }}">
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $position->uuid }}">
                                                     <li>
-                                                        <a class="dropdown-item" href="{{ route('company_positions.edit', $position->uuid) }}">Edit</a>
+                                                    <a class="dropdown-item" href="{{ route('company_positions.edit', ['uuid' => $position->uuid]) }}">Edit</a>
                                                     </li>
                                                     <li>
                                                     <form action="{{ route('company_positions.archive', $position->uuid) }}" method="POST" id="archiveForm{{ $position->uuid }}">
