@@ -33,6 +33,17 @@
                         @method('PUT')
                         
                         <div class="mb-3">
+                        @if($announcement->image)
+                            <div class="mt-2 d-flex justify-content-center">
+                                <img src="{{ asset('storage/announcements/' . $announcement->image) }}" alt="Current Image" width="300">
+                            </div>
+                        @endif
+                            <label for="image" class="form-label">Image (Optional)</label>
+                            <input type="file" name="image" id="image" class="form-control" accept="image/*">
+                     
+                        </div>
+                        
+                        <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
                             <input type="text" name="title" id="title" class="form-control" value="{{ old('title', $announcement->title) }}" required>
                         </div>
@@ -54,15 +65,7 @@
                             <textarea name="content" id="content" class="form-control" required>{{ old('content', $announcement->content) }}</textarea>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Image (Optional)</label>
-                            <input type="file" name="image" id="image" class="form-control" accept="image/*">
-                            @if($announcement->image)
-                                <div class="mt-2">
-                                    <img src="{{ asset('storage/announcements/' . $announcement->image) }}" alt="Current Image" width="150">
-                                </div>
-                            @endif
-                        </div>
+                  
                         <button type="submit" class="btn mb-3" style="float:right; background-color: #326C79; color:white;">Update Announcement</button>
                 
                     </form>
@@ -80,6 +83,7 @@
 
 @include('partials.footer')
 
+
 <script>
     CKEDITOR.replace('content', {
         height: 300,
@@ -88,8 +92,28 @@
             { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'] },
             { name: 'insert', items: ['Link', 'Image', 'Table'] },
             { name: 'styles', items: ['Format', 'FontSize'] }
-        ]
+        ],
+        removePlugins: 'securityNotification' // Hide security warning
     });
+
+    // Function to hide the CKEditor security warning instantly
+    function removeSecurityWarning() {
+        let securityWarning = document.querySelector('.cke_notification');
+        if (securityWarning) {
+            securityWarning.remove(); // Remove warning from DOM instantly
+        }
+    }
+
+    // Observe DOM changes and remove the warning as soon as it appears
+    const observer = new MutationObserver(() => {
+        removeSecurityWarning();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Run once immediately in case the warning is already present
+    removeSecurityWarning();
+</script>
 </script>
 </body>
 </html>

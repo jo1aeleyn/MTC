@@ -36,12 +36,14 @@
                             <input type="text" name="DepartmentName" id="DepartmentName" class="form-control" value="{{ old('name', $department->DepartmentName) }}" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Update Department</button>
-                    </form>
-
-                    <a href="{{ route('departments.index') }}" class="btn btn-secondary mt-3">Back to Departments</a>
-                </div>
+                  
             </div>
+        </div>
+        <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+        Back to departments List
+            </a> 
+        <button type="submit" class="btn " style="background-color: #326C79; float:right; color:white;">Update Department</button>
+                    </form>
         </div>
     </div>
 </div>

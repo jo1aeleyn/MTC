@@ -4,6 +4,12 @@
 
 <link rel="stylesheet" href="{{ asset('/css/forms.css') }}">
 <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<style>
+    .cke_dialog_ui_hbox_child span.cke_reset {
+    display: none !important;
+}
+
+</style>
 
 <div class="container">
     <div class="page-inner">
@@ -36,7 +42,7 @@
                             <label for="image" class="form-label">Image (Optional)</label>
                             <!-- Placeholder Image Preview -->
                             <div class="d-flex justify-content-center mb-2">
-                                <img id="image_preview" src="https://via.placeholder.com/150" alt="Image Preview" class="img-thumbnail" style="max-width: 150px; display: none;">
+                                <img id="image_preview" src="https://via.placeholder.com/150" alt="Image Preview" class="img-thumbnail" style="max-width: 300px; display: none;">
                             </div>
                             <input type="file" name="image" id="image" class="form-control" accept="image/*" onchange="previewImage(event)">
                         </div>
@@ -80,18 +86,37 @@
 @include('partials.footer')
 
 <script>
-    // Initialize CKEditor for the content textarea
     CKEDITOR.replace('content', {
-        // Optional: You can customize the CKEditor settings here
         height: 300,
         toolbar: [
             { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
             { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'] },
             { name: 'insert', items: ['Link', 'Image', 'Table'] },
             { name: 'styles', items: ['Format', 'FontSize'] }
-        ]
+        ],
+        removePlugins: 'securityNotification' // Hide security warning
     });
+
+    // Function to hide the CKEditor security warning instantly
+    function removeSecurityWarning() {
+        let securityWarning = document.querySelector('.cke_notification');
+        if (securityWarning) {
+            securityWarning.remove(); // Remove warning from DOM instantly
+        }
+    }
+
+    // Observe DOM changes and remove the warning as soon as it appears
+    const observer = new MutationObserver(() => {
+        removeSecurityWarning();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Run once immediately in case the warning is already present
+    removeSecurityWarning();
 </script>
+
+
 </body>
 
 <script>
