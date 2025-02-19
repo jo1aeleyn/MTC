@@ -57,7 +57,14 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $position->uuid }}">
                                                     <li>
-                                                    <a class="dropdown-item" href="{{ route('company_positions.edit', ['uuid' => $position->uuid]) }}">Edit</a>
+                                                        <button class="dropdown-item editPositionBtn" 
+                                                            data-id="{{ $position->uuid }}" 
+                                                            data-name="{{ $position->Position_name }}" 
+                                                            data-route="{{ route('company_positions.update', $position->uuid) }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editPositionModal">
+                                                            Edit
+                                                        </button>
                                                     </li>
                                                     <li>
                                                         <form action="{{ route('company_positions.archive', $position->uuid) }}" method="POST" id="archiveForm{{ $position->uuid }}">
@@ -86,9 +93,10 @@
 </div>
 
 @include('partials.footer')
+
 <!-- Add Position Modal (Centered) -->
 <div class="modal fade" id="addPositionModal" tabindex="-1" aria-labelledby="addPositionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> <!-- Centering Modal -->
+    <div class="modal-dialog modal-dialog-centered"> 
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addPositionModalLabel">Create New Position</h5>
@@ -111,6 +119,33 @@
     </div>
 </div>
 
+<!-- Edit Position Modal -->
+<div class="modal fade" id="editPositionModal" tabindex="-1" aria-labelledby="editPositionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPositionModalLabel">Edit Position</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" id="editPositionForm">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="mb-3">
+                        <label for="editPositionName" class="form-label">Position Name</label>
+                        <input type="text" name="PositionName" id="editPositionName" class="form-control" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Position</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- DataTables and Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -131,4 +166,17 @@ function confirmArchive(uuid) {
         }
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".editPositionBtn").forEach(button => {
+        button.addEventListener("click", function () {
+            let positionId = this.getAttribute("data-id");
+            let positionName = this.getAttribute("data-name");
+            let updateRoute = this.getAttribute("data-route");
+
+            document.getElementById("editPositionName").value = positionName;
+            document.getElementById("editPositionForm").action = updateRoute;
+        });
+    });
+});
 </script>
