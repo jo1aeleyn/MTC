@@ -122,7 +122,6 @@
                               <?php $latestAnnouncement = $announcements->first(); ?>
                               <?php if (!empty($latestAnnouncement->image)): ?>
                                 <img src="{{ asset('storage/announcements/' . $latestAnnouncement->image) }}" class="d-block w-100" alt="{{ $latestAnnouncement->image }}" style="height: 375px; object-fit:none ;">
-                               
                                   <?php endif; ?>
                               <div class="mt-3">
                               <h6>{!! $latestAnnouncement->title !!}</h6>

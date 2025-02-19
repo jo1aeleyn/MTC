@@ -27,9 +27,11 @@
                         </div>
                     @endif
 
-                    <!-- Add New Position Button -->
+                    <!-- Add New Position Button (Triggers Modal) -->
                     <div class="d-flex justify-content-between mb-3">
-                        <a href="{{ route('company_positions.create') }}" class="btn text-white" style="background-color:#326C79">Add New Position</a>
+                        <button class="btn text-white" style="background-color:#326C79" data-bs-toggle="modal" data-bs-target="#addPositionModal">
+                            Add New Position
+                        </button>
                     </div>
 
                     <!-- Positions Table -->
@@ -58,11 +60,10 @@
                                                         <a class="dropdown-item" href="{{ route('company_positions.edit', $position->uuid) }}">Edit</a>
                                                     </li>
                                                     <li>
-                                                    <form action="{{ route('company_positions.archive', $position->uuid) }}" method="POST" id="archiveForm{{ $position->uuid }}">
-                                                        @csrf
-                                                        <button class="dropdown-item" type="button" onclick="confirmArchive('{{ $position->uuid }}')">Archive</button>
-                                                    </form>
-
+                                                        <form action="{{ route('company_positions.archive', $position->uuid) }}" method="POST" id="archiveForm{{ $position->uuid }}">
+                                                            @csrf
+                                                            <button class="dropdown-item" type="button" onclick="confirmArchive('{{ $position->uuid }}')">Archive</button>
+                                                        </form>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -85,6 +86,31 @@
 </div>
 
 @include('partials.footer')
+<!-- Add Position Modal (Centered) -->
+<div class="modal fade" id="addPositionModal" tabindex="-1" aria-labelledby="addPositionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Centering Modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPositionModalLabel">Create New Position</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('company_positions.store') }}" method="POST" id="positionForm">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="PositionName" class="form-label">Position Name</label>
+                        <input type="text" name="PositionName" id="PositionName" class="form-control" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn" style="background-color: #326C79; color:white;">Create Position</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- DataTables and Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -105,5 +131,4 @@ function confirmArchive(uuid) {
         }
     });
 }
-
 </script>

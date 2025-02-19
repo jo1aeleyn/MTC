@@ -29,7 +29,7 @@
 
                     <!-- Add New Department Button -->
                     <div class="d-flex justify-content-between mb-3">
-                        <a href="{{ route('departments.create') }}" class="btn text-white" style="background-color:#326C79">Add New Department</a>
+                        <button class="btn text-white" style="background-color:#326C79" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">Add New Department</button>
                     </div>
 
                     <!-- Departments Table -->
@@ -59,7 +59,14 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $department->id }}">
                                                     <li>
-                                                        <a class="dropdown-item" href="{{ route('departments.edit', $department->uuid) }}">Edit</a>
+                                                        <button class="dropdown-item edit-btn"
+                                                            data-id="{{ $department->uuid }}"
+                                                            data-name="{{ $department->DepartmentName }}"
+                                                            data-url="{{ route('departments.update', $department->uuid) }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editDepartmentModal">
+                                                            Edit
+                                                        </button>
                                                     </li>
                                                     <li>
                                                         <form action="{{ route('departments.archive', $department->uuid) }}" method="POST" id="archiveForm{{ $department->id }}">
@@ -87,6 +94,59 @@
     </div>
 </div>
 
+<!-- Add Department Modal -->
+<div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Centering Modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDepartmentModalLabel">Create New Department</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('departments.store') }}" method="POST" id="departmentForm">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="DepartmentName" class="form-label">Department Name</label>
+                        <input type="text" name="DepartmentName" id="DepartmentName" class="form-control" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn" style="background-color: #326C79; color:white;">Create Department</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Department Modal -->
+<div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Centering Modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDepartmentModalLabel">Edit Department</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editDepartmentForm" method="POST">
+                    @csrf
+                    @method('PUT') <!-- Needed for updating -->
+
+                    <div class="mb-3">
+                        <label for="editDepartmentName" class="form-label">Department Name</label>
+                        <input type="text" name="DepartmentName" id="editDepartmentName" class="form-control" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn" style="background-color: #326C79; color:white;">Update Department</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @include('partials.footer')
 
 <!-- DataTables and Bootstrap JS -->
@@ -108,5 +168,22 @@
             }
         });
     }
-</script>
 
+    document.addEventListener("DOMContentLoaded", function() {
+        const editButtons = document.querySelectorAll(".edit-btn");
+
+        editButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                let departmentId = this.getAttribute("data-id");
+                let departmentName = this.getAttribute("data-name");
+                let updateUrl = this.getAttribute("data-url");
+
+                // Set modal input values
+                document.getElementById("editDepartmentName").value = departmentName;
+                
+                // Update form action URL dynamically
+                document.getElementById("editDepartmentForm").setAttribute("action", updateUrl);
+            });
+        });
+    });
+</script>
