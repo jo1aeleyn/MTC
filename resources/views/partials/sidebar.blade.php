@@ -301,6 +301,11 @@
                         <span class="sub-item" style="color: #ffffff;">Company Positions</span>
                       </a>
                     </li>
+                    <li>
+                      <a href="{{route('calendar.index')}}">
+                        <span class="sub-item" style="color: #ffffff;">Company Calendar</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </li>

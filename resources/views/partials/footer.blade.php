@@ -41,7 +41,9 @@
 <!-- jQuery Vector Maps -->
 <script src="{{ asset('assets/js/plugin/jsvectormap/jsvectormap.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugin/jsvectormap/world.js') }}"></script>
-
+<!-- FullCalendar JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- Sweet Alert -->
 <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
@@ -125,6 +127,24 @@ document.querySelectorAll('.role-dropdown').forEach(select => {
     });
 });
 </script>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth', // Show month view
+                selectable: true,
+                editable: true,
+                eventClick: function(info) {
+                    window.location.href = "/events/edit/" + info.event.id;
+                },
+                events: '/events/get', // Fetch events from Laravel controller
+            });
+
+            calendar.render();
+        });
+    </script>
 
 
 </body>
