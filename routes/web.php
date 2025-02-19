@@ -15,6 +15,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FinancialRequestController;
 use App\Http\Controllers\LeavesController;
 use App\Http\Controllers\ClientAssignmentController;
+use App\Http\Controllers\CompanyPositionController;
 
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
@@ -152,6 +153,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client-assignment/{uuid}/edit', [ClientAssignmentController::class, 'edit'])->name('client.assignment.edit');
     Route::put('/client-assignment/{uuid}', [ClientAssignmentController::class, 'update'])->name('client.assignment.update');
     Route::put('/client-assignment/archive/{uuid}', [ClientAssignmentController::class, 'archive'])->name('client.assignment.archive');
+});
+
+Route::prefix('company-positions')->group(function () {
+    Route::get('/', [CompanyPositionController::class, 'index'])->name('company_positions.index'); // List all positions
+    Route::get('/create', [CompanyPositionController::class, 'create'])->name('company_positions.create'); // Show create form
+    Route::post('/store', [CompanyPositionController::class, 'store'])->name('company_positions.store'); // Store new position
+    Route::get('/edit/{uuid}', [CompanyPositionController::class, 'edit'])->name('company_positions.edit'); // Show edit form
+    Route::put('/update/{uuid}', [CompanyPositionController::class, 'update'])->name('company_positions.update'); // Update position
+    Route::post('/{uuid}/archive', [CompanyPositionController::class, 'archive'])->name('company_positions.archive');
 });
 
 
