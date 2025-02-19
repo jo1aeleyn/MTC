@@ -249,25 +249,6 @@
                 </div>
               </li>
               
-
-              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#charts">
-                  <i class="far fa-chart-bar" style="color: #ffffff;"></i>
-                  <p style="color: #ffffff;">Departments</p>
-                  <span class="caret" style="color: #ffffff;"></span>
-                </a>
-                <div class="collapse" id="charts">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="{{route('departments.index')}}">
-                        <span class="sub-item" style="color: #ffffff;">Department List</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              @endif
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#payroll">
                   <i class="fas fa-solid fa-desktop" style="color: #ffffff;"></i>
@@ -300,6 +281,30 @@
                   <!-- <span class="badge badge-secondary" style="color: #ffffff;">1</span> -->
                 </a>
               </li>
+              
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#charts">
+                  <i class="far fa-chart-bar" style="color: #ffffff;"></i>
+                  <p style="color: #ffffff;">Company </p>
+                  <span class="caret" style="color: #ffffff;"></span>
+                </a>
+                <div class="collapse" id="charts">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{{route('departments.index')}}">
+                        <span class="sub-item" style="color: #ffffff;">Department List</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{route('company_positions.index')}}">
+                        <span class="sub-item" style="color: #ffffff;">Company Positions</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              @endif
               @endif
             </ul>
           </div>

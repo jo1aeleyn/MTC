@@ -64,9 +64,10 @@ public function create()
 {
     // Fetch all departments from the Department model
     $departments = \App\Models\Department::all();
+    $positions = \App\Models\CompanyPosition::all();
 
     // Optionally, you can pass other data (positions, etc.) if needed
-    return view('employees.create', compact('departments'));
+    return view('employees.create', compact('departments','positions'));
 }
 
     /**
@@ -360,6 +361,7 @@ public function create()
         $application = Application::where('emp_num', $employee->emp_num)->firstOrFail();
         $company = Company::where('emp_num', $employee->emp_num)->first(); // This might be null
         $departments = \App\Models\Department::all();
+        $positions = \App\Models\CompanyPosition::all();
 
         // Ensure $company is always an object, even if it's null
         $company = $company ?? new Company();
@@ -374,7 +376,8 @@ public function create()
             'emergencyContacts',
             'application',
             'company',
-            'departments' // Now guaranteed to be an object
+            'departments' ,
+            'positions'
         ));
     }
 

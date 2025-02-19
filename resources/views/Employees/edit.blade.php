@@ -77,17 +77,13 @@
         name="position" 
         required
         style="background-color: #E2E2E2;">
-        <option value="" disabled {{ old('position', $application->position) ? '' : 'selected' }}>Select Position</option>
-        <option value="Junior Audit Associate" {{ old('position', $application->position) == 'Junior Audit Associate' ? 'selected' : '' }}>Junior Audit Associate</option>
-        <option value="Audit Senior Associate" {{ old('position', $application->position) == 'Audit Senior Associate' ? 'selected' : '' }}>Audit Senior Associate</option>
-        <option value="Audit Supervisor" {{ old('position', $application->position) == 'Audit Supervisor' ? 'selected' : '' }}>Audit Supervisor</option>
-        <option value="Junior Accounting Associate" {{ old('position', $application->position) == 'Junior Accounting Associate' ? 'selected' : '' }}>Junior Accounting Associate</option>
-        <option value="Accounting Senior Associate" {{ old('position', $application->position) == 'Accounting Senior Associate' ? 'selected' : '' }}>Accounting Senior Associate</option>
-        <option value="Accounting Supervisor" {{ old('position', $application->position) == 'Accounting Supervisor' ? 'selected' : '' }}>Accounting Supervisor</option>
-        <option value="IT Associate" {{ old('position', $application->position) == 'IT Associate' ? 'selected' : '' }}>IT Associate</option>
-        <option value="Administrative Associate" {{ old('position', $application->position) == 'Administrative Associate' ? 'selected' : '' }}>Administrative Associate</option>
-        <option value="Partner" {{ old('position', $application->position) == 'Partner' ? 'selected' : '' }}>Partner</option>
-        <option value="Managing Partner" {{ old('position', $application->position) == 'Managing Partner' ? 'selected' : '' }}>Managing Partner</option>
+        <option value="" disabled selected>Select Department</option>
+        @foreach($positions as $position)
+            <option value="{{ $position->DepartmentName }}" 
+                {{ old('Position_name', $application->position) == $position->Position_name ? 'selected' : '' }}>
+                {{ $position->Position_name }}
+            </option>
+        @endforeach
     </select>
 </div>
 
