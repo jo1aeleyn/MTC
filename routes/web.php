@@ -132,6 +132,7 @@ Route::delete('/financial-req/{uuid}', [FinancialRequestController::class, 'dest
 Route::put('/financial_req/{financialRequest}/archive', [FinancialRequestController::class, 'archive'])->name('financial_req.archive');
 
 Route::prefix('leaves')->group(function () {
+
     Route::get('/', [LeavesController::class, 'index'])->name('leaves.index'); // List of leaves
     Route::get('/PersonalLeaves', [LeavesController::class, 'PersonalLeaves'])->name('leaves.PersonalLeaves');
     Route::get('/create', [LeavesController::class, 'create'])->name('leaves.create'); // Show create form
@@ -146,6 +147,7 @@ Route::prefix('leaves')->group(function () {
     Route::put('/leave-credits/{uuid}', [LeavesController::class, 'leavestore'])->name('leave.credits.store');
 });
 
+Route::delete('/users/{id}/force-delete', [UserController::class, 'forceDelete'])->name('users.forceDelete');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/client-assignment', [ClientAssignmentController::class, 'index'])->name('client.assignment.index');

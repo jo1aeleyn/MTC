@@ -175,5 +175,17 @@ public function resetPassword($uuid)
     }
 }
     
+public function forceDelete($id)
+{
+    $user= UserAccount::findOrFail($id);
+
+    // Ensure the user doesn't have an emp_num in the employee table
+    if (is_null($user->employee->emp_num ?? null)) {
+        $user->delete(); // Permanently delete the user
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+    }
+
+    return redirect()->route('users.index')->with('error', 'User cannot be deleted.');
+}
 
 }

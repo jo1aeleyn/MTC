@@ -53,8 +53,7 @@
                                             <option value="Supervisor" {{ $user->user_role == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
                                             <option value="IT Admin" {{ $user->user_role == 'IT Admin' ? 'selected' : '' }}>IT Admin</option>
                                         </select>
-
-
+                                        </td>
                                         <td>
                                             <div class="dropdown text-center">
                                                 <button class="border-0 bg-transparent p-0" type="button" id="dropdownMenu{{ $user->id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,6 +72,17 @@
                                                             </button>
                                                         </form>
                                                     </li>
+                                                    @if (is_null($user->employee->emp_num ?? null))
+                                                    <li>
+                                                        <form action="{{ route('users.forceDelete', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete this user?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="dropdown-item text-danger">
+                                                                Delete
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </td>
@@ -83,11 +93,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 
 @include('partials.footer')
-
-

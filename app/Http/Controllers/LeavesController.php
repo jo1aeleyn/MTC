@@ -130,26 +130,26 @@ class LeavesController extends Controller
 }
 
 
-    public function updateStatus($uuid, $status)
-    {
-        
-        $user = Auth::user();  // Retrieve the authenticated user
-        $uuid = $user->uuid;   // Get the user's uuid
-        $employee = Employee::where('uuid', $uuid)->firstOrFail(); // Find the employee
-        $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
+public function updateStatus($uuid, $status)
+{
+    $user = Auth::user();  // Retrieve the authenticated user
+    $employee = Employee::where('uuid', $user->uuid)->firstOrFail(); // Find the employee
+    $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
 
-        $leave = Leave::where('uuid', $uuid)->firstOrFail();
-        $leave->Status = $status;
-        
-        if ($status == 'Approved') {
-            $leave->ReviewedBy = $fullname;  // Set ApprovedBy to the authenticated user's name
-        }
-
-        $leave->save();
-
-        return redirect()->route('leaves.index', $leave->id)
-                        ->with('success', "Leave request has been $status.");
+    // Fetch the leave request based on the given UUID
+    $leave = Leave::where('uuid', $uuid)->firstOrFail();
+    $leave->Status = $status;
+    
+    if ($status == 'Approved') {
+        $leave->ReviewedBy = $fullname;
     }
+
+    $leave->save();
+
+    return redirect()->route('leaves.show', $leave->uuid)
+                     ->with('success', "Leave request has been $status.");
+}
+
 
     public function archive(Leave $leave)
     {
