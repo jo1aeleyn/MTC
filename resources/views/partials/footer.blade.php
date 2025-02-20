@@ -42,8 +42,8 @@
 <script src="{{ asset('assets/js/plugin/jsvectormap/jsvectormap.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugin/jsvectormap/world.js') }}"></script>
 <!-- FullCalendar JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.3.0/main.min.js"></script>
 <!-- Sweet Alert -->
 <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
