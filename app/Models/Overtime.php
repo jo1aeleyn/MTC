@@ -37,8 +37,10 @@ class Overtime extends Model
         'edited_by',
         'created_at',
         'updated_at',
-        'status'
+        'status',
+        'WithPay', // Added the new column
     ];
+    
 
     /**
      * Automatically generate a UUID for the `uuid` field on creating.

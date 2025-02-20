@@ -110,7 +110,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('overtime/{overtime:uuid}/edit', [OvertimeController::class, 'edit'])->name('overtime.edit');
     Route::put('overtime/{overtime:uuid}', [OvertimeController::class, 'update'])->name('overtime.update');
     Route::delete('overtime/{overtime:uuid}', [OvertimeController::class, 'destroy'])->name('overtime.destroy');
-
+J
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
     Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
     Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');

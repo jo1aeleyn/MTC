@@ -28,10 +28,18 @@ class OvertimeController extends Controller
 
     public function archive(Overtime $overtime)
     {
-        $overtime->update(['is_archived' => 1]);
-
+        $user = Auth::user();
+        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+        $fullName = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
+    
+        $overtime->update([
+            'is_archived' => 1,
+            'archived_by' => $fullName, // Set archived_by in update
+        ]);
+    
         return redirect()->route('overtime.index')->with('success', 'Overtime request archived successfully.');
     }
+    
 
     public function cancel(Overtime $overtime)
     {
@@ -94,18 +102,45 @@ class OvertimeController extends Controller
         $user = Auth::user();
         $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
         $empnum = $employee->emp_num;
+        $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
+
 
         return view('overtime.show', compact('overtime', 'empnum'));
     }
 
-    public function updateStatus($uuid, $status)
-    {
-        $overtime = Overtime::where('uuid', $uuid)->firstOrFail();
-        $overtime->status = $status;
-        $overtime->save();
+    public function updateStatus(Request $request, Overtime $overtime, $status)
+{
+    $user = Auth::user();
+    $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+    $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
 
-        return redirect()->route('overtime.index')->with('success', 'Overtime status updated to ' . ucfirst($status) . '.');
+    if ($status === 'approved' && $user->user_role === 'Partners') {
+        $overtime->approved_by = $fullname;
+        $overtime->WithPay = $request->input('WithPay'); 
+        $overtime->approved_date = now();
     }
+
+    if ($status === 'recommended' && $user->user_role === 'HR Admin') {
+        $overtime->approved_by = $fullname;
+-        $overtime->recommended_date = now();
+    }
+
+    if ($status === 'rejected' && $user->user_role === 'Partners') {
+        $request->validate([
+            'rejection_reason' => 'required|string|max:255'
+        ]);
+        $overtime->approved_by = $fullname;
+        $overtime->reason = $request->rejection_reason;
+        $overtime->approved_date = now();
+    }
+
+    $overtime->status = $status;
+    $overtime->save();
+
+    return redirect()->back()->with('success', 'Overtime request updated successfully.');
+}
+
+    
 
     public function edit($uuid)
     {
