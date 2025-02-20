@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Employee;
 use App\Models\ClientAssignment;
+use App\Models\Event;
 
 class OvertimeController extends Controller
 {
@@ -63,39 +64,50 @@ class OvertimeController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'client_name' => 'required|string',
-            'TotalDuration' => 'required|numeric',
-            'DeductedDuration' => 'required|numeric',
-            'purpose' => 'nullable|string',
-            'request_date' => 'required|date',
-        ]);
+{
+    $request->validate([
+        'client_name' => 'required|string',
+        'TotalDuration' => 'required|numeric',
+        'DeductedDuration' => 'required|numeric',
+        'purpose' => 'nullable|string',
+        'request_date' => 'required|date',
+    ]);
 
-        $user = Auth::user();
-        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
-        $fullName = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
+    $user = Auth::user();
+    $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+    $fullName = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
 
-        $overtime = new Overtime();
-        $overtime->uuid = (string) Str::uuid();
-        $overtime->emp_num = $employee->emp_num;
-        $overtime->emp_name = $fullName;
-        $overtime->client_name = $request->client_name;
-        $overtime->date_filed = now();
-        $overtime->purpose = $request->purpose;
-        $overtime->requested_by = $fullName;
-        $overtime->request_date = $request->request_date;
-        $overtime->created_by = auth()->id();
-        $overtime->created_at = now();
-        $overtime->updated_at = now();
-        $overtime->start_time = $request->start_time;
-        $overtime->end_time = $request->end_time;
-        $overtime->TotalDuration = $request->input('TotalDuration');
-        $overtime->DeductedDuration = $request->input('DeductedDuration');
-        $overtime->save();
+    // Check if request_date exists in Events table with a holiday type
+    $holiday = Event::whereDate('start_date', '<=', $request->request_date)
+    ->whereDate('end_date', '>=', $request->request_date)
+    ->whereIn('holiday_type', ['Regular Holiday', 'Special Holiday'])
+    ->value('holiday_type');
 
-        return redirect()->route('overtime.personalindex')->with('success', 'Overtime Successfully Requested.');
-    }
+    // Set the Type_of_Day based on the holiday check
+    $typeOfDay = $holiday ?? 'Regular Day';
+
+    $overtime = new Overtime();
+    $overtime->uuid = (string) Str::uuid();
+    $overtime->emp_num = $employee->emp_num;
+    $overtime->emp_name = $fullName;
+    $overtime->client_name = $request->client_name;
+    $overtime->date_filed = now();
+    $overtime->purpose = $request->purpose;
+    $overtime->requested_by = $fullName;
+    $overtime->request_date = $request->request_date;
+    $overtime->Type_of_Day = $typeOfDay; // Assigning the computed type of day
+    $overtime->created_by = auth()->id();
+    $overtime->created_at = now();
+    $overtime->updated_at = now();
+    $overtime->start_time = $request->start_time;
+    $overtime->end_time = $request->end_time;
+    $overtime->TotalDuration = $request->input('TotalDuration');
+    $overtime->DeductedDuration = $request->input('DeductedDuration');
+    $overtime->save();
+
+    return redirect()->route('overtime.personalindex')->with('success', 'Overtime Successfully Requested.');
+}
+
 
     public function show(Overtime $overtime)
     {
