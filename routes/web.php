@@ -169,7 +169,8 @@ Route::prefix('company-positions')->group(function () {
 Route::get('/calendar', [EventController::class, 'index'])->name('calendar.index');
 Route::get('/events/get', [EventController::class, 'getEvents'])->name('events.get');
 Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
-Route::get('/events/edit/{id}', [EventController::class, 'edit'])->name('events.edit');
-Route::put('/events/update/{id}', [EventController::class, 'update'])->name('events.update');
+Route::get('events/edit/{id}', [EventController::class, 'edit'])->name('events.edit');
+
+Route::post('events/update/{id}', [EventController::class, 'update'])->name('events.update');
 Route::put('/events/archive/{id}', [EventController::class, 'archive'])->name('events.archive');
 
