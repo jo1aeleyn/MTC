@@ -128,24 +128,6 @@ document.querySelectorAll('.role-dropdown').forEach(select => {
 });
 </script>
 
-<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth', // Show month view
-                selectable: true,
-                editable: true,
-                eventClick: function(info) {
-                    window.location.href = "/events/edit/" + info.event.id;
-                },
-                events: '/events/get', // Fetch events from Laravel controller
-            });
-
-            calendar.render();
-        });
-    </script>
-
 
 </body>
 </html>
