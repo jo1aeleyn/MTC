@@ -38,7 +38,8 @@ class Overtime extends Model
         'created_at',
         'updated_at',
         'status',
-        'WithPay', // Added the new column
+        'WithPay',
+        'Type_Od_Day'
     ];
     
 

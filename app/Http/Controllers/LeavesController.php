@@ -199,7 +199,7 @@ class LeavesController extends Controller
             'Status' => 'Recommended',
         ]);
 
-        return redirect()->route('leaves.index')
+        return redirect()->route('leaves.index') 
                         ->with('success', 'Leave request has been updated and recommended.');
     }   
 }
