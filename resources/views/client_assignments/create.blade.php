@@ -79,13 +79,14 @@
                             </div>
                         </div>
                         
-                    </form>
                 </div>
             </div>
             <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
         Back to Assignment List
             </a>    
             <button type="submit" class="btn mb-3" style="background-color:#326C79; color:white; float:right;">Assign Client</button>
+            </form>
+
         </div>
     </div>
 </div>
