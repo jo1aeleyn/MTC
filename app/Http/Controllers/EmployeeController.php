@@ -105,7 +105,7 @@ public function create()
             'country' => 'required|string|max:255',
             // Employment Information
             'date_hired' => 'required|date',
-            'position' => 'required|string|max:255',
+            'CompanyPosition' => 'required|string|max:255',
             'referred_by' => 'nullable|string|max:255',
             'date_applied' => 'required|date',
             'dateofregularization' => 'nullable|date',
@@ -245,17 +245,29 @@ public function create()
         ]);
 
         $dateOfRegularization = Carbon::parse($request->date_hired)->addMonths(6)->format('Y-m-d');
+        $vacationLeave = 0;
+        $sickLeave = 0;
+        $leaveResetDate = null;
 
+        // If the employee is regular, set initial leave
+        if ($request->employment_status === 'Regular') {
+            $vacationLeave = 1;
+            $sickLeave = 1;
+            $leaveResetDate = now()->startOfYear()->addYear(); // Next Jan 1st
+        }
         // After employee is created, save the application data
         $application = Application::create([
             'emp_num' => $employmentId, // The employee number created earlier
             'referred_by' => $request->referred_by,
             'date_applied' => $request->date_applied,
             'date_hired' => $request->date_hired,
-            'position' => $request->position,
+            'position' => $request->CompanyPosition,
             'EmploymentStatus' => $request->employment_status,
             'DateOfRegularization' => $dateOfRegularization,
             'DepartmentName' =>  $request->DepartmentName,
+            'vacation_leave' => $vacationLeave,
+            'sick_leave' => $sickLeave,
+            'leave_resets_on' => $leaveResetDate,
         ]);
 
         // Save educational background
