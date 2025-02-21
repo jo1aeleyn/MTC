@@ -69,6 +69,17 @@
                             <input type="hidden" name="TotalDuration" id="total_duration_input">
                             <input type="hidden" name="DeductedDuration" id="deducted_duration_input">
 
+                            <!-- Activity Code -->
+                            <div class="mb-3">
+                                <label for="activitycode" class="form-label">Activity Code</label>
+                                <input type="text" name="activitycode" id="activitycode" class="form-control" required>
+                            </div>
+
+                            <!-- Activity Name -->
+                            <div class="mb-3">
+                                <label for="activityname" class="form-label">Activity Name</label>
+                                <input type="text" name="activityname" id="activityname" class="form-control" required>
+                            </div>
 
                             <!-- Purpose -->
                             <div class="mb-3">

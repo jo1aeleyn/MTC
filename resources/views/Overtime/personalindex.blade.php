@@ -20,8 +20,13 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <a href="{{ route('overtime.create') }}" class="btn" style="background-color: #326C79; color:white;">Create New Overtime Request</a>
+<<<<<<< HEAD
                         <a href="{{ route('overtime.OverTimeSummary') }}" class="btn btn-danger">Generate PDF</a>
                         <a href="{{ route('overtime.export') }}" class="btn btn-primary">Export All OT Request</a>
+=======
+                        <a href="{{ route('overtime.summary') }}" class="btn btn-danger">Generate PDF</a>
+
+>>>>>>> 9b90e8ce884d1e2e66b57e53c8a9bc4d491c592b
 
                     </div>
                     <div class="table-responsive">
