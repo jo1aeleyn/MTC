@@ -171,7 +171,7 @@ class OvertimeController extends Controller
     $overtime->status = $status;
     $overtime->save();
 
-    return redirect()->back()->with('success', 'Overtime request updated successfully.');
+    return redirect('overtime.index')->back()->with('success', 'Overtime request updated successfully.');
 }
 
     
