@@ -71,12 +71,12 @@
     <select 
         class="form-select" 
         id="position" 
-        name="position" 
+        name="CompanyPosition" 
         required
         style="background-color: #E2E2E2;">
         <option value="" disabled selected>Select Company Positions</option>
         @foreach($positions as $position)
-            <option value="{{ $position->DepartmentName }}" {{ old('Position_name') == $position->Position_name ? 'selected' : '' }}>
+            <option value="{{ $position->Position_name }}" {{ old('Position_name') == $position->Position_name ? 'selected' : '' }}>
                 {{ $position->Position_name }}
             </option>
         @endforeach

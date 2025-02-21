@@ -13,11 +13,32 @@ class Leave extends Model
     protected $table = 'leaves_tbl';
 
     protected $fillable = [
-        'uuid', 'emp_num', 'name', 'DateOfLeave', 'TotalDays', 'TypeOfLeave',
-        'Remarks', 'Status', 'ReasonForDisapproved', 'ReviewedBy', 'ReviewedDate',
-        'LeavesCredits', 'LessApproedDays', 'RemainingLeaves', 'WithPay', 'WithoutPay',
-        'FilledUpBy', 'FilledUpDate', 'IsArchived', 'DateOfArchived', 'EditedBy', 'CreatedBy'
+        'uuid',
+        'emp_num',
+        'name',
+        'DateOfLeave',
+        'TotalDays',
+        'TypeOfLeave',
+        'Remarks',
+        'Status',
+        'ReasonForDisapproved',
+        'ReviewedBy',
+        'ReviewedDate',
+        'LeavesCredits',
+        'LessApprovedDays',
+        'RemainingLeaves',
+        'WithPay',
+        'WithoutPay',
+        'FilledUpBy',
+        'FilledUpDate',
+        'IsArchived',
+        'DateOfArchived',
+        'EditedBy',
+        'CreatedBy',
+        'VacationLeaveCount',  // New column added here
+        'SickLeaveCount'       // New column added here
     ];
+    
 
     protected static function boot()
     {
@@ -29,7 +50,7 @@ class Leave extends Model
             $leave->ReviewedBy = $leave->ReviewedBy ?? '';
             $leave->ReviewedDate = $leave->ReviewedDate ?? null;
             $leave->LeavesCredits = $leave->LeavesCredits ?? 0;
-            $leave->LessApprovedDays = $leave->LessApproedDays ?? 0;
+            $leave->LessApprovedDays = $leave->LessApprovedDays ?? 0;
             $leave->RemainingLeaves = $leave->RemainingLeaves ?? 0;
             $leave->WithPay = $leave->WithPay ?? 0;
             $leave->WithoutPay = $leave->WithoutPay ?? 0;
