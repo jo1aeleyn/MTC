@@ -277,7 +277,7 @@
               <li class="nav-item">
                 <a href="#">
                   <i class="fas fa-file" style="color: #ffffff;" ></i>
-                  <p style="color: #ffffff;" >Audit Logs</p>
+                  <p style="color: #ffffff;" >System Audit Logs</p>
                   <!-- <span class="badge badge-secondary" style="color: #ffffff;">1</span> -->
                 </a>
               </li>

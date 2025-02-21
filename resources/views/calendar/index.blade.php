@@ -3,44 +3,17 @@
 @include('partials.navbar')
 
 <link rel="stylesheet" href="{{ asset('/css/forms.css') }}">
-<style>
 
-#calendar {
-    max-width: 100%;
-    width: 75vw; /* Adjust width (90% of the viewport width) */
-    height: 90vh; /* Adjust height (80% of the viewport height) */
-    margin: auto; /* Center the calendar */
-}
-
-/* Change the color of the month name (title) */
-.fc-toolbar-title {
-    color: #326C79
-    !important; /* Change to your preferred color */
-}
-
-/* Change the color of the day names (Sunday, Monday, etc.) */
-.fc-col-header-cell-cushion {
-    color: #326C79
-    !important; /* Change to your preferred color */
-    font-weight: bold;
-}
-
-/* Change the color of the date numbers */
-.fc-daygrid-day-number {
-    color: #326C79    !important; /* Change to your preferred color */
-    font-weight: bold;
-}
-
-    </style>
 <div class="container">
     <div class="page-inner">
+    
+    <div class="container">
     <nav aria-label="breadcrumb" class="mb-3">
                 <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
                     <li class="breadcrumb-item text-muted">Manage Calendar</li>
                     <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Events</li>
                 </ol>
             </nav>
-    <div class="container">
     <div class="card shadow-lg ">
         <div class="card-body">
             

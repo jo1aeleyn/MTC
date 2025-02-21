@@ -39,7 +39,7 @@ class Overtime extends Model
         'updated_at',
         'status',
         'WithPay',
-        'Type_Od_Day'
+        'Type_Of_Day'
     ];
     
 
