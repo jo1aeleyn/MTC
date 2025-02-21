@@ -16,7 +16,7 @@
 
   
 
-h5 {
+h5,#calendarindex {
   background-color: rgba(50, 108, 121, 0.9); /* 0.7 controls the transparency */
   color: white !important;
   padding: 5px 10px;
@@ -24,7 +24,3 @@ h5 {
   text-align: center;
 }
 
-#calendar {
-  max-width: 900px;
-  margin: 40px auto;
-}

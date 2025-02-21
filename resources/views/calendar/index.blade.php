@@ -3,14 +3,50 @@
 @include('partials.navbar')
 
 <link rel="stylesheet" href="{{ asset('/css/forms.css') }}">
+<style>
 
+#calendar {
+    max-width: 100%;
+    width: 75vw; /* Adjust width (90% of the viewport width) */
+    height: 90vh; /* Adjust height (80% of the viewport height) */
+    margin: auto; /* Center the calendar */
+}
+
+/* Change the color of the month name (title) */
+.fc-toolbar-title {
+    color: #326C79
+    !important; /* Change to your preferred color */
+}
+
+/* Change the color of the day names (Sunday, Monday, etc.) */
+.fc-col-header-cell-cushion {
+    color: #326C79
+    !important; /* Change to your preferred color */
+    font-weight: bold;
+}
+
+/* Change the color of the date numbers */
+.fc-daygrid-day-number {
+    color: #326C79    !important; /* Change to your preferred color */
+    font-weight: bold;
+}
+
+    </style>
 <div class="container">
     <div class="page-inner">
-        <div class="container">
-            <h1>Event Calendar</h1>
+    <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
+                    <li class="breadcrumb-item text-muted">Manage Calendar</li>
+                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Events</li>
+                </ol>
+            </nav>
+    <div class="container">
+    <div class="card shadow-lg ">
+        <div class="card-body">
+            
 
             <!-- Add Event Button -->
-            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#createEventModal">
+            <button class="btn mb-3" style="background-color:#326C79; color:white;" data-bs-toggle="modal" data-bs-target="#createEventModal">
                 + Add Event
             </button>
 
@@ -20,6 +56,9 @@
             <!-- Calendar -->
             <div id="calendar"></div>
         </div>
+    </div>
+</div>
+
     </div>
 </div>
 
@@ -81,61 +120,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const successMessageDiv = document.getElementById("success-message");
 
-    // CREATE EVENT FORM - Handle Holiday Type Visibility
-    const typeSelect = document.getElementById("type");
-    const holidayTypeDiv = document.getElementById("holidayTypeDiv");
-    const createForm = document.getElementById("createEventForm");
-    const createModal = new bootstrap.Modal(document.getElementById("createEventModal"));
-
-    if (typeSelect) {
-        typeSelect.addEventListener("change", function () {
-            holidayTypeDiv.style.display = this.value === "holiday" ? "block" : "none";
-        });
-    }
-
-    if (createForm) {
-        createForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            let formData = new FormData(createForm);
-
-            fetch("{{ route('events.store') }}", {
-                method: "POST",
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    successMessageDiv.textContent = data.message;
-                    successMessageDiv.style.display = "block";
-                    successMessageDiv.classList.remove("alert-danger");
-                    successMessageDiv.classList.add("alert-success");
-
-                    createForm.reset();
-                    setTimeout(() => {
-                        successMessageDiv.style.display = "none";
-                        createModal.hide();
-                        location.reload();
-                    }, 2000);
-                } else {
-                    successMessageDiv.textContent = "Error: " + (data.message || "Something went wrong.");
-                    successMessageDiv.style.display = "block";
-                    successMessageDiv.classList.remove("alert-success");
-                    successMessageDiv.classList.add("alert-danger");
-                }
-            })
-            .catch(error => {
-                console.error("Fetch Error:", error);
-                successMessageDiv.textContent = "Something went wrong. Please try again.";
-                successMessageDiv.style.display = "block";
-                successMessageDiv.classList.add("alert-danger");
-            });
-        });
-    }
-
     // FULLCALENDAR INITIALIZATION
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -145,6 +129,14 @@ document.addEventListener("DOMContentLoaded", function () {
             left: "prev,next today",
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay"
+        },
+        eventDidMount: function(info) {
+            // Change text color of events dynamically
+            if (info.event.extendedProps.type === "holiday") {
+                info.el.style.color = "green";  // Holiday events will be green
+            } else {
+                info.el.style.color = "red";  // Regular events will be red
+            }
         },
         eventClick: function(info) {
             let eventId = info.event.id;
@@ -178,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // HANDLE DELETE EVENT FUNCTIONALITY
     window.deleteEvent = function() {
         let eventId = document.getElementById("editEventId").value;
-        
+
         if (confirm("Are you sure you want to delete this event?")) {
             fetch(`{{ url('events/delete') }}/${eventId}`, {
                 method: "DELETE",
@@ -199,4 +191,5 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<!-- Include Footer -->
 @include('partials.footer')

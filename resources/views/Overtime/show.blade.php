@@ -61,55 +61,27 @@
                                     {{ ucfirst($overtime->status) }}
                                 </span>
                             </p>
-                            <p>
+                            <!-- <p>
                                 <span class="detail-label">With Pay:</span> 
                                 <span class="badge bg-{{ $overtime->WithPay ? 'success' : 'danger' }}">
                                     {{ $overtime->WithPay ? 'Yes' : 'No' }}
                                 </span>
-                            </p>
+                            </p> -->
                         </div>
-
                     </div>
                 </div>
             </div>
 
             @if(auth()->user()->user_role == 'Partners' && $empnum !== $overtime->emp_num)
-                <button type="button" class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
+                <form action="{{ route('overtime.update_status', ['overtime' => $overtime, 'status' => 'approved']) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" class="btn btn-success mt-3">Approve</button>
+                </form>
                 <button type="button" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</button>
             @endif
 
-            <a href="javascript:history.back()" class="btn mt-3" style="background-color:#326C79;color:white;float:right;   ">Back to Overtime List</a>
-        </div>
-    </div>
-</div>
-
-<!-- Approve Modal -->
-<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="approveModalLabel">Approval Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('overtime.update_status', ['overtime' => $overtime, 'status' => 'approved']) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body">
-                    <p>Do you want to approve this overtime request with pay?</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="WithPay" id="withPayTrue" value="1" required>
-                        <label class="form-check-label" for="withPayTrue">With Pay</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="WithPay" id="withPayFalse" value="0" required>
-                        <label class="form-check-label" for="withPayFalse">Without Pay</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">Approve</button>
-                </div>
-            </form>
+            <a href="javascript:history.back()" class="btn mt-3" style="background-color:#326C79;color:white;float:right;">Back to Overtime List</a>
         </div>
     </div>
 </div>
