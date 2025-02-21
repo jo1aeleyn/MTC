@@ -24,3 +24,28 @@ h5,#calendarindex {
   text-align: center;
 }
 
+#calendar {
+  max-width: 100%;
+  width: 75vw; /* Adjust width (90% of the viewport width) */
+  height: 90vh; /* Adjust height (80% of the viewport height) */
+  margin: auto; /* Center the calendar */
+}
+
+/* Change the color of the month name (title) */
+.fc-toolbar-title {
+  color: #326C79
+  !important; /* Change to your preferred color */
+}
+
+/* Change the color of the day names (Sunday, Monday, etc.) */
+.fc-col-header-cell-cushion {
+  color: #326C79
+  !important; /* Change to your preferred color */
+  font-weight: bold;
+}
+
+/* Change the color of the date numbers */
+.fc-daygrid-day-number {
+  color: #326C79    !important; /* Change to your preferred color */
+  font-weight: bold;
+}

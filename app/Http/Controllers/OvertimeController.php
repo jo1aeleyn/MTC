@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Employee;
 use App\Models\ClientAssignment;
 use App\Models\Event;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OvertimeController extends Controller
 {
@@ -26,6 +27,26 @@ class OvertimeController extends Controller
 
         return view('overtime.index', compact('overtimes'));
     }
+
+    public function generatePDF()
+{
+    $overtimes = Overtime::select(
+            'emp_num',
+            'emp_name',
+            \DB::raw('SUM(number_of_hours) as total_hours'),
+            \DB::raw('SUM(CASE WHEN WithPay = 1 THEN number_of_hours ELSE 0 END) as with_pay_hours'),
+            \DB::raw('SUM(CASE WHEN WithPay = 0 THEN number_of_hours ELSE 0 END) as without_pay_hours'),
+            'Type_Of_Day'
+        )
+        ->groupBy('emp_num', 'emp_name', 'Type_Of_Day')
+        ->get();
+
+    $pdf = Pdf::loadView('overtime.OvertimeSummary', compact('overtimes'));
+
+    return $pdf->download('Overtime_Summary.pdf');
+}
+
+    
 
     public function archive(Overtime $overtime)
     {
