@@ -41,14 +41,20 @@
                                         <td>{{ $overtime->client_name }}</td>
                                         <td>{{ $overtime->date_filed }}</td>
                                         <td>
-                                                <span class="badge bg-{{ 
-                                                    $overtime->status == 'pending' ? 'warning' : 
-                                                    ($overtime->status == 'approved' ? 'success' : 
-                                                    ($overtime->status == 'recommended' ? 'warning' : 'danger')) 
-                                                }}">                                    
-                                                    {{ ucfirst($overtime->status) }}
-                                                </span>
-                                            </td>
+                                            @php
+                                                $badgeClass = match($overtime->status) {
+                                                    'Approved' => 'success',  // Green
+                                                    'Pending' => 'warning',   // Yellow
+                                                    'Rejected' => 'danger',   // Red
+                                                    default => 'secondary',   // Default (gray) if status is unknown
+                                                };
+                                            @endphp
+
+                                            <span class="badge bg-{{ $badgeClass }}">
+                                                {{ ucfirst($overtime->status) }}
+                                            </span>
+                                        </td>
+
                                         <td>{{ $overtime->requested_by }}</td>
                                         <td>
                                             <div class="dropdown" style="text-align:center;">

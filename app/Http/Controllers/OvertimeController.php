@@ -183,11 +183,16 @@ public function export()
     // Fetch the overtime records
     $overtimes = Overtime::where('is_archived', 0)
                          ->where('emp_num', $empnum)
+                         ->where('status', 'approved')
                          ->get(); // Use get() instead of paginate() for PDF generation
+
+    if ($overtimes->isEmpty()) {
+        return back()->with('error', 'No approved Overtimes available.');
+     }
 
     // Load the Blade view and set landscape orientation
     $pdf = Pdf::loadView('overtime.ot_request', compact('overtimes'))
-              ->setPaper('a4', 'landscape'); // Set to landscape mode
+              ->setPaper('a4', 'portrait'); // Set to landscape mode
 
     return $pdf->download('Overtime_Requests.pdf');
 }

@@ -41,8 +41,8 @@
                             <p><span class="detail-label">Employee Number:</span> <span class="detail-value">{{ $overtime->emp_num }}</span></p>
                             <p><span class="detail-label">Requested By:</span> <span class="detail-value">{{ $overtime->requested_by }}</span></p>
                             <p><span class="detail-label">Created By:</span> <span class="detail-value">{{ $overtime->created_by }}</span></p>
-                            <p><span class="detail-label">Approved By:</span> <span class="detail-value">{{ $overtime->approved_by }}</span></p>
-                            <p><span class="detail-label">Approved Date:</span> <span class="detail-value">{{ \Carbon\Carbon::parse($overtime->approved_date)->format('Y-m-d') }}</span></p>
+                            <p><span class="detail-label">Approved By:</span> <span class="detail-value">{{ $overtime->Approved_by }}</span></p>
+                            <p><span class="detail-label">Approved Date:</span> <span class="detail-value">{{ \Carbon\Carbon::parse($overtime->Approved_date)->format('Y-m-d') }}</span></p>
                         </div>
                         <div class="col-md-6">
                             <p><span class="detail-label">Client Name:</span> <span class="detail-value">{{ $overtime->client_name }}</span></p>
@@ -51,16 +51,22 @@
                             <p><span class="detail-label">Purpose:</span> <span class="detail-value">{{ $overtime->purpose ?? 'No Purpose Provided' }}</span></p>
                         </div>
                         <div class="col-md-6">
-                            <p>
-                                <span class="detail-label">Status:</span> 
-                                <span class="badge bg-{{ 
-                                    $overtime->status == 'pending' ? 'warning' : 
-                                    ($overtime->status == 'approved' ? 'success' : 
-                                    ($overtime->status == 'recommended' ? 'warning' : 'danger')) 
-                                }}">
-                                    {{ ucfirst($overtime->status) }}
-                                </span>
-                            </p>
+                        <p>
+                            <span class="detail-label">Status:</span> 
+                            @php
+                                $badgeClass = match($overtime->status) {
+                                    'Approved' => 'success',  // Green
+                                    'Pending' => 'warning',   // Yellow
+                                    'Rejected' => 'danger',   // Red
+                                    default => 'secondary',   // Gray for unknown status
+                                };
+                            @endphp
+
+                            <span class="badge bg-{{ $badgeClass }}">
+                                {{ ucfirst($overtime->status) }}
+                            </span>
+                        </p>
+
                             <!-- <p>
                                 <span class="detail-label">With Pay:</span> 
                                 <span class="badge bg-{{ $overtime->WithPay ? 'success' : 'danger' }}">
@@ -72,8 +78,16 @@
                 </div>
             </div>
 
+            @if(auth()->user()->user_role == 'HR Admin' && $empnum !== $overtime->emp_num)
+                <form action="{{ route('overtime.update_status', ['overtime' => $overtime, 'status' => 'Recommended']) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" class="btn btn-success mt-3">Recommend</button>
+                </form>
+                <button type="button" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</button>
+            @endif
             @if(auth()->user()->user_role == 'Partners' && $empnum !== $overtime->emp_num)
-                <form action="{{ route('overtime.update_status', ['overtime' => $overtime, 'status' => 'approved']) }}" method="POST" style="display: inline;">
+                <form action="{{ route('overtime.update_status', ['overtime' => $overtime, 'status' => 'Approved']) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('PUT')
                     <button type="submit" class="btn btn-success mt-3">Approve</button>
@@ -94,7 +108,7 @@
                 <h5 class="modal-title" id="rejectModalLabel">Provide Rejection Reason</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('overtime.update_status', ['overtime' => $overtime, 'status' => 'rejected']) }}" method="POST">
+            <form action="{{ route('overtime.update_status', ['overtime' => $overtime, 'status' => 'Rejected']) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">

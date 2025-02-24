@@ -110,11 +110,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('overtime/{overtime:uuid}/edit', [OvertimeController::class, 'edit'])->name('overtime.edit');
     Route::put('overtime/{overtime:uuid}', [OvertimeController::class, 'update'])->name('overtime.update');
     Route::delete('overtime/{overtime:uuid}', [OvertimeController::class, 'destroy'])->name('overtime.destroy');
-<<<<<<< HEAD
     Route::get('/export', [OvertimeController::class, 'export'])->name('overtime.export');
-=======
  
->>>>>>> 9b90e8ce884d1e2e66b57e53c8a9bc4d491c592b
 
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
     Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
@@ -181,4 +178,5 @@ Route::get('events/edit/{id}', [EventController::class, 'edit'])->name('events.e
 Route::post('events/update/{id}', [EventController::class, 'update'])->name('events.update');
 Route::put('/events/archive/{id}', [EventController::class, 'archive'])->name('events.archive');
 
-Route::get('/overtime-summary-pdf', [OvertimeController::class, 'generatePDF'])->name('overtime.summary');
+Route::get('/overtime-summary-pdf', [OvertimeController::class, 'generatePDF'])->name('overtime.OverTimeSummary');
+Route::get('/overtime-pdf', [OvertimeController::class, 'generatePDF'])->name('overtime.summary');

@@ -15,18 +15,22 @@
             @if(session('message'))
                 <div class="alert alert-success">{{ session('message') }}</div>
             @endif
+            
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
 
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <a href="{{ route('overtime.create') }}" class="btn" style="background-color: #326C79; color:white;">Create New Overtime Request</a>
-<<<<<<< HEAD
                         <a href="{{ route('overtime.OverTimeSummary') }}" class="btn btn-danger">Generate PDF</a>
                         <a href="{{ route('overtime.export') }}" class="btn btn-primary">Export All OT Request</a>
-=======
-                        <a href="{{ route('overtime.summary') }}" class="btn btn-danger">Generate PDF</a>
-
->>>>>>> 9b90e8ce884d1e2e66b57e53c8a9bc4d491c592b
 
                     </div>
                     <div class="table-responsive">
@@ -49,7 +53,20 @@
                                         <td>{{ $overtime->emp_name }}</td>
                                         <td>{{ $overtime->client_name }}</td>
                                         <td>{{ $overtime->date_filed }}</td>
-                                        <td>{{ $overtime->status }}</td>
+                                        <td>
+                                            @php
+                                                $badgeClass = match($overtime->status) {
+                                                    'Approved' => 'success',  // Green
+                                                    'Pending' => 'warning',   // Yellow
+                                                    'Rejected' => 'danger',   // Red
+                                                    default => 'secondary',   // Default (gray) if status is unknown
+                                                };
+                                            @endphp
+
+                                            <span class="badge bg-{{ $badgeClass }}">
+                                                {{ ucfirst($overtime->status) }}
+                                            </span>
+                                        </td>
                                         <td>{{ $overtime->requested_by }}</td>
                                         <td>
                                             <div class="dropdown" style="text-align:center;">
