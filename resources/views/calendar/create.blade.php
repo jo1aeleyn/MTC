@@ -39,8 +39,12 @@
                             <option value="">None</option>
                             <option value="Regular Holiday">Regular Holiday</option>
                             <option value="Special Holiday">Special Holiday</option>
+                            <option value="Legal Holiday">Legal Holiday</option>
+                            <option value="Legal Holiday on a Rest Day">Legal Holiday on a Rest Day</option>
+                            <option value="Spcl Holiday on a Rest Day">Spcl Holiday on a Rest Day</option>
                         </select>
                     </div>
+
 
                     <button type="submit" class="btn btn-primary w-100">Save Event</button>
                 </form>
