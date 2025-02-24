@@ -139,10 +139,10 @@
                 </div>
 
                 <div class="col-md-4">
-                  <div class="card card-dark card-round shadow-lg">
-                      <div class="card-header bg-gradient-primary">
+                <div class="card card-round">
+                <div class="card-header">
                           <div class="card-head-row">
-                              <div class="card-title" >Calendar</div>
+                              <div class="card-title">Calendar</div>
                           </div>
                       </div>
                       <div class="card-body pb-0" style="height: 500px; overflow-y: auto; background-color:white; color:black; border-radius: 10px;">
