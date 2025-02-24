@@ -110,7 +110,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('overtime/{overtime:uuid}/edit', [OvertimeController::class, 'edit'])->name('overtime.edit');
     Route::put('overtime/{overtime:uuid}', [OvertimeController::class, 'update'])->name('overtime.update');
     Route::delete('overtime/{overtime:uuid}', [OvertimeController::class, 'destroy'])->name('overtime.destroy');
+<<<<<<< HEAD
+    Route::get('/export', [OvertimeController::class, 'export'])->name('overtime.export');
+=======
  
+>>>>>>> 9b90e8ce884d1e2e66b57e53c8a9bc4d491c592b
 
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
     Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');

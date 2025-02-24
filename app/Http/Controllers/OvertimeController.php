@@ -187,10 +187,26 @@ class OvertimeController extends Controller
     $overtime->status = $status;
     $overtime->save();
 
-    return redirect('overtime.index')->back()->with('success', 'Overtime request updated successfully.');
+    return redirect('overtime')->with('success', 'Overtime request updated successfully.');
 }
 
-    
+public function export()
+{
+    $user = Auth::user();
+    $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+    $empnum = $employee->emp_num;
+
+    // Fetch the overtime records
+    $overtimes = Overtime::where('is_archived', 0)
+                         ->where('emp_num', $empnum)
+                         ->get(); // Use get() instead of paginate() for PDF generation
+
+    // Load the Blade view and set landscape orientation
+    $pdf = Pdf::loadView('overtime.ot_request', compact('overtimes'))
+              ->setPaper('a4', 'landscape'); // Set to landscape mode
+
+    return $pdf->download('Overtime_Requests.pdf');
+}
 
     public function edit($uuid)
     {
