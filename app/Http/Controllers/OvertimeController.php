@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\ClientAssignment;
 use App\Models\Event;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 
 class OvertimeController extends Controller
@@ -98,11 +99,26 @@ class OvertimeController extends Controller
         $fullName = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
     
         // Check if request_date exists in Events table with a holiday type
-        $holiday = Event::whereDate('start_date', '<=', $request->request_date)
-            ->whereDate('end_date', '>=', $request->request_date)
-            ->whereIn('holiday_type', ['Regular Holiday', 'Special Holiday'])
-            ->value('holiday_type');
-    
+        // Convert request_date to a Carbon instance
+        $requestDate = Carbon::parse($request->request_date);
+
+        // Check if the date is a Sunday
+        if ($requestDate->isSunday()) {
+            $holiday = 'Sunday';
+        } else {
+            // Check if request_date exists in Events table with a holiday type
+            $holiday = Event::whereDate('start_date', '<=', $requestDate)
+                ->whereDate('end_date', '>=', $requestDate)
+                ->whereIn('holiday_type', [
+                    'Regular Holiday', 
+                    'Special Holiday', 
+                    'Legal Holiday', 
+                    'Legal Holiday on a Rest Day', 
+                    'Spcl Holiday on a Rest Day'
+                ])
+                ->value('holiday_type');
+        }
+
         // Set the Type_of_Day based on the holiday check
         $typeOfDay = $holiday ?? 'Regular Day';
     

@@ -79,6 +79,10 @@
                             </div>
                         </div>
                         
+<<<<<<< HEAD
+                    
+=======
+>>>>>>> 25f2e993837a55f256c9d2c9dc820917c2ff3b6f
                 </div>
             </div>
             <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
@@ -88,7 +92,9 @@
             </form>
 
         </div>
+
     </div>
+    </form>
 </div>
 
 @include('partials.footer')
