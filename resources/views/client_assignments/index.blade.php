@@ -30,6 +30,11 @@
                     <div class="d-flex justify-content-between mb-3">
                         <!-- Add New Assignment Button -->
                         <a href="{{ route('client.assignment.create') }}" class="btn text-white" style="background-color:#326C79">Assign Client</a>
+                        <a href="{{ route('client.assignment.export.pdf') }}" class="btn btn-danger">
+                            <i class="fas fa-file-pdf"></i> Generate PDF
+                        </a>
+
+
                     </div>
 
                     <!-- Client Assignments Table -->
