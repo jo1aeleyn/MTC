@@ -180,3 +180,5 @@ Route::put('/events/archive/{id}', [EventController::class, 'archive'])->name('e
 
 Route::get('/overtime-summary-pdf', [OvertimeController::class, 'generatePDF'])->name('overtime.OverTimeSummary');
 Route::get('/overtime-pdf', [OvertimeController::class, 'generatePDF'])->name('overtime.summary');
+Route::get('/client-assignments/export-pdf', [ClientAssignmentController::class, 'exportPDF'])->name('client.assignment.export.pdf');
+

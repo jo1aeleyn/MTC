@@ -9,6 +9,8 @@ use App\Models\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\View;
 
 class ClientAssignmentController extends Controller
 {
@@ -118,5 +120,31 @@ class ClientAssignmentController extends Controller
     
         return redirect()->route('client.assignment.index')->with('error', 'Failed to archive assignment.');
     }
+
+    public function exportPDF()
+{
+    $assignments = ClientAssignment::where('is_archived', false)
+        ->with(['assignedBy', 'createdBy', 'editedBy', 'archivedBy'])
+        ->latest()
+        ->get();
+
+    foreach ($assignments as $assignment) {
+        $employee = Employee::where('emp_num', $assignment->emp_num)->first();
+        $client = ClientTbl::where('client_id', $assignment->client_id)->first();
+        $assignedByUser = UserAccount::find($assignment->assigned_by);
+
+        $assignment->employee_name = $employee ? $employee->first_name . ' ' . $employee->surname : 'N/A';
+        $assignment->client_name = $client ? $client->registered_company_name : 'N/A';
+
+        if ($assignedByUser) {
+            $employeeAssignedBy = Employee::where('uuid', $assignedByUser->uuid)->first();
+            $assignment->assigned_by_name = $employeeAssignedBy ? $employeeAssignedBy->first_name . ' ' . $employeeAssignedBy->surname : 'N/A';
+        }
+    }
+
+    $pdf = Pdf::loadView('client_assignments.summaryreport', compact('assignments'));
+
+    return $pdf->download('client_assignments.pdf');
+}
     
 }
