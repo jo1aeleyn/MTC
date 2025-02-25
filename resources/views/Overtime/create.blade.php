@@ -34,12 +34,13 @@
                                 <label for="client_name" class="form-label">Client Name</label>
                                 <select name="client_name" id="client_name" class="form-control" required>
                                     <option value="">Select Client</option>
-                                    @foreach($assignedClients as $assignment)
-                                        @if($assignment->client) <!-- Check if the client exists -->
-                                            <option value="{{ $assignment->client->registered_company_name }}">{{ $assignment->client->registered_company_name }}</option>
-                                        @endif
+                                    @foreach($clients as $client)
+                                        <option value="{{ $client['name'] }}">
+                                            {{ $client['name'] }} ({{ $client['type'] }})
+                                        </option>
                                     @endforeach
                                 </select>
+
 
                             <!-- Start Time and End Time -->
                             <div class="row">
@@ -107,47 +108,76 @@
 
     @include('partials.footer')
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const startTimeInput = document.getElementById("start_time");
-        const endTimeInput = document.getElementById("end_time");
-        const totalDurationOutput = document.getElementById("total_duration");
-        const totalDurationInput = document.getElementById("total_duration_input");
-        const deductedDurationOutput = document.getElementById("deducted_duration");
-        const deductedDurationInput = document.getElementById("deducted_duration_input");
+  document.addEventListener("DOMContentLoaded", function () {
+    const startTimeInput = document.getElementById("start_time");
+    const endTimeInput = document.getElementById("end_time");
+    const totalDurationOutput = document.getElementById("total_duration");
+    const totalDurationInput = document.getElementById("total_duration_input");
+    const deductedDurationOutput = document.getElementById("deducted_duration");
+    const deductedDurationInput = document.getElementById("deducted_duration_input");
 
-        function calculateDuration() {
-            const startTime = startTimeInput.value;
-            const endTime = endTimeInput.value;
+    function roundToNearest30Minutes(hours) {
+        const fullHours = Math.floor(hours); // Get full hours
+        const minutes = Math.round((hours - fullHours) * 60); // Convert decimal to minutes
 
-            if (startTime && endTime) {
-                const start = new Date(`1970-01-01T${startTime}:00`);
-                const end = new Date(`1970-01-01T${endTime}:00`);
-
-                let diff = (end - start) / (1000 * 60 * 60); // Convert milliseconds to hours
-
-                if (diff < 0) {
-                    diff += 24; // Handle overnight shifts
-                }
-
-                // Calculate deducted duration (25% reduction)
-                const deducted = diff * 0.75; // 75% of total duration
-
-                // Update displayed values
-                totalDurationOutput.textContent = diff.toFixed(2) + " hours";
-                deductedDurationOutput.textContent = deducted.toFixed(2) + " hours";
-
-                // Update hidden inputs
-                totalDurationInput.value = diff.toFixed(2);
-                deductedDurationInput.value = deducted.toFixed(2);
-            } else {
-                totalDurationOutput.textContent = "--";
-                deductedDurationOutput.textContent = "--";
-                totalDurationInput.value = "";
-                deductedDurationInput.value = "";
-            }
+        let roundedMinutes;
+        if (minutes <= 14) {
+            roundedMinutes = 0; // Round down to nearest hour
+        } else if (minutes <= 44) {
+            roundedMinutes = 30; // Round to 30 minutes
+        } else {
+            roundedMinutes = 0; // Round up to next full hour
+            fullHours += 1;
         }
 
-        startTimeInput.addEventListener("input", calculateDuration);
-        endTimeInput.addEventListener("input", calculateDuration);
-    });
+        return fullHours + roundedMinutes / 60; // Convert back to decimal hours
+    }
+
+    function getStandardDeduction(overtime) {
+        const deductionTable = {
+            1.00: 0.25, 1.50: 0.25, 2.00: 0.50, 2.50: 0.50, 3.00: 0.75, 
+            3.50: 0.75, 4.00: 1.00, 4.50: 1.00, 5.00: 1.25, 5.50: 1.25, 
+            6.00: 1.50, 6.50: 1.50, 7.00: 1.75, 7.50: 1.75, 8.00: 2.00, 
+            8.50: 2.00, 9.00: 2.25, 9.50: 2.25, 9.75: 2.50, 10.00: 2.50, 
+            10.50: 2.50, 11.00: 2.75, 11.50: 2.75, 12.00: 3.00, 12.50: 3.00, 
+            13.00: 3.25, 13.50: 3.25
+        };
+        return deductionTable[overtime] || 0; // Default to 0 if not found
+    }
+
+    function calculateDuration() {
+        const startTime = startTimeInput.value;
+        const endTime = endTimeInput.value;
+
+        if (startTime && endTime) {
+            const start = new Date(`1970-01-01T${startTime}:00`);
+            const end = new Date(`1970-01-01T${endTime}:00`);
+
+            let diff = (end - start) / (1000 * 60 * 60); // Convert milliseconds to hours
+            if (diff < 0) diff += 24; // Handle overnight shifts
+
+            const roundedDuration = roundToNearest30Minutes(diff);
+            const deduction = getStandardDeduction(roundedDuration);
+            const netOvertime = roundedDuration - deduction;
+
+            // Update displayed values
+            totalDurationOutput.textContent = `${Math.floor(roundedDuration)}h ${((roundedDuration % 1) * 60).toFixed(0)}m`;
+            deductedDurationOutput.textContent = `${Math.floor(netOvertime)}h ${((netOvertime % 1) * 60).toFixed(0)}m`;
+
+            // Update hidden inputs
+            totalDurationInput.value = roundedDuration.toFixed(2);
+            deductedDurationInput.value = netOvertime.toFixed(2);
+        } else {
+            totalDurationOutput.textContent = "--";
+            deductedDurationOutput.textContent = "--";
+            totalDurationInput.value = "";
+            deductedDurationInput.value = "";
+        }
+    }
+
+    startTimeInput.addEventListener("input", calculateDuration);
+    endTimeInput.addEventListener("input", calculateDuration);
+});
+
+
 </script>

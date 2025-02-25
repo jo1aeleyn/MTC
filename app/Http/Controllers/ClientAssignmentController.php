@@ -61,17 +61,19 @@ class ClientAssignmentController extends Controller
 
     public function store(Request $request)
 {
-    // Validate employee and client
+    // Validate employee, client, and client type
     $request->validate([
-        'emp_num' => 'required|exists:employees,emp_num',  // Ensure emp_num is validated correctly
-        'client_id' => 'required|exists:client_tbl,client_id',  // Ensure client_id is validated correctly
+        'emp_num' => 'required|exists:employees,emp_num',  
+        'client_id' => 'required|exists:client_tbl,client_id',  
+        'client_type' => 'required|in:Main Client,Temporary Client', // Validate client_type
     ]);
 
     // Create new client assignment
     ClientAssignment::create([
         'uuid' => Str::uuid(),
-        'emp_num' => $request->emp_num,  // Ensure you are using the correct field names
+        'emp_num' => $request->emp_num,
         'client_id' => $request->client_id,
+        'client_type' => $request->client_type, // Save client_type
         'assigned_by' => Auth::id(),
         'created_by' => Auth::id(),
         'edited_by' => null, 
@@ -80,6 +82,7 @@ class ClientAssignmentController extends Controller
 
     return redirect()->route('client.assignment.index')->with('success', 'Client assigned successfully.');
 }
+
 
 
     public function edit($uuid)
@@ -95,17 +98,20 @@ class ClientAssignmentController extends Controller
         $request->validate([
             'emp_num' => 'required|exists:employees,emp_num',
             'client_id' => 'required|exists:client_tbl,client_id',
+            'client_type' => 'required|in:Main Client,Temporary Client', // Validate client_type
         ]);
-
+    
         $assignment = ClientAssignment::where('uuid', $uuid)->firstOrFail();
         $assignment->update([
             'emp_num' => $request->emp_num,
             'client_id' => $request->client_id,
+            'client_type' => $request->client_type, // Save client_type
             'edited_by' => Auth::id(),
         ]);
-
+    
         return redirect()->route('client.assignment.index')->with('success', 'Client assignment updated successfully.');
     }
+    
     
     public function archive($uuid)
     {

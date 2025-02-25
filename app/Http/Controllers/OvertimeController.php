@@ -7,6 +7,7 @@ use App\Models\Overtime;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Employee;
+use App\Models\TempClient;
 use App\Models\ClientAssignment;
 use App\Models\Event;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -221,20 +222,50 @@ public function export()
     }
 
     public function create()
-    {
-        $user = auth()->user();
-        $employee = Employee::where('uuid', $user->uuid)->first();
+{
+    $user = auth()->user();
+    $employee = Employee::where('uuid', $user->uuid)->first();
 
-        if ($employee) {
-            $assignedClients = ClientAssignment::where('emp_num', $employee->emp_num)
-                ->with('client')  
-                ->get();
-        } else {
-            $assignedClients = collect();
-        }
+    $clients = collect(); // Initialize an empty collection
 
-        return view('overtime.create', compact('assignedClients'));
+    if ($employee) {
+        // Fetch assigned clients from ClientAssignment
+        $assignedClients = ClientAssignment::where('emp_num', $employee->emp_num)
+            ->with('client')
+            ->get()
+            ->map(function ($assignment) {
+                return [
+                    'name' => $assignment->client->registered_company_name,
+                    'type' => 'Assigned'
+                ];
+            });
+
+        // Define the start of the current payroll period (last 14 days)
+        $payrollStart = now()->subDays(14);
+
+        // Fetch only "Approved" temp clients created within the last payroll period
+        $tempClients = TempClient::where('emp_num', $employee->emp_num)
+            ->where('status', 'Approved')
+            ->where('created_at', '>=', $payrollStart) // ✅ Filter last 2 weeks
+            ->with('client')
+            ->get()
+            ->map(function ($tempClient) {
+                return [
+                    'name' => $tempClient->client->registered_company_name,
+                    'type' => 'Temporary'
+                ];
+            });
+
+        // Merge both collections and remove duplicates based on client name
+        $clients = $assignedClients->merge($tempClients)->unique('name');
     }
+
+    return view('overtime.create', compact('clients'));
+}
+
+
+
+
 
     public function update(Request $request, Overtime $overtime)
 {

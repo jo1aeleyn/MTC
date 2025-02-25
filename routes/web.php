@@ -17,6 +17,7 @@ use App\Http\Controllers\LeavesController;
 use App\Http\Controllers\ClientAssignmentController;
 use App\Http\Controllers\CompanyPositionController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\TempClientController;
 
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
@@ -182,3 +183,13 @@ Route::get('/overtime-summary-pdf', [OvertimeController::class, 'generatePDF'])-
 Route::get('/overtime-pdf', [OvertimeController::class, 'generatePDF'])->name('overtime.summary');
 Route::get('/client-assignments/export-pdf', [ClientAssignmentController::class, 'exportPDF'])->name('client.assignment.export.pdf');
 
+Route::prefix('temp-clients')->name('temp.clients.')->group(function () {
+    Route::get('/', [TempClientController::class, 'index'])->name('index'); // List all temporary clients
+    Route::get('/create', [TempClientController::class, 'create'])->name('create'); // Show form to create a new temp client
+    Route::post('/', [TempClientController::class, 'store'])->name('store'); // Store a new temp client
+    Route::get('/{tempClient}/show', [TempClientController::class, 'show'])->name('show');
+    Route::put('/{id}', [TempClientController::class, 'update'])->name('update'); // Update temp client
+    Route::delete('/{id}', [TempClientController::class, 'destroy'])->name('archive'); // Delete temp client
+    Route::patch('/{tempClient}/update-status', [TempClientController::class, 'updateStatus'])->name('updateStatus');
+
+});
