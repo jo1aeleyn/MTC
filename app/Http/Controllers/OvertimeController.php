@@ -21,6 +21,11 @@ class OvertimeController extends Controller
 
         if ($user->user_role == 'HR Admin') {
             $overtimes = Overtime::where('status', 'pending')->paginate(10);
+
+        } elseif ($user->user_role == 'Auditing Supervisor') {
+            $overtimes = Overtime::whereIn('status', ['recommended', 'pending'])->paginate(10);
+
+            
         } elseif ($user->user_role == 'Partners') {
             $overtimes = Overtime::whereIn('status', ['recommended', 'approved'])->paginate(10);
         } else {
@@ -36,7 +41,15 @@ class OvertimeController extends Controller
         $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
         $empnum = $employee->emp_num;
 
-        $overtimes = Overtime::where('is_archived', 0)->where('emp_num', $empnum)->get();
+        $overtimes = Overtime::where('is_archived', 0)
+        ->where('status', 'approved')
+        ->where('emp_num', $empnum)
+        ->get();
+
+        if ($overtimes->isEmpty()) {
+            return back()->with('error', 'No approved Overtimes available.');
+         }
+
 
         $pdf = Pdf::loadView('overtime.EmployeeOTSummary', ['overtimes' => $overtimes])
          ->setPaper([0, 0, 612, 1008], 'landscape'); // 8.5 x 13 inches
@@ -210,7 +223,7 @@ public function export()
 
     // Load the Blade view and set landscape orientation
     $pdf = Pdf::loadView('overtime.ot_request', compact('overtimes'))
-              ->setPaper('a4', 'portrait'); // Set to landscape mode
+              ->setPaper('a4', 'portrait');
 
     return $pdf->download('Overtime_Requests.pdf');
 }

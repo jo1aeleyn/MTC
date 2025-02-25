@@ -32,13 +32,18 @@
     <!-- Add New Employee Button -->
     <a href="{{ route('employee.create') }}" class="btn text-white" style="background-color:#326C79">Add New Employee</a>
 
-    <!-- Filter and Export Buttons Section -->
+    <!-- Right-aligned section -->
     <div class="d-flex">
-        <!-- Export Button placed left of Filter Button -->
-        <a href="{{ route('employee.export', ['year' => request('year')]) }}" class="btn me-2" style="background-color: #FFDE59">
-    Export
-        </a>
-
+        <!-- Generate Report Dropdown -->
+        <div class="dropdown me-2">
+            <button class="btn dropdown-toggle" style="background-color: #FFDE59" type="button" id="generateReportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Generate Report
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="generateReportDropdown">
+                <li><a class="dropdown-item" href="{{ route('employee.exportdir')}}">Employee Directory</a></li>
+                <li><a class="dropdown-item" href="{{ route('employee.export', ['year' => request('year')]) }}">Export Excel File</a></li>
+            </ul>
+        </div>
 
         <!-- Filter Section -->
         <div class="dropdown">
@@ -58,6 +63,7 @@
         </div>
     </div>
 </div>
+
 
 
         <!-- Employee Table -->

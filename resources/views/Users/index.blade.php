@@ -50,8 +50,8 @@
                                             <option value="Employee User" {{ $user->user_role == 'Employee User' ? 'selected' : '' }}>Employee User</option>
                                             <option value="HR Admin" {{ $user->user_role == 'HR Admin' ? 'selected' : '' }}>HR Admin</option>
                                             <option value="Partners" {{ $user->user_role == 'Partners' ? 'selected' : '' }}>Partners</option>
-                                            <option value="Supervisor" {{ $user->user_role == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
-                                            <option value="IT Admin" {{ $user->user_role == 'IT Admin' ? 'selected' : '' }}>IT Admin</option>
+                                            <option value="Auditing Supervisor" {{ $user->user_role == 'Auditing Supervisor' ? 'selected' : '' }}>Auditing Supervisor</option>
+                                            <option value="Accounting Supervisor" {{ $user->user_role == 'Accounting Supervisor' ? 'selected' : '' }}>Accounting Supervisor</option>
                                         </select>
                                         </td>
                                         <td>

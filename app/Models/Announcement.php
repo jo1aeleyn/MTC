@@ -23,4 +23,10 @@ class Announcement extends Model
         'ArchivedBy',
     ];
 
+    public function createdByUser()
+{
+    return $this->belongsTo(UserAccount::class, 'createdBy', 'id');
+}
+
+
 }

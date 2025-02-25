@@ -31,9 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/employees/{uuid}/archive', [EmployeeController::class, 'archive'])->name('employee.archive');
 });
 
-Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
- Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
-
+Route::get('employees/exportdir', [EmployeeController::class, 'exportdir'])->name('employee.exportdir');
 Route::get('employees/export', [EmployeeController::class, 'export'])->name('employee.export');
  Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -179,6 +177,5 @@ Route::post('events/update/{id}', [EventController::class, 'update'])->name('eve
 Route::put('/events/archive/{id}', [EventController::class, 'archive'])->name('events.archive');
 
 Route::get('/overtime-summary-pdf', [OvertimeController::class, 'generatePDF'])->name('overtime.OverTimeSummary');
-Route::get('/overtime-pdf', [OvertimeController::class, 'generatePDF'])->name('overtime.summary');
-Route::get('/client-assignments/export-pdf', [ClientAssignmentController::class, 'exportPDF'])->name('client.assignment.export.pdf');
+    Route::get('/client-assignments/export-pdf', [ClientAssignmentController::class, 'exportPDF'])->name('client.assignment.export.pdf');
 

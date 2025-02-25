@@ -23,7 +23,11 @@ class DashboardController extends Controller
         // Count the number of rows in the employees table
         $employeeCount = Employee::count();
         $clientCount = ClientTbl::count();
-        $announcements = Announcement::where('IsArchived', 0)->latest()->take(3)->get();
+        $announcements = Announcement::where('IsArchived', 0)
+        ->latest()
+        ->take(3)
+        ->with('createdByUser') // Eager load the user data
+        ->get();        
 
         $OT = Overtime::where('status', 'pending')->count();
         $FR = FinancialReq::where('status', 'pending')->count();

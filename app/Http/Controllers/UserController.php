@@ -153,7 +153,7 @@ public function resetPassword($uuid)
         Log::info('Update Role Called', ['id' => $id, 'request' => $request->all()]);
 
         $request->validate([
-            'role' => 'required|in:Employee User,HR Admin,Partners,Supervisor,IT Admin',
+            'role' => 'required|in:Employee User,HR Admin,Partners,Auditing Supervisor,Accounting Supervisor'
         ]);
 
         $user = UserAccount::find($id);

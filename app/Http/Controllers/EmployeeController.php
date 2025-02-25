@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Log;
 use App\Mail\SendAccountDetails;
 use Illuminate\Support\Facades\Response;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class EmployeeController extends Controller
@@ -798,5 +799,34 @@ if ($application) {
     
         echo '</table></body></html>';
     }
+
+
+    public function exportdir()
+{
+    $employees = Employee::where('is_archived', 0)->get();
+
+    $employeeNumbers = $employees->pluck('emp_num'); // Get all emp_num values as a collection
+    $applications = Application::whereIn('emp_num', $employeeNumbers)->get()->keyBy('emp_num');
+    
+    foreach ($employees as $employee) {
+        $employee->application = $applications->get($employee->emp_num); // Associate application
+        // Use the application date_hired instead of the employee's date_hired if available
+        $employee->formatted_date_hired = $employee->application 
+            ? \Carbon\Carbon::parse($employee->application->date_hired)->format('Y-m-d') 
+            : \Carbon\Carbon::parse($employee->date_hired)->format('Y-m-d'); // Format application date_hired or employee date_hired
+    }
+
+    
+    if ($employees->isEmpty()) {
+        return back()->with('error', 'No Employees available.');
+    }
+
+    $pdf = Pdf::loadView('Employees.EmpDirectory', compact('employees'))
+              ->setPaper('a4', 'landscape');
+
+    return $pdf->download('Employee_Directory.pdf');
+}
+
+
     
 }

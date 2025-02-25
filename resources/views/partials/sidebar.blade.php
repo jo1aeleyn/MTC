@@ -69,7 +69,8 @@
               @endif
 
 
-              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
+              @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners' || auth()->user()->user_role == 'Auditing Supervisor'
+              || auth()->user()->user_role == 'Accounting Supervisor')
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarLayouts">
                   <i class="fas fa-th-list" style="color: #ffffff;"></i>
@@ -139,7 +140,8 @@
                       </a>
                       <div class="collapse" id="subnav1">
                         <ul class="nav nav-collapse subnav">
-                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners')
+                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners'|| auth()->user()->user_role == 'Auditing Supervisor'
+                        || auth()->user()->user_role == 'Accounting Supervisor')
                           <li>
                             <a href="{{route('overtime.index')}}">
                               <span class="sub-item" style="color: #ffffff;">All Pending Overtime Request</span>

@@ -65,10 +65,12 @@ public function companyannouncements()
 }
 
 
-    public function show(Announcement $announcement)
-    {
-        return view('announcements.show', compact('announcement'));
-    }
+public function show(Announcement $announcement)
+{
+    $announcement->load('createdByUser'); // Eager load the user account
+
+    return view('announcements.show', compact('announcement'));
+}
 
     public function edit($uuid)
     {

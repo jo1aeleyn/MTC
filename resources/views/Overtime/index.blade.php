@@ -45,6 +45,7 @@
                                                 $badgeClass = match($overtime->status) {
                                                     'Approved' => 'success',  // Green
                                                     'Pending' => 'warning',   // Yellow
+                                                    'Recommended'=> 'warning',   // Yellow
                                                     'Rejected' => 'danger',   // Red
                                                     default => 'secondary',   // Default (gray) if status is unknown
                                                 };

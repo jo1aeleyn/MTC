@@ -29,8 +29,10 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <a href="{{ route('overtime.create') }}" class="btn" style="background-color: #326C79; color:white;">Create New Overtime Request</a>
-                        <a href="{{ route('overtime.OverTimeSummary') }}" class="btn btn-danger">Generate PDF</a>
+                        <div class="d-flex justify-content-end">
+                        <a href="{{ route('overtime.OverTimeSummary') }}" class="btn btn-danger me-2">Generate PDF</a>
                         <a href="{{ route('overtime.export') }}" class="btn btn-primary">Export All OT Request</a>
+                    </div>
 
                     </div>
                     <div class="table-responsive">
@@ -58,6 +60,7 @@
                                                 $badgeClass = match($overtime->status) {
                                                     'Approved' => 'success',  // Green
                                                     'Pending' => 'warning',   // Yellow
+                                                    'Recommended'=> 'warning',   // Yellow
                                                     'Rejected' => 'danger',   // Red
                                                     default => 'secondary',   // Default (gray) if status is unknown
                                                 };

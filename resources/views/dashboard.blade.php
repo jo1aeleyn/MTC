@@ -1,7 +1,70 @@
 @include('partials.header')
 @include('partials.sidebar')
 @include('partials.navbar')
+<style>
+/* Calendar Widget Container */
+/* 🔹 Calendar Widget Container */
+#calendar {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-size: 12px; /* Make everything more compact */
+}
 
+/* 🔹 Header & Navigation Buttons */
+.fc-header-toolbar {
+    padding: 5px;
+}
+
+.fc-toolbar-title {
+    font-size: 14px !important;
+    font-weight: bold;
+}
+
+.fc-button {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+    border-radius: 5px !important;
+}
+
+/* 🔹 Compact Date Headers */
+.fc-col-header-cell-cushion {
+    font-size: 10px !important;
+    font-weight: 600;
+    padding: 4px 2px;
+}
+
+/* 🔹 Event Styling */
+.fc-event {
+    border-radius: 5px;
+    font-size: 11px;
+
+    padding: 2px 5px;
+    transition: 0.2s ease-in-out;
+}
+
+.fc-event:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* 🔹 Reduce Slot Labels Font Size */
+.fc-timegrid-slot {
+    font-size: 10px !important;
+}
+
+/* 🔹 Current Day Highlight */
+.fc-day-today {
+    background-color: rgba(0, 123, 255, 0.08) !important;
+}
+
+/* 🔹 Now Indicator Styling */
+.fc-now-indicator {
+    border-top: 2px solid red !important;
+}
+
+</style>
 <div class="container">
 <div class="page-inner">
                     <!-- Display success message -->
@@ -110,46 +173,65 @@
             <div class="row">
 
 
-                <div class="col-md-8">
-                    <div class="card card-round">
-                        <div class="card-header">
-                            <div class="card-head-row">
-                                <div class="card-title">Company Announcements</div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                          <?php if (!empty($announcements) && count($announcements) > 0): ?>
-                              <?php $latestAnnouncement = $announcements->first(); ?>
-                              <?php if (!empty($latestAnnouncement->image)): ?>
-                                <img src="{{ asset('storage/announcements/' . $latestAnnouncement->image) }}" class="d-block w-100" alt="{{ $latestAnnouncement->image }}" style="height: 375px; object-fit:none ;">
-                                  <?php endif; ?>
-                              <div class="mt-3">
-                              <h6>{!! $latestAnnouncement->title !!}</h6>
-                              <p>{!! Str::limit($latestAnnouncement->content, 100) !!}</p>
-                              
+            <div class="row d-flex align-items-stretch"> <!-- Flexbox for Equal Height -->
 
-                              </div>
-                          <?php else: ?>
-                              <p>No announcements available.</p>
-                          <?php endif; ?>
-                      </div>
-
-
-                    </div>
+    <!-- Left Column: Announcements -->
+    <div class="col-md-8 d-flex">
+        <div class="card card-round flex-fill"> <!-- flex-fill ensures it stretches -->
+            <div class="card-header">
+                <div class="card-head-row">
+                    <div class="card-title">Company Announcements</div>
                 </div>
+            </div>
+            <div class="card-body">
+                @if ($announcements->isNotEmpty()) 
+                    @php $latestAnnouncement = $announcements->first(); @endphp
+                    <div >
+                        <div >
+                            <div class="d-flex align-items-center mb-2">
+                                <!-- Display Profile Picture -->
+                                <img src="{{ !empty($latestAnnouncement->createdByUser) && !empty($latestAnnouncement->createdByUser->profile_picture) 
+                                            ? asset('profile_pictures/' . $latestAnnouncement->createdByUser->profile_picture) 
+                                            : asset('profile_pictures/default-profile.png') }}" 
+                                    alt="Profile Picture" 
+                                    class="rounded-circle me-2" 
+                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                <!-- Display Username -->
+                                <span>{{ $latestAnnouncement->createdByUser->username ?? 'Unknown' }}</span>
+                            </div>
+                            @if (!empty($latestAnnouncement->image))
+                                <img src="{{ asset('storage/announcements/' . $latestAnnouncement->image) }}" 
+                                    class="d-block w-100" 
+                                    alt="{{ $latestAnnouncement->image }}" 
+                                    style="height: 375px; object-fit: cover;">
+                            @endif
+                        </div>
+                        <h6>{!! $latestAnnouncement->title !!}</h6>
+                        <p>{!!($latestAnnouncement->content) !!}</p>
+                    </div>
+                @else
+                    <p>No announcements available.</p>
+                @endif
+            </div>
+        </div>
+    </div>
 
-                <div class="col-md-4">
-                <div class="card card-round">
-                <div class="card-header">
-                          <div class="card-head-row">
-                              <div class="card-title">Calendar</div>
-                          </div>
-                      </div>
-                      <div class="card-body pb-0" style="height: 500px; overflow-y: auto; background-color:white; color:black; border-radius: 10px;">
-                          <div id="calendar" style="min-height: 120px; font-size: 0.9em;"></div>
-                      </div>
-                  </div>
-              </div>
+    <!-- Right Column: Calendar -->
+    <div class="col-md-4 d-flex">
+        <div class="card card-round flex-fill"> <!-- Ensures it stretches -->
+            <div class="card-header">
+                <div class="card-head-row">
+                    <div class="card-title">Calendar</div>
+                </div>
+            </div>
+            <div class="card-body pb-0" style="background-color:white; color:black; border-radius: 10px;">
+                <div id="calendar" style="min-height: 200px; font-size: 0.9em;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
                             
               </div>
             </div>
@@ -597,21 +679,23 @@
 document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "timeGridWeek",
+        initialView: "dayGridMonth", // Best for compact widgets
         height: "auto",
-        contentHeight: 'auto',
+        contentHeight: 350, // Adjust height based on widget size
         events: {!! json_encode($events) !!},
         headerToolbar: {
             left: "prev,next",
             center: "title",
-            right: "timeGridWeek"
+            right: "listWeek,dayGridMonth"
         },
-        views: {
-            timeGridWeek: {
-                dayHeaderFormat: { weekday: 'short' },
-                slotLabelFormat: { hour: 'numeric', minute: '2-digit', omitZeroMinute: true, meridiem: 'short' }
-            }
-        }
+        themeSystem: "bootstrap5",
+        nowIndicator: true,
+        selectable: true,
+        dayMaxEvents: 2, // Show "+ more" in case of many events
+        eventBackgroundColor: "#007bff",
+        eventBorderColor: "transparent",
+        eventTextColor: "#fff",
+        eventDisplay: "block", // Ensures better readability inside widgets
     });
     calendar.render();
 });

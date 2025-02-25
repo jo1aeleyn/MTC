@@ -34,6 +34,21 @@
                         </div>
                     </div>
 
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Posted By:</label>
+                        <div class="d-flex align-items-center p-3 border" style="background-color: #f8f9fa;">
+                            <!-- Display Profile Picture -->
+                            <img src="{{ $announcement->createdByUser->profile_picture ? asset('profile_pictures/' . $announcement->createdByUser->profile_picture) : asset('profile_pictures/default-profile.png') }}" 
+                                alt="Profile Picture" 
+                                class="rounded-circle me-2" 
+                                style="width: 50px; height: 50px; object-fit: cover;">
+
+                            <!-- Display Username -->
+                            <span>{{ $announcement->createdByUser->username ?? 'Unknown' }}</span>
+                        </div>
+                    </div>
+
                     @if ($announcement->image)
                         <div class="mb-3">
                             <label class="form-label">Image:</label>

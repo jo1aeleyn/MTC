@@ -60,7 +60,7 @@
                                     <p id="total_duration" class="fw-bold">--</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Deducted Duration (After 25% Reduction)</label>
+                                    <label class="form-label">Deducted Duration (After 25% deduction)</label>
                                     <p id="deducted_duration" class="fw-bold">--</p>
                                 </div>
                             </div>
