@@ -9,8 +9,8 @@
         <div class="container">
             <nav aria-label="breadcrumb" class="mb-3">
                 <ol class="breadcrumb bg-transparent p-0 m-0 fs-5">
-                    <li class="breadcrumb-item text-muted">Client Assignment</li>
-                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Assign Client to Employee</li>
+                    <li class="breadcrumb-item text-muted">Temporary Clients</li>
+                    <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Add Temporary Client for Employee</li>
                 </ol>
             </nav>
 
@@ -26,18 +26,32 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h5>Assign Client to Employee</h5>
-                    <form action="{{ route('client.assignment.store') }}" method="POST">
+                    <h5>Add Temporary Client</h5>
+                    <form action="{{ route('temp.clients.store') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <!-- Employee Dropdown -->
+
+                            <!-- Requested By Dropdown -->
                             <div class="col-12 col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Employee Name</label>
-                                    <select name="emp_num" id="emp_num" class="form-control" required>
+                                    <label class="form-label">Requested By</label>
+                                    <select name="requested_by" id="requested_by" class="form-control" required>
                                         <option value="">Select Employee</option>
                                         @foreach($employees as $employee)
                                             <option value="{{ $employee->emp_num }}">{{ $employee->surname }}, {{ $employee->first_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Department Dropdown -->
+                            <div class="col-12 col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Department</label>
+                                    <select name="DepartmentID" id="DepartmentID" class="form-control" required>
+                                        <option value="">Select Department</option>
+                                        @foreach($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->DepartmentName }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -56,25 +70,23 @@
                                 </div>
                             </div>
 
-                            <!-- Client Type Dropdown -->
-                            <div class="col-12 col-md-6">
+                    
+                            <!-- Purpose -->
+                            <div class="col-12">
                                 <div class="mb-3">
-                                    <label class="form-label">Client Type</label>
-                                    <select name="client_type" id="client_type" class="form-control" required>
-                                        <option value="Main Client">Main Client</option>
-                                        <option value="Temporary Client">Temporary Client</option>
-                                    </select>
+                                    <label class="form-label">Purpose</label>
+                                    <textarea name="purpose" id="purpose" class="form-control" required></textarea>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        
+                        <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
+                            Back to List
+                        </a>    
+                        <button type="submit" class="btn mb-3" style="background-color:#326C79; color:white; float:right;">Add Temporary Client</button>
+                    </form>
                 </div>
-
-                <a href="javascript:history.back()" style="color: #289DD2; font-size: 90%; font-weight: 600; text-decoration: none; transition: 0.3s;">
-                    Back to Assignment List
-                </a>    
-                <button type="submit" class="btn mb-3" style="background-color:#326C79; color:white; float:right;">Assign Client</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>

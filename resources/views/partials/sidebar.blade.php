@@ -119,6 +119,7 @@
                         <span class="sub-item" style="color: #ffffff;">Client Assignment</span>
                       </a>
                     </li>
+                    
                   </ul>
                 </div>
               </li>
@@ -214,9 +215,15 @@
                                 <span class="sub-item" style="color: #ffffff;">Leave Request Form</span>
                               </a>
                             </li>
+                           
                           </ul>
                         </div>
                       </li>
+                      <li>
+                              <a href="{{route('temp.clients.index')}}">
+                                <span class="sub-item" style="color: #ffffff;">Apply for Client</span>
+                              </a>
+                            </li>
                       
                   </ul>
                 </div>

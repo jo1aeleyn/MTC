@@ -84,9 +84,20 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <!-- Client Type Dropdown -->
+                            <div class="col-12 col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Client Type</label>
+                                    <select name="client_type" id="client_type" class="form-control" required>
+                                        <option value="Main Client" {{ $assignment->client_type == 'Main Client' ? 'selected' : '' }}>Main Client</option>
+                                        <option value="Temporary Client" {{ $assignment->client_type == 'Temporary Client' ? 'selected' : '' }}>Temporary Client</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <!-- Add a submit button for the form -->
+
+                        <!-- Submit Button -->
                         <button type="submit" class="btn mb-3" style="background-color:#326C79; color:white; float:right;">Update Assignment</button>
                     </form>
                 </div>
@@ -98,5 +109,6 @@
         </div>
     </div>
 </div>
+
 
 @include('partials.footer')

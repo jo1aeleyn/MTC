@@ -56,7 +56,7 @@
                                         <td>{{ $overtime->client_name }}</td>
                                         <td>{{ $overtime->date_filed }}</td>
                                         <td>
-                                            @php
+                                        @php
                                                 $badgeClass = match($overtime->status) {
                                                     'Approved' => 'success',  // Green
                                                     'Pending' => 'warning',   // Yellow

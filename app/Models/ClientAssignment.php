@@ -15,6 +15,7 @@ class ClientAssignment extends Model
         'emp_num',
         'uuid',
         'client_id',
+        'client_type',
         'assigned_by',
         'created_by',
         'edited_by',
