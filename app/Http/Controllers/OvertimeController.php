@@ -83,68 +83,70 @@ class OvertimeController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'client_name' => 'required|string',
-            'TotalDuration' => 'required|numeric',
-            'DeductedDuration' => 'required|numeric',
-            'purpose' => 'nullable|string',
-            'request_date' => 'required|date',
-            'activitycode' => 'required|string', // Added validation for activity_code
-            'activityname' => 'required|string', // Added validation for activity_name
-        ]);
-    
-        $user = Auth::user();
-        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
-        $fullName = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
-    
-        // Check if request_date exists in Events table with a holiday type
-        // Convert request_date to a Carbon instance
-        $requestDate = Carbon::parse($request->request_date);
+{
+    $request->validate([
+        'client_name' => 'required|string',
+        'TotalDuration' => 'required|numeric',
+        'DeductedDuration' => 'required|numeric',
+        'purpose' => 'nullable|string',
+        'request_date' => 'required|date',
+        'activitycode' => 'required|string',
+        'activityname' => 'required|string',
+    ]);
 
-        // Check if the date is a Sunday
-        if ($requestDate->isSunday()) {
-            $holiday = 'Sunday';
-        } else {
-            // Check if request_date exists in Events table with a holiday type
-            $holiday = Event::whereDate('start_date', '<=', $requestDate)
-                ->whereDate('end_date', '>=', $requestDate)
-                ->whereIn('holiday_type', [
-                    'Regular Holiday', 
-                    'Special Holiday', 
-                    'Legal Holiday', 
-                    'Legal Holiday on a Rest Day', 
-                    'Spcl Holiday on a Rest Day'
-                ])
-                ->value('holiday_type');
-        }
+    $user = Auth::user();
+    $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+    $fullName = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
 
-        // Set the Type_of_Day based on the holiday check
-        $typeOfDay = $holiday ?? 'Regular Day';
-    
-        $overtime = new Overtime();
-        $overtime->uuid = (string) Str::uuid();
-        $overtime->emp_num = $employee->emp_num;
-        $overtime->emp_name = $fullName;
-        $overtime->client_name = $request->client_name;
-        $overtime->date_filed = now();
-        $overtime->purpose = $request->purpose;
-        $overtime->requested_by = $fullName;
-        $overtime->request_date = $request->request_date;
-        $overtime->Type_of_Day = $typeOfDay; // Assigning the computed type of day
-        $overtime->created_by = auth()->id();
-        $overtime->created_at = now();
-        $overtime->updated_at = now();
-        $overtime->start_time = $request->start_time;
-        $overtime->end_time = $request->end_time;
-        $overtime->TotalDuration = $request->input('TotalDuration');
-        $overtime->DeductedDuration = $request->input('DeductedDuration');
-        $overtime->ActivityCode = $request->input('activitycode'); // Added activity_code
-        $overtime->ActivityName = $request->input('activityname'); // Added activity_name
-        $overtime->save();
-    
-        return redirect()->route('overtime.personalindex')->with('success', 'Overtime Successfully Requested.');
+    $requestDate = Carbon::parse($request->request_date);
+
+    if ($requestDate->isSunday()) {
+        $holiday = 'Sunday';
+    } else {
+        $holiday = Event::whereDate('start_date', '<=', $requestDate)
+            ->whereDate('end_date', '>=', $requestDate)
+            ->whereIn('holiday_type', [
+                'Regular Holiday', 
+                'Special Holiday', 
+                'Legal Holiday', 
+                'Legal Holiday on a Rest Day', 
+                'Spcl Holiday on a Rest Day'
+            ])
+            ->value('holiday_type');
     }
+
+    $typeOfDay = $holiday ?? 'Regular Day';
+
+    $overtime = new Overtime();
+    $overtime->uuid = (string) Str::uuid();
+    $overtime->emp_num = $employee->emp_num;
+    $overtime->emp_name = $fullName;
+    $overtime->client_name = $request->client_name;
+    $overtime->date_filed = now();
+    $overtime->purpose = $request->purpose;
+    $overtime->requested_by = $fullName;
+    $overtime->request_date = $request->request_date;
+    $overtime->Type_of_Day = $typeOfDay;
+    $overtime->created_by = auth()->id();
+    $overtime->created_at = now();
+    $overtime->updated_at = now();
+    $overtime->start_time = $request->start_time;
+    $overtime->end_time = $request->end_time;
+    $overtime->TotalDuration = $request->input('TotalDuration');
+    $overtime->DeductedDuration = $request->input('DeductedDuration');
+    $overtime->ActivityCode = $request->input('activitycode');
+    $overtime->ActivityName = $request->input('activityname');
+    
+    // Check if user is HR Admin
+    if ($user->user_role === 'HR Admin') {
+        $overtime->status = 'Recommended';
+    }
+    
+    $overtime->save();
+
+    return redirect()->route('overtime.personalindex')->with('success', 'Overtime Successfully Requested.');
+}
+
     
 
     public function show(Overtime $overtime)
