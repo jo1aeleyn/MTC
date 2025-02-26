@@ -19,11 +19,12 @@ class AnnouncementController extends Controller
 }  
 public function companyannouncements()
 {
-    // Retrieve announcements where IsArchived is 0, ordered by latest
-    $announcements = Announcement::where('IsArchived', 0)->latest()->get();
+    // Retrieve paginated announcements where IsArchived is 0, ordered by latest
+    $announcements = Announcement::where('IsArchived', 0)->latest()->paginate(6); // Adjust the number per page if needed
 
     return view('announcements.companyAnnouncements', compact('announcements'));
 }
+
 
 
     public function create()

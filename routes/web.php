@@ -177,6 +177,7 @@ Route::get('events/edit/{id}', [EventController::class, 'edit'])->name('events.e
 Route::post('events/update/{id}', [EventController::class, 'update'])->name('events.update');
 Route::put('/events/archive/{id}', [EventController::class, 'archive'])->name('events.archive');
 
+
 Route::get('/overtime-summary-pdf', [OvertimeController::class, 'generatePDF'])->name('overtime.OverTimeSummary');
     Route::get('/client-assignments/export-pdf', [ClientAssignmentController::class, 'exportPDF'])->name('client.assignment.export.pdf');
 

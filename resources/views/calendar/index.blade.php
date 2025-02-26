@@ -84,6 +84,12 @@
 
                     <button type="submit" class="btn btn-primary">Update Event</button>
                 </form>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-warning" id="archiveEventBtn">
+    Archive Event
+</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div>
             </div>
         </div>
     </div>
@@ -139,28 +145,39 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     calendar.render();
-
-    // HANDLE DELETE EVENT FUNCTIONALITY
-    window.deleteEvent = function() {
+    document.getElementById("archiveEventBtn").addEventListener("click", function () {
         let eventId = document.getElementById("editEventId").value;
 
-        if (confirm("Are you sure you want to delete this event?")) {
-            fetch(`{{ url('events/delete') }}/${eventId}`, {
-                method: "DELETE",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Event deleted successfully!");
-                    location.reload();
-                }
-            })
-            .catch(error => console.error("Error deleting event:", error));
-        }
-    };
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This event will be archived!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, archive it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`{{ url('events/archive') }}/${eventId}`, {
+                    method: "PUT",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire("Archived!", "The event has been archived.", "success")
+                            .then(() => location.reload());
+                    } else {
+                        Swal.fire("Error!", "Failed to archive the event.", "error");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            }
+        });
+    });
 });
 </script>
 

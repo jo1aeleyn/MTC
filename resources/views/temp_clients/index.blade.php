@@ -49,8 +49,8 @@
                                         <td>{{ $client->employee->first_name ?? 'N/A' }} {{ $client->employee->surname  ?? '' }}</td>
                                         <td>{{ $client->client->registered_company_name ?? 'N/A' }}</td>
                                         <td>{{ $client->requestedByEmployee->first_name ?? 'N/A' }} {{ $client->requestedByEmployee->surname ?? '' }}</td>
-                                        @php
-                                                $badgeClass = match($overtime->status) {
+                                        <td>@php
+                                                $badgeClass = match($client->status) {
                                                     'Approved' => 'success',  // Green
                                                     'Pending' => 'warning',   // Yellow
                                                     'Recommended'=> 'warning',   // Yellow
@@ -60,8 +60,9 @@
                                             @endphp
 
                                             <span class="badge bg-{{ $badgeClass }}">
-                                                {{ ucfirst($overtime->status) }}
+                                                {{ ucfirst($client->status) }}
                                             </span>
+                                            </td>
                                         <td>{{ $client->purpose }}</td>
                                         <td>
                                             <div class="dropdown" style="text-align:center;">

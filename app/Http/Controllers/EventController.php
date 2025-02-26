@@ -9,7 +9,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::all()->map(function ($event) {
+        $events = Event::where('IsArchived', 0)->get()->map(function ($event) {
             return [
                 'id'    => $event->id,
                 'title' => $event->title,
@@ -24,7 +24,7 @@ class EventController extends Controller
 
 public function getEvents()
 {
-    $events = Event::all()->map(function ($event) {
+    $events = Event::where('IsArchived', 0)->get()->map(function ($event) {
         return [
             'id'    => $event->id,
             'title' => $event->title,
@@ -76,12 +76,22 @@ public function update(Request $request, $id)
 
     
 
-public function destroy($id)
+public function archive($id)
 {
-    $event = Event::findOrFail($id);
-    $event->delete();
+    $event = Event::find($id);
 
-    return response()->json(['success' => true]);
+    if (!$event) {
+        return response()->json(['success' => false, 'message' => 'Event not found'], 404);
+    }
+
+    $event->IsArchived = 1;
+    $event->ArchivedBy = auth()->user()->id;
+    $event->ArchivedDate = now();
+    $event->save();
+
+    return response()->json(['success' => true, 'message' => 'Event archived successfully']);
 }
+
+
 
 }
