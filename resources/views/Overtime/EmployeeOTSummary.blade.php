@@ -179,139 +179,183 @@
             }
         @endphp
         <table border="1">
-            <thead>
-                <tr>
-                    <th></th> <!-- Blank header cell -->
-                    <th>1st 8h</th>
-                    <th>1st 8h NP</th>
-                    <th>>8h</th>
-                    <th>>8h NP</th>
-                    <th></th> <!-- Blank Column -->
-                    <th colspan="2">Leave & Absences</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Regular</td>
-                    <td>{{ $first8h_total }}</td>
-                    <td>-</td>
-                    <td>{{ $more8h_total }}</td>
-                    <td>0.0</td>
-                    <td></td>
-                    <td>Tardiness/Undertime</td>
-                    <td></td>
-                </tr>
-                <!-- You can add additional rows here for Sunday, Legal Holiday, etc. -->
-                <tr>
-    <td>Sunday</td>
-    <td>
-        @php
-            $sunday_first8h = 0;
-            $sunday_more8h = 0;
-            foreach($overtimes as $summary) {
-                if($summary->Type_of_Day == "Sunday" && $summary->TotalDuration != 'none') {
-                    if($summary->TotalDuration <= 8) {
-                        $sunday_first8h += $summary->TotalDuration;
-                    } else {
-                        $sunday_first8h += 8;
-                        $sunday_more8h += ($summary->TotalDuration - 8);
-                    }
-                }
-            }
-        @endphp
-        {{ $sunday_first8h }}
-    </td>
-    <td>-</td>
-    <td>{{ $sunday_more8h }}</td>
-    <td>0.0</td>
-    <td></td>
-    <td>Absence w/o Leave</td>
-    <td></td>
-</tr>
-<tr>
-    <td>Legal Holiday</td>
-    <td>
-        @php
-            $legal_first8h = 0;
-            $legal_more8h = 0;
-            foreach($overtimes as $summary) {
-                if($summary->Type_of_Day == "Legal Holiday" && $summary->TotalDuration != 'none') {
-                    if($summary->TotalDuration <= 8) {
-                        $legal_first8h += $summary->TotalDuration;
-                    } else {
-                        $legal_first8h += 8;
-                        $legal_more8h += ($summary->TotalDuration - 8);
-                    }
-                }
-            }
-        @endphp
-        {{ $legal_first8h }}
-    </td>
-    <td>-</td>
-    <td>{{ $legal_more8h }}</td>
-    <td>0.0</td>
-    <td></td>
-    <td>Vacation Leave</td>
-    <td></td>
-</tr>
-<tr>
-    <td>Special Holiday</td>
-    <td>
-        @php
-            $special_first8h = 0;
-            $special_more8h = 0;
-            foreach($overtimes as $summary) {
-                if($summary->Type_of_Day == "Special Holiday" && $summary->TotalDuration != 'none') {
-                    if($summary->TotalDuration <= 8) {
-                        $special_first8h += $summary->TotalDuration;
-                    } else {
-                        $special_first8h += 8;
-                        $special_more8h += ($summary->TotalDuration - 8);
-                    }
-                }
-            }
-        @endphp
-        {{ $special_first8h }}
-    </td>
-    <td>-</td>
-    <td>{{ $special_more8h }}</td>
-    <td>0.0</td>
-    <td></td>
-    <td>Sick Leave</td>
-    <td></td>
-</tr>
-                <tr>
-                    <td>Legal Hol Sun</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td></td>
-                    <td>Other Leave</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Spcl Hol Sun</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                @if($overtimes->isNotEmpty())
-                <td colspan="2">Prepared by: {{ $overtimes->first()->emp_name }}</td>
-                 @endif
+    <thead>
+        <tr>
+            <th></th> <!-- Blank header cell -->
+            <th>1st 8h</th>
+            <th>1st 8h NP</th>
+            <th>>8h</th>
+            <th>>8h NP</th>
+            <th></th> <!-- Blank Column -->
+            <th colspan="2">Leave & Absences</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Regular</td>
+            <td>{{ $first8h_total }}</td>
+            <td>
+                @php
+                    $night_premium = 0;
+                    $processed_dates = [];
 
-                    <td colspan="3">Checked by:</td>
-                    <td colspan="3">Approved by:</td>
-                </tr>
-            </tfoot>
-        </table>
+                    foreach ($overtimes as $summary) {
+                        if ($summary->TotalDuration > 5 && !in_array($summary->Date, $processed_dates)) {
+                            $night_premium += 1;
+                            $processed_dates[] = $summary->Date;
+                        }
+                    }
+                @endphp
+                {{ $night_premium }}
+            </td>
+            <td>{{ $more8h_total }}</td>
+            <td>0.0</td>
+            <td></td>
+            <td>Tardiness/Undertime</td>
+            <td></td>
+        </tr>
+        
+        <!-- Sunday -->
+        <tr>
+            <td>Sunday</td>
+            <td>
+                @php
+                    $sunday_first8h = 0;
+                    $sunday_more8h = 0;
+                    $sunday_np = 0;
+                    $sunday_dates = [];
+
+                    foreach($overtimes as $summary) {
+                        if($summary->Type_of_Day == "Sunday" && $summary->TotalDuration != 'none') {
+                            if($summary->TotalDuration <= 8) {
+                                $sunday_first8h += $summary->TotalDuration;
+                            } else {
+                                $sunday_first8h += 8;
+                                $sunday_more8h += ($summary->TotalDuration - 8);
+                            }
+
+                            if ($summary->TotalDuration > 5 && !in_array($summary->Date, $sunday_dates)) {
+                                $sunday_np += 1;
+                                $sunday_dates[] = $summary->Date;
+                            }
+                        }
+                    }
+                @endphp
+                {{ $sunday_first8h }}
+            </td>
+            <td>{{ $sunday_np }}</td>
+            <td>{{ $sunday_more8h }}</td>
+            <td>0.0</td>
+            <td></td>
+            <td>Absence w/o Leave</td>
+            <td></td>
+        </tr>
+
+        <!-- Legal Holiday -->
+        <tr>
+            <td>Legal Holiday</td>
+            <td>
+                @php
+                    $legal_first8h = 0;
+                    $legal_more8h = 0;
+                    $legal_np = 0;
+                    $legal_dates = [];
+
+                    foreach($overtimes as $summary) {
+                        if($summary->Type_of_Day == "Legal Holiday" && $summary->TotalDuration != 'none') {
+                            if($summary->TotalDuration <= 8) {
+                                $legal_first8h += $summary->TotalDuration;
+                            } else {
+                                $legal_first8h += 8;
+                                $legal_more8h += ($summary->TotalDuration - 8);
+                            }
+
+                            if ($summary->TotalDuration > 5 && !in_array($summary->Date, $legal_dates)) {
+                                $legal_np += 1;
+                                $legal_dates[] = $summary->Date;
+                            }
+                        }
+                    }
+                @endphp
+                {{ $legal_first8h }}
+            </td>
+            <td>{{ $legal_np }}</td>
+            <td>{{ $legal_more8h }}</td>
+            <td>0.0</td>
+            <td></td>
+            <td>Vacation Leave</td>
+            <td></td>
+        </tr>
+
+        <!-- Special Holiday -->
+        <tr>
+            <td>Special Holiday</td>
+            <td>
+                @php
+                    $special_first8h = 0;
+                    $special_more8h = 0;
+                    $special_np = 0;
+                    $special_dates = [];
+
+                    foreach($overtimes as $summary) {
+                        if($summary->Type_of_Day == "Special Holiday" && $summary->TotalDuration != 'none') {
+                            if($summary->TotalDuration <= 8) {
+                                $special_first8h += $summary->TotalDuration;
+                            } else {
+                                $special_first8h += 8;
+                                $special_more8h += ($summary->TotalDuration - 8);
+                            }
+
+                            if ($summary->TotalDuration > 5 && !in_array($summary->Date, $special_dates)) {
+                                $special_np += 1;
+                                $special_dates[] = $summary->Date;
+                            }
+                        }
+                    }
+                @endphp
+                {{ $special_first8h }}
+            </td>
+            <td>{{ $special_np }}</td>
+            <td>{{ $special_more8h }}</td>
+            <td>0.0</td>
+            <td></td>
+            <td>Sick Leave</td>
+            <td></td>
+        </tr>
+
+        <!-- Other Days -->
+        <tr>
+            <td>Legal Hol Sun</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+            <td>Other Leave</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Spcl Hol Sun</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            @if($overtimes->isNotEmpty())
+                <td colspan="2">Prepared by: {{ $overtimes->first()->emp_name }}</td>
+            @endif
+            <td colspan="3">Checked by:</td>
+            <td colspan="3">Approved by:</td>
+        </tr>
+    </tfoot>
+</table>
+
     </div>
 
 </body>

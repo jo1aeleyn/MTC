@@ -11,47 +11,36 @@
                     <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">Company Announcements</li>
                 </ol>
             </nav>
-
-            <div class="card">
-                <div class="card-body">
-                   
-
-                    <!-- Announcements Table -->
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table id="announcementTable" class="display table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Title</th>
-                                        <th>Category</th>
-                                        <th>Created By</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($announcements as $key => $announcement)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $announcement->title }}</td>
-                                        <td>{{ $announcement->category }}</td>
-                                        <td>{{ $announcement->createdBy }}</td>
-                                       
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- No Records Found Message -->
-                    <div id="noRecordsMessage" class="text-center text-muted" style="display: none; font-size: 18px;">
+            <div class="card p-4">
+            <div class="row">
+                @if ($announcements->isEmpty())
+                    <div class="col-12 text-center text-muted fs-5">
                         No announcement records found.
                     </div>
-                </div>
+                @else
+                    @foreach ($announcements as $announcement)
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="{{ asset('storage/announcements/' . $announcement->image) }}" class="card-img-top" alt="Announcement Image" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                <h6 class="card-title fw-bold text-center">{{ $announcement->title }}</h6>
+                                    <p class="card-text m-0"><strong>Category:</strong> {{ $announcement->category }}</p>
+                                    <p class="card-text m-0"><strong>Created By:</strong> {{ $announcement->createdBy }}</p>
+                                    <p class="card-text text-muted m-0"><i class="fas fa-clock"></i> {{ $announcement->created_at->format('M d, Y') }}</p>
+                                    <a href="#" class="btn btn-primary w-100">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+            <!-- Pagination -->
+<div class="d-flex justify-content-center mt-3">
+    {{ $announcements->links('pagination::bootstrap-5') }}
+</div>
             </div>
         </div>
     </div>
 </div>
 
 @include('partials.footer')
-
