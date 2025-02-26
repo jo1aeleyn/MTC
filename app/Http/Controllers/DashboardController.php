@@ -34,7 +34,7 @@ class DashboardController extends Controller
         $LR = Leave::where('status', 'pending')->count();
         $totalRequests = $OT + $FR + $LR;
 
-        $events = Event::all()->map(function ($event) {
+        $events = Event::where('IsArchived', 0)->get()->map(function ($event) {
             return [
                 'id'    => $event->id,
                 'title' => $event->title,
@@ -43,6 +43,7 @@ class DashboardController extends Controller
                 'color' => $event->type == 'holiday' ? ($event->holiday_type == 'Regular Holiday' ? 'red' : 'blue') : 'green',
             ];
         });
+        
         
 
         // Pass the data to the dashboard view

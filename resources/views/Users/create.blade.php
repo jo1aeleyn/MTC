@@ -56,13 +56,6 @@
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
-            <div class="mb-3">
-                <label for="user_role" class="form-label">Role</label>
-                <select class="form-select" id="user_role" name="user_role" required>
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
-                </select>
-            </div>
             </div>
 
 

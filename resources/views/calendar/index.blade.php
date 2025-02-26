@@ -84,13 +84,16 @@
 
                     <button type="submit" class="btn btn-primary">Update Event</button>
                 </form>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-warning" id="archiveEventBtn">
+
+            </div>
+            <div class="modal-footer">
+    <button type="button" class="btn btn-warning" id="archiveEventBtn">
     Archive Event
 </button>
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -145,6 +148,31 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     calendar.render();
+
+    document.getElementById("createEventForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        let formData = new FormData(this);
+
+        fetch("{{ url('events/store') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            },
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Event added successfully!");
+                location.reload(); // Refresh calendar
+            } else {
+                alert("Failed to add event.");
+            }
+        })
+        .catch(error => console.error("Error creating event:", error));
+    });
+
     document.getElementById("archiveEventBtn").addEventListener("click", function () {
         let eventId = document.getElementById("editEventId").value;
 

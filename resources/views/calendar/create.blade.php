@@ -52,3 +52,20 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const typeSelect = document.getElementById("type");
+        const holidayTypeDiv = document.getElementById("holidayTypeDiv");
+
+        typeSelect.addEventListener("change", function () {
+            if (this.value === "holiday") {
+                holidayTypeDiv.style.display = "block";
+            } else {
+                holidayTypeDiv.style.display = "none";
+            }
+        });
+
+        // Trigger change event on page load to ensure correct visibility
+        typeSelect.dispatchEvent(new Event("change"));
+    });
+</script>

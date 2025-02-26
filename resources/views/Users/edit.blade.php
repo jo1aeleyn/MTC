@@ -58,14 +58,6 @@
         <input type="text" class="form-control" id="username" name="username" value="{{ old('username', $user->username) }}" required>
     </div>
 
-    <!-- User Role Dropdown -->
-    <div class="col-md-6">
-        <label for="user_role" class="form-label">User Role</label>
-        <select class="form-select" id="user_role" name="user_role" required>
-            <option value="admin" {{ old('user_role', $user->user_role) == 'admin' ? 'selected' : '' }}>Admin</option>
-            <option value="user" {{ old('user_role', $user->user_role) == 'user' ? 'selected' : '' }}>User</option>
-        </select>
-    </div>
 </div>
 
 

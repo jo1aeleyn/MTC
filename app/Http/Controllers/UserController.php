@@ -30,7 +30,6 @@ class UserController extends Controller
     $request->validate([
         'username' => 'required|unique:user_accounts_tbl,username',
         'email' => 'required|unique:user_accounts_tbl,email',
-        'user_role' => 'required',
         'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
     ]);
 
@@ -56,7 +55,6 @@ class UserController extends Controller
         'email' => $request->email,
         'username' => $request->username,
         'password' => $hashedPassword,
-        'user_role' => $request->user_role,
         'profile_picture' => $profile_picture,
         'created_by' => auth()->id(),
     ]);
@@ -80,7 +78,7 @@ class UserController extends Controller
     $validatedData = $request->validate([
         'username' => 'required|string|max:255|unique:user_accounts_tbl,username,' . $user->id,
         'password' => 'nullable|string|min:8|confirmed|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
-        'user_role' => 'required|in:admin,user',
+        'user_role' => 'required',
         'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
