@@ -58,12 +58,12 @@
                             Back to List
                         </a>    
 
-                        @if(auth()->user()->user_role === 'HR Admin')
+                     
                             <button type="button" class="btn mb-3" style="background-color:#FF9800; color:white; float:right;" 
                                 onclick="updateStatus('{{ $tempClient->id }}', 'Recommended')">
                                 Recommend
                             </button>
-                        @endif
+                     
 
                         @if(auth()->user()->user_role === 'Partners')
                             <button type="button" class="btn mb-3" style="background-color:#4CAF50; color:white; float:right;" 

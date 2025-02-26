@@ -78,7 +78,6 @@ class UserController extends Controller
     $validatedData = $request->validate([
         'username' => 'required|string|max:255|unique:user_accounts_tbl,username,' . $user->id,
         'password' => 'nullable|string|min:8|confirmed|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
-        'user_role' => 'required',
         'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
