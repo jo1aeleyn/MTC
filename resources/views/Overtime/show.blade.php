@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            @if(auth()->user()->user_role == 'HR Admin' && $empnum !== $overtime->emp_num)
+            @if(auth()->user()->user_role == 'Auditing Supervisor' && $empnum !== $overtime->emp_num || auth()->user()->user_role == 'Accounting Supervisor' && $empnum !== $overtime->emp_num)
                 <form action="{{ route('overtime.update_status', ['overtime' => $overtime, 'status' => 'Recommended']) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('PUT')

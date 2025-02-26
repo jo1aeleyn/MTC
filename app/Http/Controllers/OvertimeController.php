@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\TempClient;
 use App\Models\ClientAssignment;
 use App\Models\Event;
+use App\Models\Application;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
@@ -23,8 +24,43 @@ class OvertimeController extends Controller
         if ($user->user_role == 'HR Admin') {
             $overtimes = Overtime::where('status', 'pending')->paginate(10);
 
-        } elseif ($user->user_role == 'Auditing Supervisor') {
-            $overtimes = Overtime::whereIn('status', ['recommended', 'pending'])->paginate(10);
+        }  elseif ($user->user_role == 'Auditing Supervisor') {
+            $userUuid = $user->uuid;
+        
+            // Get the employee record
+            $employee = Employee::where('uuid', $userUuid)->first();
+        
+            if ($employee) {
+                $empNum = $employee->emp_num;
+        
+                // Ensure overtimes are only from employees in the Audit department
+                $overtimes = Overtime::whereIn('status', ['recommended', 'pending'])
+                    ->whereHas('employee.application', function ($query) {
+                        $query->where('DepartmentName', 'Audit');
+                    })
+                    ->paginate(10);
+            } else {
+                $overtimes = collect(); // Return empty collection if employee not found
+            }
+
+        }   elseif ($user->user_role == 'Accounting Supervisor') {
+            $userUuid = $user->uuid;
+        
+            // Get the employee record
+            $employee = Employee::where('uuid', $userUuid)->first();
+        
+            if ($employee) {
+                $empNum = $employee->emp_num;
+        
+                // Ensure overtimes are only from employees in the Audit department
+                $overtimes = Overtime::whereIn('status', ['recommended', 'pending'])
+                    ->whereHas('employee.application', function ($query) {
+                        $query->where('DepartmentName', 'Accounting');
+                    })
+                    ->paginate(10);
+            } else {
+                $overtimes = collect(); // Return empty collection if employee not found
+            }
 
             
         } elseif ($user->user_role == 'Partners') {

@@ -29,4 +29,6 @@ class Application extends Model
     {
         return $this->belongsTo(Employee::class, 'emp_num', 'emp_num');
     }
+
+    
 }
