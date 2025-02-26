@@ -12,11 +12,19 @@
                 </ol>
             </nav>
             <div class="card">
+
+            @if(request()->has('success'))
+                <div class="alert alert-success">
+                    {{ request('success') }}
+                </div>
+            @endif
+
+
                 <div class="card-body">
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
-                        </div>
+                        </div>  
                     @endif
                     
                     @if (session('error'))

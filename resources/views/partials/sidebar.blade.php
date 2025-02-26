@@ -84,11 +84,7 @@
                         <span class="sub-item" style="color: #ffffff;">User List</span>
                       </a>
                     </li>
-                    <li>
-                      <a href="{{ route('users.create') }}">
-                        <span class="sub-item" style="color: #ffffff;">Register New User</span>
-                      </a>
-                    </li>
+                   
                   </ul>
                 </div>
               </li>

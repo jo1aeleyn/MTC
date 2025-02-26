@@ -91,11 +91,13 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert(data.message);
-                location.reload(); // Reload page to reflect changes
+                window.location.href = "{{ route('temp.clients.index') }}?success=" + encodeURIComponent(data.message);
+            } else {
+                alert('Failed to update status');
             }
         })
         .catch(error => console.error('Error:', error));
     }
 </script>
+
 @include('partials.footer')
