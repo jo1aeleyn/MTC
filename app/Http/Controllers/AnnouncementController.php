@@ -7,6 +7,10 @@ use App\Models\Announcement;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\AnnouncementMail;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Employee;
+
 
 class AnnouncementController extends Controller
 {
@@ -31,39 +35,44 @@ public function companyannouncements()
     {
         return view('announcements.create');
     }
-
+    
     public function store(Request $request)
-{
-    // Validate the incoming request
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'content' => 'required',
-        'category' => 'required|string|max:255',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate image
-    ]);
-
-    // Handle the file upload if there's an image
-    $imagePath = null;
-    if ($request->hasFile('image')) {
-        // Store the image and get its filename (without 'announcements/' folder)
-        $imagePath = $request->file('image')->store('announcements', 'public');
-        $imagePath = basename($imagePath); // Get only the filename (no folder path)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required',
+            'category' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('announcements', 'public');
+            $imagePath = basename($imagePath);
+        }
+    
+        $announcement = Announcement::create([
+            'uuid' => Str::uuid(),
+            'announcementID' => 'ANN-' . time(),
+            'title' => $request->title,
+            'content' => $request->content,
+            'category' => $request->category,
+            'createdBy' => Auth::id(),
+            'image' => $imagePath,
+        ]);
+    
+        // Fetch only active employee emails
+        $employeeEmails = Employee::where('is_archived', 0)->pluck('email')->toArray();
+    
+        // Send email only if there are recipients
+        if (!empty($employeeEmails)) {
+            Mail::to($employeeEmails)->send(new AnnouncementMail($announcement));
+        }
+    
+        return redirect()->route('announcements.index')->with('success', 'Announcement created and emailed successfully.');
     }
-
-    // Create a new announcement without specifying the 'id' field (auto-incremented)
-    Announcement::create([
-        'uuid' => Str::uuid(), // Generate a unique UUID and store it in the 'uuid' column
-        'announcementID' => 'ANN-' . time(), // Generate a custom announcement ID using the current timestamp
-        'title' => $request->title, // Title from the form input
-        'content' => $request->content, // Content from the form input
-        'category' => $request->category, // Category from the form input
-        'createdBy' => Auth::id(), // The ID of the authenticated user
-        'image' => $imagePath, // Save only the image filename
-    ]);
-
-    // Redirect to the announcement index page with a success message
-    return redirect()->route('announcements.index')->with('success', 'Announcement created successfully.');
-}
+    
+    
 
 
 public function show(Announcement $announcement)
@@ -96,12 +105,13 @@ public function show(Announcement $announcement)
         $imagePath = $announcement->image; // Keep the existing image if not updated
         if ($request->hasFile('image')) {
             // Delete the old image if it exists
-            if ($announcement->image && Storage::exists('public/' . $announcement->image)) {
-                Storage::delete('public/' . $announcement->image);
+            if ($announcement->image && Storage::exists('public/announcements/' . $announcement->image)) {
+                Storage::delete('public/announcements/' . $announcement->image);
             }
     
-            // Store the new image and get its path
+            // Store the new image and get only the filename
             $imagePath = $request->file('image')->store('announcements', 'public');
+            $imagePath = basename($imagePath); // Extract only the filename
         }
     
         // Update the announcement
@@ -110,7 +120,7 @@ public function show(Announcement $announcement)
             'content' => $request->content,
             'category' => $request->category,
             'editedBy' => auth()->id(),
-            'image' => $imagePath, // Update the image path if changed
+            'image' => $imagePath, // Save only the filename
         ]);
     
         return redirect()->route('announcements.index')->with('success', 'Announcement updated successfully.');
