@@ -58,6 +58,7 @@
                                 <i class="bi bi-eye"></i>
                             </span>
                         </div>
+                        <small id="capsLockIndicator" class="text-warning d-none">Caps Lock is ON</small>
                         <a href="{{ route('password.request') }}" class="d-block mt-2">Forgot password?</a>
                     </div>
 
@@ -93,6 +94,16 @@
             }
         });
     </script>
+    <script>
+    document.getElementById("password").addEventListener("keyup", function (event) {
+        let capsLockIndicator = document.getElementById("capsLockIndicator");
+        if (event.getModifierState("CapsLock")) {
+            capsLockIndicator.classList.remove("d-none");
+        } else {
+            capsLockIndicator.classList.add("d-none");
+        }
+    });
+</script>
 </body>
 
 </html>

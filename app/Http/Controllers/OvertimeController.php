@@ -227,12 +227,12 @@ class OvertimeController extends Controller
 -        $overtime->recommended_date = now();
     }
 
-    if ($status === 'rejected' && $user->user_role === 'Partners') {
+    if ($status === 'Rejected' && in_array($user->user_role, ['Partners', 'Auditing Supervisor', 'Accounting Supervisor'])) {
         $request->validate([
             'rejection_reason' => 'required|string|max:255'
         ]);
         $overtime->approved_by = $fullname;
-        $overtime->reason = $request->rejection_reason;
+        $overtime->reason = $request->input('rejection_reason'); // Correct way to get textarea input
         $overtime->approved_date = now();
     }
 
