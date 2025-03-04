@@ -188,6 +188,35 @@
                         </div>
                       </li>
                       <li>
+                      <a data-bs-toggle="collapse" href="#subnav4">
+                        <span class="sub-item" style="color: #ffffff;">WFH Request</span>
+                        <span class="caret" style="color: #ffffff;"></span>
+                      </a>
+                      <div class="collapse" id="subnav4">
+                        <ul class="nav nav-collapse subnav">
+                        @if(auth()->user()->user_role == 'HR Admin' || auth()->user()->user_role == 'Partners'|| auth()->user()->user_role == 'Auditing Supervisor'
+                        || auth()->user()->user_role == 'Accounting Supervisor')
+                          <li>
+                            <a href="{{route('wfh.index')}}">
+                              <span class="sub-item" style="color: #ffffff;">All WFH Request</span>
+                            </a>
+                          </li>
+                       @endif
+                          <li>
+                            <a href="{{route('wfh.personalindex')}}">
+                              <span class="sub-item" style="color: #ffffff;">My WFH Request</span>
+                            </a>
+                          </li>
+                   
+                          <li>
+                            <a href="{{route('wfh.create')}}">
+                              <span class="sub-item" style="color: #ffffff;">WFH Request Form</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                      <li>
                         <a data-bs-toggle="collapse" href="#subnav3">
                           <span class="sub-item" style="color: #ffffff;">Employee Leave</span>
                           <span class="caret" style="color: #ffffff;"></span>
