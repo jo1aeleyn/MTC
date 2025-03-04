@@ -6,6 +6,10 @@ use App\Models\FinancialReq;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\FinancialReqImage;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+
 
 class FinancialRequestController extends Controller
 {
@@ -49,50 +53,69 @@ class FinancialRequestController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $user = Auth::user();  // Retrieve the authenticated user
-        $uuid = $user->uuid;   // Get the user's uuid
-        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
-        $empnum = $employee->emp_num;
-        $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
+{
+    $user = Auth::user();
+    $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
 
-        $validated = $request->validate([
-            'Chargeto' => 'nullable|string|max:255',
-            'PaymentForm' => 'nullable|string|max:50',
-            'RequestType' => 'nullable|string|max:100',
-            'Ammount' => 'nullable|numeric',
-            'purpose' => 'nullable|string',
-            'RequestedBy' => 'nullable|string|max:100',
-            'ApprovedBy' => 'nullable|string|max:100',
-            'PaymentReceivedBy' => 'nullable|string|max:100',
-            'Date' => 'nullable|date',
+    // Validate input
+    $validated = $request->validate([
+        'Chargeto' => 'nullable|string|max:255',
+        'PaymentForm' => 'nullable|string|max:50',
+        'RequestType' => 'required|string|max:100',
+        'Amount' => 'nullable|numeric',  // Ensure this is numeric
+        'purpose' => 'nullable|string',
+        'Date' => 'nullable|date',
+        'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate images
+    ]);
+
+    // Set additional fields
+    $validated['uuid'] = $user->uuid;
+    $validated['emp_num'] = $employee->emp_num;
+    $validated['payee'] = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
+    $validated['RequestedBy'] = $validated['payee'];
+    $validated['PaymentReceivedBy'] = $validated['payee'];
+    $validated['status'] = 'pending';
+
+    // Create financial request and get its ID
+    $financialRequest = FinancialReq::create($validated);
+
+    // Handle image uploads and store them in the database
+if ($request->hasFile('images')) {
+    foreach ($request->file('images') as $image) {
+        $path = $image->store('financial_images', 'public'); // Save file
+        $filename = basename($path); // Extract only the filename
+
+        // Insert into financial_req_images table
+        DB::table('financial_req_images')->insert([
+            'financial_req_id' => $financialRequest->id, 
+            'image_path' => $filename, // Store only the filename
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
-
-        // Add the user's uuid to the validated data
-        $validated['uuid'] = $uuid;
-        $validated['emp_num'] = $empnum;
-        $validated['payee'] = $fullname;
-        $validated['RequestedBy'] = $fullname;
-        $validated['PaymentReceivedBy'] = $fullname;
-        $validated['status'] = 'pending'; 
-
-        // Create the record with the validated data
-        FinancialReq::create($validated);
-
-        return redirect()->route('financial_req.create')->with('success', 'Financial Request created successfully.');
     }
+}
+
+
+    return redirect()->route('financial_req.create')->with('success', 'Financial Request created successfully.');
+}
 
     public function show($uuid)
-    {
-        $user = Auth::user();
-        $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
-        $empnum = $employee->emp_num;
-    
-        // Fetch the FinancialReq by its UUID
-        $financialRequest = FinancialReq::where('uuid', $uuid)->firstOrFail();
-    
-        return view('financial_req.show', compact('financialRequest', 'empnum'));
-    }
+{
+    $user = Auth::user();
+    $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
+    $empnum = $employee->emp_num;
+
+    // Fetch financial request by UUID
+    $financialRequest = FinancialReq::where('uuid', $uuid)->firstOrFail();
+
+    // Fetch related images from financial_req_images table
+    $images = DB::table('financial_req_images')
+        ->where('financial_req_id', $financialRequest->id)
+        ->pluck('image_path'); // Retrieve only the image_path column
+
+    return view('financial_req.show', compact('financialRequest', 'empnum', 'images'));
+}
+
     
     
 
