@@ -34,7 +34,7 @@
                     @endif
 
                     <!-- Financial Request Form -->
-                    <form action="{{ route('financial_req.store') }}" method="POST">
+                    <form action="{{ route('financial_req.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="row">
@@ -93,6 +93,12 @@
                             <input type="date" name="Date" id="Date" class="form-control">
                         </div>
 
+                                            <!-- Upload Images Section (Hidden by Default) -->
+                        <div id="imageUploadSection" class="mb-3" style="display: none;">
+                            <label for="images" class="form-label">Upload Images</label>
+                            <input type="file" name="images[]" id="images" name="images" class="form-control" multiple>
+                        </div>
+
                         <!-- Submit and Cancel Buttons -->
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn text-white w-auto px-4" style="background-color:#326C79">Submit</button>
@@ -120,6 +126,17 @@
         // Add conditional option if Request Type is "Reimbursement"
         if (requestType === "reimbursement") {
             paymentForm.innerHTML += '<option value="Credit to Payroll">Credit to Payroll</option>';
+        }
+    });
+
+    document.getElementById("RequestType").addEventListener("change", function () {
+        let requestType = this.value;
+        let imageUploadSection = document.getElementById("imageUploadSection");
+
+        if (requestType === "reimbursement" || requestType === "liquidation") {
+            imageUploadSection.style.display = "block";
+        } else {
+            imageUploadSection.style.display = "none";
         }
     });
 </script>

@@ -18,8 +18,12 @@ use App\Http\Controllers\ClientAssignmentController;
 use App\Http\Controllers\CompanyPositionController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\TempClientController;
+<<<<<<< HEAD
 use App\Http\Controllers\SummaryRepController;
 
+=======
+use App\Http\Controllers\WFH_tblController;
+>>>>>>> 11505ac73477f93f2191f94ccf3fcb23be0d3772
 
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
@@ -191,6 +195,22 @@ Route::prefix('temp-clients')->name('temp.clients.')->group(function () {
     Route::put('/{id}', [TempClientController::class, 'update'])->name('update'); // Update temp client
     Route::delete('/{id}', [TempClientController::class, 'destroy'])->name('archive'); // Delete temp client
     Route::patch('/{tempClient}/update-status', [TempClientController::class, 'updateStatus'])->name('updateStatus');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wfh', [WFH_tblController::class, 'index'])->name('wfh.index'); // View all WFH requests
+    Route::get('/wfh/personalindex', [WFH_tblController::class, 'personalindex'])->name('wfh.personalindex');
+    Route::get('/wfh/create', [WFH_tblController::class, 'create'])->name('wfh.create'); // Show create form
+    Route::post('/wfh', [WFH_tblController::class, 'store'])->name('wfh.store'); // Store new WFH request
+    Route::get('/wfh/{uuid}', [WFH_tblController::class, 'show'])->name('wfh.show');
+    Route::get('/wfh/{uuid}/edit', [WFH_tblController::class, 'edit'])->name('wfh.edit'); // Show edit form
+    Route::put('/wfh/{uuid}', [WFH_tblController::class, 'update'])->name('wfh.update'); // Update WFH request
+    Route::delete('/wfh/{uuid}', [WFH_tblController::class, 'destroy'])->name('wfh.destroy'); // Delete WFH request
+    Route::post('/wfh/{uuid}/archive', [WFH_tblController::class, 'archive'])->name('wfh.archive');
+    Route::put('/overtime/{overtime:uuid}/as', [OvertimeController::class, 'cancel'])->name('wfh.cancel');
+    Route::put('/wfh/{uuid}/approve', [WFH_tblController::class, 'approve'])->name('wfh.approve');
+Route::put('/wfh/{uuid}/disapprove', [WFH_tblController::class, 'disapprove'])->name('wfh.disapprove');
+
 
 });
 

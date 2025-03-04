@@ -33,4 +33,10 @@ class FinancialReq extends Model
         'Ammount' => 'decimal:2',
         'IsArchived' => 'boolean',
     ];
+    public function images()
+{
+    return $this->hasMany(FinancialReqImage::class, 'financial_req_id', 'id');
+}
+
+
 }
