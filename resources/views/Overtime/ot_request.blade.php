@@ -101,7 +101,7 @@
             <td>{{ $overtime->client_name ?? 'N/A' }}</td>
 
             <td class="label">Deducted Duration:</td>
-            <td>{{ $overtime->DeductedDuration ?? 'N/A' }}</td>
+            <td>{{ $overtime->partner_deduction ?? 'N/A' }}</td>
         </tr>
     </table>
 

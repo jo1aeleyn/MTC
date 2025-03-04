@@ -216,23 +216,43 @@ class OvertimeController extends Controller
     $employee = Employee::where('uuid', $user->uuid)->firstOrFail();
     $fullname = $employee->first_name . ' ' . ($employee->middle_name ? $employee->middle_name . ' ' : '') . $employee->surname;
 
+    // Validate inputs
+    $request->validate([
+        'deducted_duration' => 'nullable|numeric|min:0',
+        'sup_deduction' => 'nullable|numeric|min:0',
+        'partner_deduction' => 'nullable|numeric|min:0',
+    ]);
+
+    // Assign sup_deduction if user is an Auditing or Accounting Supervisor
+    if (in_array($user->user_role, ['Auditing Supervisor', 'Accounting Supervisor']) && $request->has('sup_deduction')) {
+        $overtime->sup_deduction = $request->input('sup_deduction');
+    }
+
+    // Assign partner_deduction if user is a Partner
+    if ($user->user_role === 'Partners' && $request->has('partner_deduction')) {
+        $overtime->partner_deduction = $request->input('partner_deduction');
+    }
+
+    // Handle approval
     if ($status === 'approved' && $user->user_role === 'Partners') {
         $overtime->approved_by = $fullname;
         $overtime->WithPay = $request->input('WithPay'); 
         $overtime->approved_date = now();
     }
 
+    // Handle recommendation
     if ($status === 'recommended' && $user->user_role === 'HR Admin') {
         $overtime->approved_by = $fullname;
--        $overtime->recommended_date = now();
+        $overtime->recommended_date = now();
     }
 
+    // Handle rejection
     if ($status === 'Rejected' && in_array($user->user_role, ['Partners', 'Auditing Supervisor', 'Accounting Supervisor'])) {
         $request->validate([
             'rejection_reason' => 'required|string|max:255'
         ]);
         $overtime->approved_by = $fullname;
-        $overtime->reason = $request->input('rejection_reason'); // Correct way to get textarea input
+        $overtime->reason = $request->input('rejection_reason');
         $overtime->approved_date = now();
     }
 
@@ -241,6 +261,9 @@ class OvertimeController extends Controller
 
     return redirect('overtime')->with('success', 'Overtime request updated successfully.');
 }
+
+    
+    
 
 public function export()
 {

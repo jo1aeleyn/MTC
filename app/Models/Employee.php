@@ -75,8 +75,12 @@ public function user()
         return $this->hasMany(Application::class, 'emp_num', 'emp_num');
     }
     public function application()
-{
-    return $this->hasOne(Application::class, 'emp_num', 'emp_num');
-}
+    {
+        return $this->hasOne(Application::class, 'emp_num', 'emp_num');
+    }
+    public function overtimeRecords(): HasMany
+    {
+        return $this->hasMany(OvertimeSummary::class, 'emp_num', 'emp_num');
+    }
 
 }

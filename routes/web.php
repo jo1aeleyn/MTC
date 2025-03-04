@@ -18,6 +18,8 @@ use App\Http\Controllers\ClientAssignmentController;
 use App\Http\Controllers\CompanyPositionController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\TempClientController;
+use App\Http\Controllers\SummaryRepController;
+
 
 
 Route::get('/', [AuthController::class, 'showLoginForm']);
@@ -191,3 +193,8 @@ Route::prefix('temp-clients')->name('temp.clients.')->group(function () {
     Route::patch('/{tempClient}/update-status', [TempClientController::class, 'updateStatus'])->name('updateStatus');
 
 });
+
+Route::get('/summary/overtime', [SummaryRepController::class, 'OvertimeSummary']);
+Route::get('/overtime-summary', [SummaryRepController::class, 'OvertimeSummary'])->name('overtime.summary');
+Route::get('/export-pdf', [SummaryRepController::class, 'exportOvertimePDF'])->name('overtime.export-pdf');
+
